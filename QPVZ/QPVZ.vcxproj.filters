@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{6b4792f9-e1b2-44c6-9efe-d51beed6e2ff}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{4c9490cd-d8b0-46dc-8c7f-31efcb5090aa}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Header Files\Plants">
+      <UniqueIdentifier>{89f60876-ff37-45d0-9808-bbcf1269c88a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Component">
+      <UniqueIdentifier>{2d7e7f67-e1e1-4b84-927b-bd060ea82507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Component">
+      <UniqueIdentifier>{c80506c8-5b30-49c4-bed4-d9ee78e0f76e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Plants">
+      <UniqueIdentifier>{d8be7434-1759-40ad-a10d-ae345eb20bf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Zombies">
+      <UniqueIdentifier>{b15455ac-8fdc-4893-a9fa-3eb4980e9bbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Zombies">
+      <UniqueIdentifier>{2be0a66e-bd23-4ff4-9a44-1fe15eb90fb5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qpvz.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qpvz.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_qpvz.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QGameDisplayer.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QGameMode.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QMyButton.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QMyButton.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="QMyButton.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="qpvz.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="QMyGif.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="QWeapoons.cpp">
+      <Filter>Source Files\Plants</Filter>
+    </ClCompile>
+    <ClCompile Include="QPlants.cpp">
+      <Filter>Source Files\Plants</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QPlants.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QPlants.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QMyObject.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QMyObject.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="QZombies.cpp">
+      <Filter>Source Files\Zombies</Filter>
+    </ClCompile>
+    <ClCompile Include="QEquipments.cpp">
+      <Filter>Source Files\Zombies</Filter>
+    </ClCompile>
+    <ClCompile Include="QFightMethods.cpp">
+      <Filter>Source Files\Plants</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QGameController.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="QGameDisplayer.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QGameDisplayer.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="QGameController.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="QMyObject.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QGameMode.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QGameModeLoader.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QGameModeLoader.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="QGameMode.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QGameController.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="QGameModeLoader.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="qpvz.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="qpvz.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="qpvz.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QGameDisplayer.h">
+      <Filter>Header Files\Component</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QGameMode.h">
+      <Filter>Header Files\Component</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QMyButton.h">
+      <Filter>Header Files\Component</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QPlants.h">
+      <Filter>Header Files\Plants</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QMyObject.h">
+      <Filter>Header Files\Component</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QGameController.h">
+      <Filter>Header Files\Component</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QGameModeLoader.h">
+      <Filter>Header Files\Component</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles\ui_qpvz.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QEquipments.h">
+      <Filter>Header Files\Zombies</Filter>
+    </ClInclude>
+    <ClInclude Include="QGameProcessor.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="QFightMethods.h">
+      <Filter>Header Files\Plants</Filter>
+    </ClInclude>
+    <ClInclude Include="QZombies.h">
+      <Filter>Header Files\Zombies</Filter>
+    </ClInclude>
+    <ClInclude Include="QMyGif.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="QWeapoons.h">
+      <Filter>Header Files\Plants</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="QPVZ.rc" />
+  </ItemGroup>
+</Project>
