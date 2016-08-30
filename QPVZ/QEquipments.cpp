@@ -1,7 +1,7 @@
 #include "QEquipments.h"
 
-QEquipments::QEquipments(QWidget* parent = 0)
-	:QMyObject(parent)
+QEquipments::QEquipments(QWidget* parent)
+//	:QMyObject(parent)
 {
 
 }
@@ -9,4 +9,9 @@ QEquipments::QEquipments(QWidget* parent = 0)
 QEquipments::~QEquipments()
 {
 
+}
+
+void QEquipments::exec()
+{
+	
 }

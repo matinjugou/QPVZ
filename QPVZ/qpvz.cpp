@@ -1,12 +1,13 @@
 #include "qpvz.h"
-#include "QGameController.h"
 
 QPVZ::QPVZ(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	QGameController *Controller = new QGameController(this);
-	
+	Controller = new QGameController;
+	setCentralWidget(Controller->Displayer->getView());
+	setFixedSize(905, 605);
+	//Controller->Displayer->getView()->show();
 }
 
 QPVZ::~QPVZ()

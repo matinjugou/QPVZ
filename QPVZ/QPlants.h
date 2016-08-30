@@ -41,7 +41,7 @@ public:
 	QBulletPlants(QWidget *parent = 0);
 	~QBulletPlants();
 public:
-	virtual void shoot();
+	virtual void Shoot(){}
 	void setCD(int);
 	int getCD();
 };
@@ -63,6 +63,6 @@ public:
 	~QPeaShooter();
 public:
 	void timerEvent(QTimerEvent *event);
-	void shoot();
+	void Shoot();
 	void Died();
 };

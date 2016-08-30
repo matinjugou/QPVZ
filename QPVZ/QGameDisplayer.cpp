@@ -2,8 +2,8 @@
 #include "QPlants.h"
 #include "QZombies.h"
 
-QGameDisplayer::QGameDisplayer(QWidget *parent = 0)
-	:QObject(parent)
+QGameDisplayer::QGameDisplayer(QWidget *parent)
+//	:QObject(parent)
 {
 	mainView = new QGraphicsView;
 	mainView->setRenderHint(QPainter::Antialiasing);
@@ -11,11 +11,13 @@ QGameDisplayer::QGameDisplayer(QWidget *parent = 0)
 	mainView->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
 	mainView->setDragMode(QGraphicsView::ScrollHandDrag);
 	mainView->resize(900, 600);
-
+	mainView->setFrameStyle(0);
+	mainView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	mainView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 QGameDisplayer::QGameDisplayer(QGraphicsScene* scene, QWidget *parent)
-	:QObject(parent)
+//	:QObject(parent)
 {
 	mainView = new QGraphicsView;
 	mainView->setRenderHint(QPainter::Antialiasing);
@@ -44,9 +46,18 @@ void QGameDisplayer::addItem(objectNames name, Position pos)
 	{
 	case PeaShooter:
 		currentScene->addItem(new QPeaShooter(pos.x, pos.y));
-		break; 
+		break;
 	default:
 		break;
 	}
 }
 
+QGraphicsScene* QGameDisplayer::getCurrentScene()
+{
+	return currentScene;
+}
+
+QGraphicsView* QGameDisplayer::getView()
+{
+	return mainView;
+}

@@ -17,4 +17,7 @@ public:
 public slots:
 	void setScene(QGraphicsScene* scene);
 	void addItem(objectNames, Position);
+public:
+	QGraphicsView* getView();
+	QGraphicsScene* getCurrentScene();
 };

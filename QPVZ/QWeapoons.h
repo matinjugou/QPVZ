@@ -11,7 +11,7 @@ public:
 	QWeapoons(QWidget* parent = 0);
 	~QWeapoons();
 public:
-	virtual void hurt(QMyObject *enemy);
+	virtual void hurt(QMyObject *enemy){}
 	void setPower(int);
 	int getPower();
 	void setSpeed(int);

@@ -12,7 +12,7 @@ public:
 	QZombies(QWidget *parent = 0);
 	~QZombies();
 public:
-	virtual void hurt(QObject *enemy);
+	virtual void hurt(QMyObject *enemy);
 	void setHP(int hp)
 	{
 		HP = hp;

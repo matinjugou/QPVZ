@@ -1,9 +1,10 @@
 #include "QGameModeLoader.h"
 
 QGameModeLoader::QGameModeLoader(QWidget *parent)
-	:QObject(parent)
+//	:QObject(parent)
 {
 	MainMode = new QGameMainMode;
+	CurrentMode = MainMode;
 	connect(CurrentMode, SIGNAL(exchangetoScene(QGraphicsScene*)), this, SIGNAL(exchangetoScene(QGraphicsScene*)));
 	connect(MainMode, SIGNAL(exchangetoScene(QGraphicsScene*)), this, SIGNAL(exchangetoScene(QGraphicsScene*)));
 	connect(CurrentMode, SIGNAL(exit()), this, SLOT(QuitMode()));
@@ -16,15 +17,13 @@ QGameModeLoader::~QGameModeLoader()
 
 QGameMode* QGameModeLoader::Load(GameModeNames name)
 {
+	//TODO º”‘ÿƒ£ Ω
 	switch (name)
 	{
-	case Adventure: 
-	{
-	}
-		break;
 	default:
 		break;
 	}
+	return NULL;
 }
 
 void QGameModeLoader::QuitMode()

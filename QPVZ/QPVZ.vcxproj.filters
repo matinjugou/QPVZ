@@ -83,9 +83,6 @@
     <ClCompile Include="qpvz.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
-    <ClCompile Include="QMyGif.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
     <ClCompile Include="QWeapoons.cpp">
       <Filter>Source Files\Plants</Filter>
     </ClCompile>
@@ -197,9 +194,6 @@
     </ClInclude>
     <ClInclude Include="QZombies.h">
       <Filter>Header Files\Zombies</Filter>
-    </ClInclude>
-    <ClInclude Include="QMyGif.h">
-      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="QWeapoons.h">
       <Filter>Header Files\Plants</Filter>

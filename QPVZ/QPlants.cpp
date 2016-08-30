@@ -1,7 +1,7 @@
 #include "QPlants.h"
 
-QPlants::QPlants(QWidget* parent = 0)
-	:QMyObject(parent)
+QPlants::QPlants(QWidget* parent)
+//	:QMyObject(parent)
 {
 	Type = Plants;
 	beThreatened = false;
@@ -12,32 +12,41 @@ QPlants::~QPlants()
 
 }
 
-QBulletPlants::QBulletPlants(QWidget* parent = 0)
-	:QPlants(parent)
+QBulletPlants::QBulletPlants(QWidget* parent)
+//	:QPlants(parent)
 {
 	lastShoot = 0;
 }
 
+QBulletPlants::~QBulletPlants()
+{
+
+}
+
 QPeaShooter::QPeaShooter(QWidget* parent)
-	: QBulletPlants(parent)
+//	: QBulletPlants(parent)
 {
 	HP = 300;
 	CD = 1400;
-	setPos(parent->pos.x, parent->pos.y);
-	Gif[0].setGif("Resources/pvz-material/images/Plants/Peashooter.Peashooter.gif");
+	setPos(parent->pos().x(), parent->pos().y());
 	
 	startTimer (20);
 }
 
-QPeaShooter::QPeaShooter(int x, int y, QWidget *parent = 0)
-	: QBulletPlants(parent)
+QPeaShooter::QPeaShooter(int x, int y, QWidget *parent)
+//	: QBulletPlants(parent)
 {
 	HP = 300;
 	CD = 1400;
 	setPos(x, y);
-	Gif[0].setGif("Resources/pvz-material/images/Plants/Peashooter.Peashooter.gif");
-
+	
 	startTimer (20);
+}
+
+
+QPeaShooter::~QPeaShooter()
+{
+
 }
 
 void QPeaShooter::timerEvent(QTimerEvent *event)
@@ -56,4 +65,9 @@ void QPeaShooter::Died()
 {
 	//TODO À¿Õˆ∂Øª≠
 	setVisible(false);
+}
+
+void QPeaShooter::Shoot()
+{
+
 }

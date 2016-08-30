@@ -3,7 +3,6 @@
 #include <QtGui>
 #include "qgraphicsitem.h"
 #include "qvector.h"
-#include "QMyGif.h"
 
 enum objectType { Plants, Zombies, CommonObjects };
 enum objectNames { PeaShooter, Zombie };
@@ -19,10 +18,10 @@ class QMyObject :public QObject, public QGraphicsPixmapItem
 	Q_OBJECT
 protected:
 	QVector<QPixmap> Pictures;
-	QVector<QMyGif> Gif;
 	objectType Type;
 	QGraphicsItemAnimation *animation;
 	QTimeLine *timer;
+	Position Pos;
 public:
 	QMyObject(QWidget* parent = 0);
 	~QMyObject();
@@ -30,8 +29,11 @@ signals:
 	void moveStop();
 public:
 	objectType getType();
-	virtual void timerEvent(QTimerEvent *event); //TODO 检测生命值、改变动画状态
-	virtual void Died();
+	virtual void Died()
+	{
+		//TODO 等待继承者重写死亡动画
+	}
 	void moveTo(int x, int y, int speed);
 	void pushbackPixmap(QPixmap);
+	void setMyPixmap(int);
 };

@@ -1,7 +1,7 @@
 #include "QGameController.h"
 
 QGameController::QGameController(QWidget* parent)
-	:QObject(parent)
+//	:QObject(parent)
 {
 	Loader = new QGameModeLoader;
 	Displayer = new QGameDisplayer(Loader->getMainMode()->getScene());

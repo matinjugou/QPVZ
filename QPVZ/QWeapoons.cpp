@@ -3,7 +3,7 @@
 #include "QPlants.h"
 
 QWeapoons::QWeapoons(QWidget* parent)
-	:QMyObject(parent)
+//	:QMyObject(parent)
 {
 
 }
@@ -14,7 +14,7 @@ QWeapoons::~QWeapoons()
 }
 
 QPeas::QPeas(int power, int speed, int direction, int x, int y, QWidget* parent)
-	: QWeapoons(parent)
+//	: QWeapoons(parent)
 {
 	Pictures[0].load("Resources/pvz-material/images/weapoons/Pea.png");
 	Pictures[1].load("Resources/pvz-material/images/weapoons/PeaBulletHit.png");
@@ -26,7 +26,7 @@ QPeas::QPeas(int power, int speed, int direction, int x, int y, QWidget* parent)
 	startTimer(20);
 }
 QPeas::QPeas(int x, int y, QWidget* parent)
-	: QWeapoons(parent)
+//	: QWeapoons(parent)
 {
 	Pictures[0].load("Resources/pvz-material/images/weapoons/Pea.png");
 	Pictures[1].load("Resources/pvz-material/images/weapoons/PeaBulletHit.png");

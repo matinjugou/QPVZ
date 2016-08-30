@@ -15,9 +15,6 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -25,28 +22,16 @@ QT_BEGIN_NAMESPACE
 class Ui_QPVZClass
 {
 public:
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
     QWidget *centralWidget;
-    QStatusBar *statusBar;
 
     void setupUi(QMainWindow *QPVZClass)
     {
         if (QPVZClass->objectName().isEmpty())
             QPVZClass->setObjectName(QStringLiteral("QPVZClass"));
         QPVZClass->resize(900, 600);
-        menuBar = new QMenuBar(QPVZClass);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        QPVZClass->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(QPVZClass);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        QPVZClass->addToolBar(mainToolBar);
         centralWidget = new QWidget(QPVZClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         QPVZClass->setCentralWidget(centralWidget);
-        statusBar = new QStatusBar(QPVZClass);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
-        QPVZClass->setStatusBar(statusBar);
 
         retranslateUi(QPVZClass);
 

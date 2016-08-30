@@ -1,9 +1,9 @@
 #include "QMyObject.h"
 #include "math.h"
 QMyObject::QMyObject(QWidget *parent)
-	:QObject(parent)
+//	:QObject(parent)
 {
-	connect(timer, SIGNAL(finished(QPrivateSignal)), this, SIGNAL(moveStop()));
+//	connect(timer, SIGNAL(finished(QPrivateSignal)), this, SIGNAL(moveStop()));
 }
 
 QMyObject::~QMyObject()
@@ -37,4 +37,9 @@ void QMyObject::moveTo(int x, int y, int speed)
 void QMyObject::pushbackPixmap(QPixmap pic)
 {
 	Pictures.push_back(pic);
+}
+
+void QMyObject::setMyPixmap(int i)
+{
+	setPixmap(Pictures[i]);
 }
