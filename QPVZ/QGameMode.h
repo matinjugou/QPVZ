@@ -4,6 +4,8 @@
 #include "QPlants.h"
 #include "qgraphicsscene.h"
 #include "QMyButton.h"
+#include "QCardBanks.h"
+#include "QCardSelector.h"
 
 enum GameModeNames{Surface, Adventure, NetFight};
 class QGameMode :public QObject, public QGraphicsPixmapItem
@@ -45,3 +47,11 @@ private:
 	QMyObject *Name_Card;
 	QMyButton *Name_Change;
 };
+
+//class QGameAdventureMode :public QGameMode
+//{
+//	Q_OBJECT
+//private:
+//	QCardSelector *Selector;
+//	QCardBank *Bank;
+//};

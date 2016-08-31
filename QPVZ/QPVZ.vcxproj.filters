@@ -51,6 +51,12 @@
     <Filter Include="Source Files\Zombies">
       <UniqueIdentifier>{2be0a66e-bd23-4ff4-9a44-1fe15eb90fb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Cards">
+      <UniqueIdentifier>{c8271c37-1380-43d1-add6-1e616f3d9e5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Cards">
+      <UniqueIdentifier>{8d578c01-3784-4971-bb8b-f0db14044afc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -143,6 +149,27 @@
     <ClCompile Include="QGameModeLoader.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
+    <ClCompile Include="QMyCard.cpp">
+      <Filter>Source Files\Cards</Filter>
+    </ClCompile>
+    <ClCompile Include="QCardSelector.cpp">
+      <Filter>Source Files\Cards</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QCardSelector.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QCardSelector.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="QCardBanks.cpp">
+      <Filter>Source Files\Cards</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QCardBanks.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="QMyMap.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qpvz.h">
@@ -175,6 +202,12 @@
     <CustomBuild Include="QGameModeLoader.h">
       <Filter>Header Files\Component</Filter>
     </CustomBuild>
+    <CustomBuild Include="QCardSelector.h">
+      <Filter>Header Files\Cards</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QCardBanks.h">
+      <Filter>Header Files\Cards</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_qpvz.h">
@@ -197,6 +230,12 @@
     </ClInclude>
     <ClInclude Include="QWeapoons.h">
       <Filter>Header Files\Plants</Filter>
+    </ClInclude>
+    <ClInclude Include="QMyCard.h">
+      <Filter>Header Files\Cards</Filter>
+    </ClInclude>
+    <ClInclude Include="QMyMap.h">
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

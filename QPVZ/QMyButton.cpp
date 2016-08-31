@@ -39,16 +39,31 @@ QMyButton::~QMyButton()
 void QMyButton::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
 	setPixmap(Button_Hover);
-	QGraphicsItem::hoverEnterEvent(event);
 }
 void QMyButton::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
 	setPixmap(Button_Plain);
-	QGraphicsItem::hoverLeaveEvent(event);
 }
 
 void QMyButton::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+	PosX = pos().x();
+	PosY = pos().y();
+	setPos(pos().x() + 2, pos().y() + 2);
+}
+
+void QMyButton::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
 	emit clicked();
-	QGraphicsItem::mousePressEvent(event);
+	setPos(PosX, PosY);
+}
+
+void QMyButton::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+	if (!isUnderMouse())
+	{
+		ungrabMouse();
+		setPixmap(Button_Plain);
+		setPos(PosX, PosY);
+	}
 }

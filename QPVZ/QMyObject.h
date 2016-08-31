@@ -27,13 +27,14 @@ public:
 	~QMyObject();
 signals:
 	void moveStop();
+public slots:
+	void moveTo(int x, int y, int speed);
 public:
 	objectType getType();
 	virtual void Died()
 	{
 		//TODO 等待继承者重写死亡动画
 	}
-	void moveTo(int x, int y, int speed);
 	void pushbackPixmap(QPixmap);
 	void setMyPixmap(int);
 };
