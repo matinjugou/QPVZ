@@ -16,3 +16,10 @@
 接下来就是逐渐实现和完善各项功能的时候了</br>
 学了Git貌似还可以顺便熟悉一下如何写HTML文档</br>
 Gitpush之前一定要记得确认好自己的readme.md到底写好了没有……………………</br>
+
+<h1>Update 2</h1>
+时间：2016年9月1日 2:43
+---------
+MAPPING SYSTEM Finished(about 50%)</br>
+一定要先在本地改好并确认好了文件再git push</br>
+工作之前先记得git pull origin</br>
