@@ -18,11 +18,14 @@ QMyMap::QMyMap(QWidget *parent)
 		verticalLines[i] = MapRect.x() + MapRect.width() / 5 * i;
 		horizontalLines[i] = MapRect.y() + MapRect.height() / 5 * i;
 	}
+	ReadytoPlant = new QGraphicsPixmapItem;
+	ReadytoPlant_Shadow = new QGraphicsPixmapItem;
 }
 
 QMyMap::~QMyMap()
 {
-
+	delete ReadytoPlant;
+	delete ReadytoPlant_Shadow;
 }
 
 QPoint QMyMap::PostoPoint(QPointF itemPos)
@@ -55,15 +58,21 @@ void QMyMap::Plantrequest_Ready(objectNames itemname, QPointF itemPos)
 	QPoint tempPoint = PostoPoint(itemPos);
 	int x = tempPoint.x();
 	int y = tempPoint.y();
+	changePixmap(itemname);
+	ReadytoPlant->setPos(itemPos);
+	ReadytoPlant->grabMouse();
 	if (isPlantedMap[x][y] == true)
 	{
-		ReadytoPlant->setVisible(false);
+		ReadytoPlant_Shadow->setVisible(false);
 	}
 	else
 	{
-		changePixmap(itemname);
 		setPos(PointtoPos(tempPoint));
-		ReadytoPlant->setVisible(true);
+		ReadytoPlant_Shadow->setVisible(true);
 	}
 }
 
+void QMyMap::changePixmap(objectNames itemname)
+{
+	
+}

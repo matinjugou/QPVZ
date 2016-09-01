@@ -8,6 +8,7 @@ class QMyCard :public QMyObject
 protected:
 	cardType chosenType;
 	QString nameText;
+	objectNames objectTypeName;
 	QPointF cardPosinSelector;  //存储放在卡片选择器中的位置，便于回移
 public:
 	QMyCard(QWidget *parent = 0);
@@ -15,6 +16,7 @@ public:
 signals:
 	void moveToSelector(QMyCard*);
 	void moveToBank(QMyCard*);
+	void ReadytoPlant(objectNames, QPointF);
 public slots:
 	void moveAccepted(Position);
 public:

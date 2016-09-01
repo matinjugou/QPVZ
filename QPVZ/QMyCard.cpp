@@ -57,7 +57,7 @@ void QMyCard::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	}
 	else
 	{
-
+		emit ReadytoPlant(objectTypeName, pos());
 	}
 	
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "QMyObject.h"
+#include "QItemShades.h"
 
 class QMyMap :public QMyObject
 {
@@ -9,10 +10,12 @@ private:
 	QRectF MapRect;
 	qreal verticalLines[5];		//竖直边界线
 	qreal horizontalLines[5];	//水平边界线
-	QGraphicsPixmapItem *ReadytoPlant;
+	QItemShade *ReadytoPlant;
+	QItemShade *ReadytoPlant_Shadow;
 signals:
-	void RequestAccepted();		//接收请求
+	void RequestAccepted(objectNames, Position);		//接收请求
 	void RequestDinied();		//拒绝请求
+	void RequesCancelled();
 	void deleteFromMap(QPointF);//删除一个物品
 public slots:
 	void Plantrequest_Ready(objectNames, QPointF); //尝试种植

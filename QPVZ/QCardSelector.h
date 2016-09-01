@@ -8,7 +8,7 @@ private:
 	QGraphicsPixmapItem* Board;
 	QMyCard* newCard;
 	QGraphicsPixmapItem *newCardBoard;
-	Position currentPos;
+	Position currentPos;		//记录当前绘画卡片的坐标点
 	int totCard;
 	int maxX;
 	int maxY;

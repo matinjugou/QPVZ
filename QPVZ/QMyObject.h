@@ -18,7 +18,7 @@ class QMyObject :public QObject, public QGraphicsPixmapItem
 	Q_OBJECT
 protected:
 	QVector<QPixmap> Pictures;
-	objectType Type;
+	objectType objectTypeName;
 	QGraphicsItemAnimation *animation;
 	QTimeLine *timer;
 	Position Pos;

@@ -14,6 +14,7 @@ public:
 	~QCardBank();
 signals:
 	void moveAccepted(Position, QMyCard*); //接受置入请求并回传位置给卡片,position与QPointF之后需要统一
+	void ReadytoPlant(objectNames, QPointF);
 public slots:
 	void moveRequested(QMyCard*);	//接收卡片的置入请求，并得到地址便于回传
 	void removeConfirm(QMyCard*);

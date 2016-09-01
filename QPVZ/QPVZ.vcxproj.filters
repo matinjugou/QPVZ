@@ -170,6 +170,15 @@
     <ClCompile Include="QMyMap.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
+    <ClCompile Include="QItemShades.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QItemShades.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QItemShades.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qpvz.h">
@@ -207,6 +216,9 @@
     </CustomBuild>
     <CustomBuild Include="QCardBanks.h">
       <Filter>Header Files\Cards</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QItemShades.h">
+      <Filter>Header Files\Component</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

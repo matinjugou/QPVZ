@@ -38,6 +38,7 @@ void QCardSelector::moveAccepted(Position itemPos, QMyCard* cardtomove)
 void QCardSelector::resetIn(QMyCard* cardtoset)
 {
 	addToGroup(cardtoset);
+	emit removeInform(cardtoset);
 }
 
 void QCardSelector::addNewCard(objectNames name)
@@ -49,7 +50,7 @@ void QCardSelector::addNewCard(objectNames name)
 		//TODO写卡片子类构造以及绘画位置，并创建一个具有一定透明度的卡片垫在下层
 		//newCard = new Q...Card(Pos);
 		//newCardBoard = new ...
-		//connect(newCard, SIGANL(moveToBank(this)), this, SLOT(moveRequest(QMyCard*)));
+		//connect(newCard, SIGANL(moveToBank(this)), this, SIGNAL(moveRequest(QMyCard*)));
 		//connect(newCard, SIGANL(moveToSelector(this)), this, SLOT(resetIn(QMyCard*)));
 	}
 		break;
