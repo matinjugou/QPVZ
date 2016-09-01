@@ -23,3 +23,10 @@ Gitpush之前一定要记得确认好自己的readme.md到底写好了没有…�
 MAPPING SYSTEM Finished(about 50%)</br>
 一定要先在本地改好并确认好了文件再git push</br>
 工作之前先记得git pull origin</br>
+
+<h1>Update 3</h1>
+时间：2016年9月1日 22:43
+---------
+用了真的是整整一天去写Mapping system</br>
+这种小架构真是太麻烦了，好在写完了，看上去架构也合理</br>
+下一次这个东西应该就可以上线了</br>
