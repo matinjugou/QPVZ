@@ -16,8 +16,9 @@ public:
 	QGameMode* getCurrentMode();
 signals:
 	void exchangetoScene(QGraphicsScene*);
-	void addItem(objectNames, Position);
+	void addItem(objectNames, QPointF);
 	void addItem(QMyObject*);
+	void Itemadded(QMyObject*);
 public slots:
 	void QuitMode();
 };

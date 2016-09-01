@@ -16,6 +16,8 @@ protected:
 signals:
 	void exit();
 	void exchangetoScene(QGraphicsScene*);
+	void addItem(objectNames, QPointF); //要建立链接
+	void Itemadded(QMyObject*);
 public:
 	QGameMode(QWidget *parent = 0);
 	~QGameMode();

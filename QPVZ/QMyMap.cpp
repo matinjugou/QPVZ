@@ -18,8 +18,12 @@ QMyMap::QMyMap(QWidget *parent)
 		verticalLines[i] = MapRect.x() + MapRect.width() / 5 * i;
 		horizontalLines[i] = MapRect.y() + MapRect.height() / 5 * i;
 	}
-	ReadytoPlant = new QGraphicsPixmapItem;
-	ReadytoPlant_Shadow = new QGraphicsPixmapItem;
+	ReadytoPlant = new QItemShade;
+	ReadytoPlant_Shadow = new QItemShade;
+	connect(ReadytoPlant, SIGNAL(leftButtonClicked()), this, SLOT(Plantrequest_Try()));
+	connect(ReadytoPlant, SIGNAL(rightButtonClicked()), this, SLOT(Plantrequest_Done()));
+	connect(ReadytoPlant, SIGNAL(rightButtonClicked()), this, SIGNAL(RequesCancelled()));
+	connect(ReadytoPlant, SIGNAL(cursorMoved(QPointF)), this, SLOT(Plantrequest_Update(QPointF)));
 }
 
 QMyMap::~QMyMap()
@@ -59,8 +63,9 @@ void QMyMap::Plantrequest_Ready(objectNames itemname, QPointF itemPos)
 	int x = tempPoint.x();
 	int y = tempPoint.y();
 	changePixmap(itemname);
-	ReadytoPlant->setPos(itemPos);
+	ReadytoPlant->setPos(itemPos); //之后要让图片更可能处于中心
 	ReadytoPlant->grabMouse();
+	ReadytoPlant->setVisible(true);
 	if (isPlantedMap[x][y] == true)
 	{
 		ReadytoPlant_Shadow->setVisible(false);
@@ -72,7 +77,74 @@ void QMyMap::Plantrequest_Ready(objectNames itemname, QPointF itemPos)
 	}
 }
 
+void QMyMap::Plantrequest_Update(QPointF itemPos)
+{
+	QPoint tempPoint = PostoPoint(itemPos);
+	int x = tempPoint.x();
+	int y = tempPoint.y();
+	if (isPlantedMap[x][y] == true)
+	{
+		ReadytoPlant_Shadow->setVisible(false);
+	}
+	else
+	{
+		setPos(PointtoPos(tempPoint));
+		ReadytoPlant_Shadow->setVisible(true);
+	}
+}
+
+void QMyMap::Plantrequest_Try()
+{
+	if (ReadytoPlant_Shadow->isVisible())
+	{
+		addItem(ReadytoPlant->objectTypeNames, ReadytoPlant_Shadow->scenePos());
+		pointNewItemtoPlantOn = PostoPoint(ReadytoPlant_Shadow->scenePos());
+		Plantrequest_Done();
+	}
+	else
+	{
+		//判断如果点在画面的其他位置就取消
+	}
+}
+
+void QMyMap::Plantrequest_Done()
+{
+	ReadytoPlant->setVisible(false);
+	ReadytoPlant_Shadow->setVisible(false);
+	ReadytoPlant->setPos(900, 600);
+	ReadytoPlant_Shadow->setPos(900, 600);
+	emit RequestDone();
+}
+
 void QMyMap::changePixmap(objectNames itemname)
 {
 	
+}
+
+void QMyMap::examineMap()
+{
+	for (const auto &i : PlantsinMap)
+	{
+		for (const auto &j : ZombiesinMap)
+		{
+			if (i->inRange(j))
+			{
+				i->threadtened();
+				break;
+			}
+		}
+	}
+}
+
+void QMyMap::Itemadded(QMyObject* newItemAdded)
+{
+	int x = pointNewItemtoPlantOn.x();
+	int y = pointNewItemtoPlantOn.y();
+	isPlantedMap[x][y] = true;
+	Map[x][y] = newItemAdded;
+}
+
+void QMyMap::timerEvent(QTimerEvent *event)
+{
+
 }

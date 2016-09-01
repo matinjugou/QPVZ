@@ -22,7 +22,8 @@ void QItemShade::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	}
 }
 
-void QItemShade::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void QItemShade::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-	setPos(event->scenePos());
+	setPos(event->scenePos());//之后要让图标更加靠近中
+	emit cursorMoved(event->scenePos());
 }

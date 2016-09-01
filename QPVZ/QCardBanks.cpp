@@ -17,9 +17,9 @@ void QCardBank::moveRequested(QMyCard* card)
 {
 	if (totCard < 8)
 	{
-		Position tmpPos;
-		tmpPos.x = totCard * 102 + 50;
-		tmpPos.y = 20;
+		QPointF tmpPos;
+		tmpPos.setX(totCard * 102 + 50);
+		tmpPos.setY(20);
 		emit moveAccepted(tmpPos, card);
 		addToGroup(card);
 		cardList[totCard] = card;
@@ -38,6 +38,18 @@ void QCardBank::Initconnection()
 	for (int i = 0; i < 8; i++)
 	{
 		cardList[i]->setChosenType(inGame);
-		connect(cardList[i], SIGNAL(ReadytoPlant(objectNames, QPointF)), this, SIGNAL(ReadytoPlant(objectNames, QPointF)));
+		connect(cardList[i], SIGNAL(ReadytoPlant(objectNames, QPointF, QMyCard*)), this, SIGNAL(ReadytoPlant(objectNames, QPointF, QMyCard*)));
 	}
+}
+
+
+void QCardBank::ReadytoPlantFromCard(objectNames itemName, QPointF itemPos, QMyCard* cardtoplant)
+{
+	cardReadytoPlant = cardtoplant;
+	emit ReadytoPlant(itemName, itemPos);
+}
+
+void QCardBank::plantRequestDone()
+{
+//	cardReadytoPlant->setPixmap(); »»»ØÕý³£Í¼Æ¬
 }

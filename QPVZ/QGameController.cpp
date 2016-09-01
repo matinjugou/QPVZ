@@ -5,7 +5,7 @@ QGameController::QGameController(QWidget* parent)
 {
 	Loader = new QGameModeLoader;
 	Displayer = new QGameDisplayer(Loader->getMainMode()->getScene());
-	connect(Loader, SIGNAL(addItem(objectNames, Position)), Displayer, SLOT(addItem(objectNames, Position)));
+	connect(Loader, SIGNAL(addItem(objectNames, QpointF)), Displayer, SLOT(addItem(objectNames, QPointF)));
 
 }
 

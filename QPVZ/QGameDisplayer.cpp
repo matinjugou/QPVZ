@@ -40,12 +40,16 @@ void QGameDisplayer::setScene(QGraphicsScene *scene)
 	mainView->setScene(currentScene);
 }
 
-void QGameDisplayer::addItem(objectNames name, Position pos)
+void QGameDisplayer::addItem(objectNames name, QPointF pos)
 {
 	switch (name)
 	{
 	case PeaShooter:
-		currentScene->addItem(new QPeaShooter(pos.x, pos.y));
+	{
+		QPeaShooter* newPeashooter = new QPeaShooter(pos.x(), pos.y());
+		currentScene->addItem(newPeashooter);
+		emit Itemadded(newPeashooter);
+	}
 		break;
 	default:
 		break;

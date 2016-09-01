@@ -7,12 +7,6 @@
 enum objectType { Plants, Zombies, CommonObjects };
 enum objectNames { PeaShooter, Zombie };
 
-struct Position
-{
-	int x;
-	int y;
-};
-
 class QMyObject :public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT
@@ -21,7 +15,8 @@ protected:
 	objectType objectTypeName;
 	QGraphicsItemAnimation *animation;
 	QTimeLine *timer;
-	Position Pos;
+	QPointF Pos;
+	QPoint PointinMap;//后期要Review坐标系统
 public:
 	QMyObject(QWidget* parent = 0);
 	~QMyObject();

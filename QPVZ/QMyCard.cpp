@@ -57,14 +57,14 @@ void QMyCard::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	}
 	else
 	{
-		emit ReadytoPlant(objectTypeName, pos());
+		emit ReadytoPlant(objectTypeName, pos(), this);
 	}
 	
 }
 
-void QMyCard::moveAccepted(Position PostoLoad)
+void QMyCard::moveAccepted(QPointF PostoLoad)
 {
-	moveTo(PostoLoad.x, PostoLoad.y, 5);
+	moveTo(PostoLoad.x(), PostoLoad.y(), 5);
 	chosenType = chosen;
 }
 

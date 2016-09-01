@@ -16,9 +16,9 @@ public:
 signals:
 	void moveToSelector(QMyCard*);
 	void moveToBank(QMyCard*);
-	void ReadytoPlant(objectNames, QPointF);
+	void ReadytoPlant(objectNames, QPointF, QMyCard*);
 public slots:
-	void moveAccepted(Position);
+	void moveAccepted(QPointF);
 public:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);

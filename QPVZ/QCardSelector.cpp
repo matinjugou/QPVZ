@@ -29,7 +29,7 @@ QCardSelector::~QCardSelector()
 
 }
 
-void QCardSelector::moveAccepted(Position itemPos, QMyCard* cardtomove)
+void QCardSelector::moveAccepted(QPointF itemPos, QMyCard* cardtomove)
 {
 	cardtomove->moveAccepted(itemPos);
 	removeFromGroup(cardtomove);

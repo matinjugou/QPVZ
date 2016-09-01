@@ -25,6 +25,8 @@ public:
 	int getHP();
 	void setSunPrice(int);
 	int getSunPrice();
+	virtual void threadtened(){}
+	virtual bool inRange(QMyObject*){}
 };
 
 /* QPlants:			Éä»÷ĞÍÖ²ÎïÀà
