@@ -3,24 +3,42 @@
 QCardSelector::QCardSelector(QWidget *parent)
 //	:QGraphicsItemGroup(parent)
 {
+	setHandlesChildEvents(false);
 	Board = new QGraphicsPixmapItem(QPixmap("Resources/pvz-material/images/interface/SeedChooser_Background.png"));
-	Board->setPos(0, 600);
+	Board->setPos(0, 0);
+	Board->setScale(0.9);
 	addToGroup(Board);
-	currentPos.x = 1;
-	currentPos.y = 1;
+	currentPos.setX(1);
+	currentPos.setY(1);
+	maxX = 8;
+	maxY = 6;
+	startGame = new QMyButton("Resources/pvz-material/images/Buttons/SeedChooser_Button_Disabled.png", "Resources/pvz-material/images/Buttons/SeedChooser_Button.png");
+	startGame->setPos(137, 420);
+	addToGroup(startGame);
+	connect(startGame, SIGNAL(clicked()), this, SIGNAL(startGameNow()));
 }
 
 QCardSelector::QCardSelector(int totcard, const objectNames cardlist[], QWidget *parent)
 //	:QGraphicsItemGroup(parent)
 {
+	setHandlesChildEvents(false);
 	Board = new QGraphicsPixmapItem(QPixmap("Resources/pvz-material/images/interface/SeedChooser_Background.png"));
-	Board->setPos(0, 600);
-	currentPos.x = 1;
-	currentPos.y = 1;
+	Board->setPos(0, 0);
+	Board->setScale(0.9);
+	addToGroup(Board);
+	currentPos.setX(1);
+	currentPos.setY(1);
+
+	maxX = 8;
+	maxY = 6;
 	for (int i = 0; i < totcard; i++)
 	{
-		addNewCard(cardlist[i]);
+		addNewCard(cardlist[i]); //之后要补充
 	}
+	startGame = new QMyButton("Resources/pvz-material/images/Buttons/SeedChooser_Button_Disabled.png", "Resources/pvz-material/images/Buttons/SeedChooser_Button.png");
+	startGame->setPos(137, 420);
+	addToGroup(startGame);
+	connect(startGame, SIGNAL(clicked()), this, SIGNAL(startGameNow()));
 }
 
 QCardSelector::~QCardSelector()
@@ -32,7 +50,6 @@ QCardSelector::~QCardSelector()
 void QCardSelector::moveAccepted(QPointF itemPos, QMyCard* cardtomove)
 {
 	cardtomove->moveAccepted(itemPos);
-	removeFromGroup(cardtomove);
 }
 
 void QCardSelector::resetIn(QMyCard* cardtoset)
@@ -47,22 +64,26 @@ void QCardSelector::addNewCard(objectNames name)
 	{
 	case PeaShooter:
 	{
-		//TODO写卡片子类构造以及绘画位置，并创建一个具有一定透明度的卡片垫在下层
-		//newCard = new Q...Card(Pos);
-		//newCardBoard = new ...
-		//connect(newCard, SIGANL(moveToBank(this)), this, SIGNAL(moveRequest(QMyCard*)));
-		//connect(newCard, SIGANL(moveToSelector(this)), this, SLOT(resetIn(QMyCard*)));
+		newCard = new PeaShooterCard;
+		newCardBoard = new PeaShooterCard;
+		connect(newCard, SIGNAL(moveToBank(QMyCard*)), this, SIGNAL(moveRequest(QMyCard*)));
+		connect(newCard, SIGNAL(moveToSelector(QMyCard*)), this, SLOT(resetIn(QMyCard*)));
 	}
 		break;
 	default:
 		break;
 	}
+	addToGroup(newCardBoard);
 	addToGroup(newCard);
-	currentPos.x++;
-	if (currentPos.x > maxX)
+	newCardBoard->setPos((currentPos.x() - 1) * 51 + 17, ((currentPos.y() - 1) * 70) + 35);
+	newCardBoard->setOpacity(0.5);
+	newCard->setPos((currentPos.x() - 1) * 51 + 17, ((currentPos.y() - 1) * 70) + 35);
+	newCard->setCardOriginPos(newCard->pos());
+	currentPos.setX(currentPos.x() + 1);
+	if (currentPos.x() > maxX)
 	{
-		currentPos.x = 1;
-		currentPos.y++;
+		currentPos.setX(1);
+		currentPos.setY(currentPos.y() + 1);
 	}
 }
 

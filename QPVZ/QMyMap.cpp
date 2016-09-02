@@ -3,23 +3,28 @@
 QMyMap::QMyMap(QWidget *parent)
 {
 	for (int i = 0; i < 5; i++)
-		for (int j = 0; j < 5; j++)
+		for (int j = 0; j < 9; j++)
 		{
 			Map[i][j] = NULL;
 			isPlantedMap[i][j] = false;
 		}
-	MapRect.setX(0);
-	MapRect.setY(0);
-	MapRect.setWidth(0);
-	MapRect.setHeight(0);
+	MapRect.setX(245);
+	MapRect.setY(70);
+	MapRect.setWidth(752);
+	MapRect.setHeight(503);
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 9; i++)
 	{
-		verticalLines[i] = MapRect.x() + MapRect.width() / 5 * i;
-		horizontalLines[i] = MapRect.y() + MapRect.height() / 5 * i;
+		verticalLines[i] = MapRect.x() + MapRect.width() / 9 * i;
+		if (i < 5)
+		{
+			horizontalLines[i] = MapRect.y() + MapRect.height() / 5 * i;
+		}
 	}
 	ReadytoPlant = new QItemShade;
 	ReadytoPlant_Shadow = new QItemShade;
+	ReadytoPlant->setParentItem(this);
+	ReadytoPlant_Shadow->setParentItem(this);
 	connect(ReadytoPlant, SIGNAL(leftButtonClicked()), this, SLOT(Plantrequest_Try()));
 	connect(ReadytoPlant, SIGNAL(rightButtonClicked()), this, SLOT(Plantrequest_Done()));
 	connect(ReadytoPlant, SIGNAL(rightButtonClicked()), this, SIGNAL(RequesCancelled()));
@@ -41,6 +46,9 @@ QPoint QMyMap::PostoPoint(QPointF itemPos)
 		{
 			tempPoint.setX(i);
 		}
+	}
+	for (int i = 0; i < 8; i++)
+	{
 		if ((itemPos.y() >= horizontalLines[i]) && (itemPos.y() < horizontalLines[i + 1]))
 		{
 			tempPoint.setY(i);
@@ -55,6 +63,11 @@ QPointF QMyMap::PointtoPos(QPoint itemPoint)
 	tempPointF.setX(verticalLines[itemPoint.x()]);
 	tempPointF.setX(horizontalLines[itemPoint.y()]);
 	return tempPointF;
+}
+
+void QMyMap::setScene(QGraphicsScene* Modescene)
+{
+	Mapscene = Modescene;
 }
 
 void QMyMap::Plantrequest_Ready(objectNames itemname, QPointF itemPos)
@@ -118,7 +131,17 @@ void QMyMap::Plantrequest_Done()
 
 void QMyMap::changePixmap(objectNames itemname)
 {
-	
+	switch (itemname)
+	{
+	case PeaShooter:
+	{
+		ReadytoPlant->LoadPixmap("Resources/pvz-material/images/Plants/Peashooter/0.gif");
+		ReadytoPlant_Shadow->LoadPixmap("Resources/pvz-material/images/Plants/Peashooter/0.gif");
+	}
+	break;
+	default:
+		break;
+	}
 }
 
 void QMyMap::examineMap()

@@ -32,4 +32,5 @@ public:
 	}
 	void pushbackPixmap(QPixmap);
 	void setMyPixmap(int);
+	QPixmap getPicture(int i);
 };

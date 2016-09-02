@@ -1,6 +1,6 @@
 #pragma once
 #include "QMyObject.h"
-#include "QWeapoons.h"
+#include "QWeapons.h"
 #include "QFightMethods.h"
 
 
@@ -14,7 +14,6 @@ class QPlants :public QMyObject
 	Q_OBJECT
 protected:
 	int HP;
-	int SunPrice;
 	bool beThreatened;
 public:
 	QPlants(QWidget* parent = 0);
@@ -26,19 +25,19 @@ public:
 	void setSunPrice(int);
 	int getSunPrice();
 	virtual void threadtened(){}
-	virtual bool inRange(QMyObject*){}
+	virtual bool inRange(QMyObject*) { return false; }
 };
 
 /* QPlants:			射击型植物类
 *@param CD:			植物的攻击间隔，单位为毫秒
-*@param QWeapoons:	植物的武器
+*@param QWeapons:	植物的武器
 */
 class QBulletPlants :public QPlants
 {
 protected:
 	int CD;
 	int lastShoot;
-	QWeapoons *Weapoon;
+	QWeapons *Weapoon;
 public:
 	QBulletPlants(QWidget *parent = 0);
 	~QBulletPlants();

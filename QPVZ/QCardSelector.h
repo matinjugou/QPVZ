@@ -1,5 +1,6 @@
 #pragma once
 #include "QMyCard.h"
+#include "QMyButton.h"
 
 class QCardSelector :public QObject, public QGraphicsItemGroup
 {
@@ -7,14 +8,16 @@ class QCardSelector :public QObject, public QGraphicsItemGroup
 private:
 	QGraphicsPixmapItem* Board;
 	QMyCard* newCard;
-	QGraphicsPixmapItem *newCardBoard;
-	QPointF currentPos;		//记录当前绘画卡片的坐标点
+	QMyCard* newCardBoard;
+	QPoint currentPos;		//记录当前绘画卡片的坐标点
+	QMyButton* startGame;
 	int totCard;
 	int maxX;
 	int maxY;
 signals:
 	void moveRequest(QMyCard*);
 	void removeInform(QMyCard*);
+	void startGameNow();
 public slots:
 	void moveAccepted(QPointF, QMyCard*);
 	void resetIn(QMyCard*);

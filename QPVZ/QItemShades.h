@@ -1,6 +1,7 @@
 #pragma once
 #include "qgraphicsitem.h"
 #include "QtWidgets"
+#include "QMyObject.h"
 
 class QItemShade :public QObject, public QGraphicsPixmapItem
 {
@@ -18,4 +19,5 @@ signals:
 public:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void LoadPixmap(const QString &filename);
 };

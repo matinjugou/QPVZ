@@ -13,14 +13,14 @@ QMyObject::~QMyObject()
 
 objectType QMyObject::getType()
 {
-	return Type;
+	return objectTypeName;
 }
 
-void QMyObject::moveTo(int x, int y, int speed)
+void QMyObject::moveTo(int x, int y, int speed)	//ÐèÒªÖØÐ´
 {
-	int totFrame = abs((pos().y() - y)) / speed;
-	int stepx = (x - pos().x()) / speed;
-	int stepy = (y - pos().y()) / speed;
+	int totFrame = abs((pos().y() - y)) / ((double)speed);
+	int stepx = (x - pos().x()) / ((double)speed);
+	int stepy = (y - pos().y()) / ((double)speed);
 	timer = new QTimeLine(totFrame * 20);
 	timer->setFrameRange(0, totFrame);
 
@@ -42,4 +42,9 @@ void QMyObject::pushbackPixmap(QPixmap pic)
 void QMyObject::setMyPixmap(int i)
 {
 	setPixmap(Pictures[i]);
+}
+
+QPixmap QMyObject::getPicture(int i)
+{
+	return Pictures[i];
 }

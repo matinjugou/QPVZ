@@ -6,7 +6,7 @@ QPVZ::QPVZ(QWidget *parent)
 	ui.setupUi(this);
 	Controller = new QGameController;
 	setCentralWidget(Controller->Displayer->getView());
-	setFixedSize(905, 605);
+	setFixedSize(900, 600);
 	//Controller->Displayer->getView()->show();
 }
 

@@ -6,7 +6,9 @@ class QCardBank :public QObject, public QGraphicsItemGroup
 	Q_OBJECT
 private:
 	int statusType; //0 presen out of game, 1 pres in game
+	int sunshineNum;
 	QGraphicsPixmapItem *Board;
+	QGraphicsTextItem *sunshineText;
 	QMyCard* cardList[8];
 	QMyCard* cardReadytoPlant;
 	int totCard;
@@ -21,6 +23,5 @@ public slots:
 	void moveRequested(QMyCard*);	//接收卡片的置入请求，并得到地址便于回传
 	void removeConfirm(QMyCard*);
 	void ReadytoPlantFromCard(objectNames, QPointF, QMyCard*);
-public:
 	void Initconnection();
 };

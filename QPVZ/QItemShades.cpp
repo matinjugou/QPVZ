@@ -27,3 +27,8 @@ void QItemShade::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 	setPos(event->scenePos());//之后要让图标更加靠近中
 	emit cursorMoved(event->scenePos());
 }
+
+void QItemShade::LoadPixmap(const QString &filename)
+{
+	setPixmap(QPixmap(filename));
+}

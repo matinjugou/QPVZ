@@ -7,11 +7,11 @@ class QGameModeLoader:public QObject
 private:
 	QGameMainMode *MainMode;
 	QGameMode *CurrentMode;
+	QGraphicsView *LoaderView;
 public:
 	QGameModeLoader(QWidget* parent = 0);
 	~QGameModeLoader();
 public:
-	QGameMode* Load(GameModeNames);
 	QGameMainMode* getMainMode();
 	QGameMode* getCurrentMode();
 signals:
@@ -20,5 +20,8 @@ signals:
 	void addItem(QMyObject*);
 	void Itemadded(QMyObject*);
 public slots:
+	QGameMode* Load(GameModeNames);
+	void LoadAdventure();
 	void QuitMode();
+	void setView(QGraphicsView*);
 };

@@ -6,12 +6,14 @@
 
 class QMyMap :public QMyObject
 {
+	Q_OBJECT
 private:
-	QMyObject *Map[5][5];	//初始化为全部为空指针
-	bool isPlantedMap[5][5];		//初始化为全false
+	QGraphicsScene* Mapscene;
+	QMyObject *Map[5][9];	//初始化为全部为空指针
+	bool isPlantedMap[5][9];		//初始化为全false
 	QRectF MapRect;
 	QPoint pointNewItemtoPlantOn;
-	qreal verticalLines[5];		//竖直边界线
+	qreal verticalLines[9];		//竖直边界线
 	qreal horizontalLines[5];	//水平边界线
 	QItemShade *ReadytoPlant;
 	QItemShade *ReadytoPlant_Shadow;
@@ -19,7 +21,7 @@ private:
 	QVector<QZombies*> ZombiesinMap;
 signals:
 	void RequestDone();
-	void deleteFromMap(QPointF);//删除一个物品
+//	void deleteFromMap(QPointF);//删除一个物品
 	void addItem(objectNames, QPointF);	//向scene中加一个物品
 public slots:
 	void Plantrequest_Ready(objectNames, QPointF); //尝试种植
@@ -36,4 +38,5 @@ public:
 	void changePixmap(objectNames);
 	void timerEvent(QTimerEvent *event);
 	void examineMap();
+	void setScene(QGraphicsScene*);
 };

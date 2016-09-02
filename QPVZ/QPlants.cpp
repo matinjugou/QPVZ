@@ -3,7 +3,7 @@
 QPlants::QPlants(QWidget* parent)
 //	:QMyObject(parent)
 {
-	Type = Plants;
+	objectTypeName = Plants;
 	beThreatened = false;
 }
 

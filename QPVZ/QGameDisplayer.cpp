@@ -9,7 +9,7 @@ QGameDisplayer::QGameDisplayer(QWidget *parent)
 	mainView->setRenderHint(QPainter::Antialiasing);
 	mainView->setCacheMode(QGraphicsView::CacheBackground);
 	mainView->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-	mainView->setDragMode(QGraphicsView::ScrollHandDrag);
+	mainView->setDragMode(QGraphicsView::NoDrag);
 	mainView->resize(900, 600);
 	mainView->setFrameStyle(0);
 	mainView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -23,9 +23,10 @@ QGameDisplayer::QGameDisplayer(QGraphicsScene* scene, QWidget *parent)
 	mainView->setRenderHint(QPainter::Antialiasing);
 	mainView->setCacheMode(QGraphicsView::CacheBackground);
 	mainView->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-	mainView->setDragMode(QGraphicsView::ScrollHandDrag);
+	mainView->setDragMode(QGraphicsView::NoDrag);
 	mainView->resize(900, 600);
-
+	mainView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	mainView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	mainView->setScene(scene);
 }
 

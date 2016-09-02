@@ -5,8 +5,10 @@ QGameController::QGameController(QWidget* parent)
 {
 	Loader = new QGameModeLoader;
 	Displayer = new QGameDisplayer(Loader->getMainMode()->getScene());
-	connect(Loader, SIGNAL(addItem(objectNames, QpointF)), Displayer, SLOT(addItem(objectNames, QPointF)));
-
+	Loader->setView(Displayer->getView());
+	connect(Loader, SIGNAL(addItem(objectNames, QPointF)), Displayer, SLOT(addItem(objectNames, QPointF)));
+	connect(Displayer, SIGNAL(Itemadded(QMyObject*)), Loader, SIGNAL(Itemadded(QMyObject*)));
+	connect(Loader, SIGNAL(exchangetoScene(QGraphicsScene*)), Displayer, SLOT(setScene(QGraphicsScene*)));
 }
 
 QGameController::~QGameController()

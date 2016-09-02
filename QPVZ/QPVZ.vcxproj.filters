@@ -89,9 +89,6 @@
     <ClCompile Include="qpvz.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
-    <ClCompile Include="QWeapoons.cpp">
-      <Filter>Source Files\Plants</Filter>
-    </ClCompile>
     <ClCompile Include="QPlants.cpp">
       <Filter>Source Files\Plants</Filter>
     </ClCompile>
@@ -179,6 +176,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_QItemShades.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QMyCard.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QMyMap.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="QWeapons.cpp">
+      <Filter>Source Files\Plants</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qpvz.h">
@@ -220,6 +226,12 @@
     <CustomBuild Include="QItemShades.h">
       <Filter>Header Files\Component</Filter>
     </CustomBuild>
+    <CustomBuild Include="QMyCard.h">
+      <Filter>Header Files\Cards</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QMyMap.h">
+      <Filter>Header Files\Component</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_qpvz.h">
@@ -240,14 +252,8 @@
     <ClInclude Include="QZombies.h">
       <Filter>Header Files\Zombies</Filter>
     </ClInclude>
-    <ClInclude Include="QWeapoons.h">
+    <ClInclude Include="QWeapons.h">
       <Filter>Header Files\Plants</Filter>
-    </ClInclude>
-    <ClInclude Include="QMyCard.h">
-      <Filter>Header Files\Cards</Filter>
-    </ClInclude>
-    <ClInclude Include="QMyMap.h">
-      <Filter>Header Files\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

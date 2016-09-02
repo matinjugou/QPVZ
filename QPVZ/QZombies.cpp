@@ -3,7 +3,7 @@
 QZombies::QZombies(QWidget* parent)
 //	:QMyObject(parent)
 {
-	Type = Zombies;
+	objectTypeName = Zombies;
 }
 
 QZombies::~QZombies()
