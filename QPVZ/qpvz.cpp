@@ -1,4 +1,5 @@
 #include "qpvz.h"
+#include <ctime>
 
 QPVZ::QPVZ(QWidget *parent)
 	: QMainWindow(parent)
@@ -6,7 +7,8 @@ QPVZ::QPVZ(QWidget *parent)
 	ui.setupUi(this);
 	Controller = new QGameController;
 	setCentralWidget(Controller->Displayer->getView());
-	setFixedSize(900, 600);
+	srand(unsigned(time(0)));
+//	setFixedSize(900, 600);
 	//Controller->Displayer->getView()->show();
 }
 

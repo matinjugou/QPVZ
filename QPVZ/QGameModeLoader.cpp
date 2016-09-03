@@ -31,6 +31,8 @@ QGameMode* QGameModeLoader::Load(GameModeNames name)
 		CurrentMode = AdventureMode;
 		emit exchangetoScene(AdventureMode->getScene());
 		AdventureMode->setView(LoaderView);
+		connect(CurrentMode, SIGNAL(addItem(objectNames, QPointF)), this, SIGNAL(addItem(objectNames, QPointF)));
+		connect(this, SIGNAL(Itemadded(QMyObject*)), CurrentMode, SIGNAL(Itemadded(QMyObject*)));
 		AdventureMode->GameStart();
 		return AdventureMode;
 	}
@@ -47,6 +49,8 @@ void QGameModeLoader::LoadAdventure()
 		QGameAdventureMode *AdventureMode = new QGameAdventureMode;
 		CurrentMode = AdventureMode;
 		emit exchangetoScene(AdventureMode->getScene());
+		connect(CurrentMode, SIGNAL(addItem(objectNames, QPointF)), this, SIGNAL(addItem(objectNames, QPointF)));
+		connect(this, SIGNAL(Itemadded(QMyObject*)), CurrentMode, SIGNAL(Itemadded(QMyObject*)));
 		AdventureMode->setView(LoaderView);
 		AdventureMode->GameStart();
 }

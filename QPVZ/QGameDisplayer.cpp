@@ -51,7 +51,14 @@ void QGameDisplayer::addItem(objectNames name, QPointF pos)
 		currentScene->addItem(newPeashooter);
 		emit Itemadded(newPeashooter);
 	}
-		break;
+	break;
+	case CommonZombie:
+	{
+		QCommonZombie* newCommonZombie = new QCommonZombie(pos.x(), pos.y());
+		currentScene->addItem(newCommonZombie);
+		emit Itemadded(newCommonZombie);
+	}
+	break;
 	default:
 		break;
 	}

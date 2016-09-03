@@ -7,7 +7,11 @@
 #include "QCardBanks.h"
 #include "QCardSelector.h"
 #include "QMyMap.h"
-
+struct Node
+{
+	objectNames Zombie_Type;
+	int timetoshow;
+};
 enum GameModeNames{Surface, Adventure, NetFight};
 class QGameMode :public QObject, public QGraphicsPixmapItem
 {
@@ -67,6 +71,9 @@ private:
 	QMyObject *Background;
 	objectNames CardList[2] = {PeaShooter, PeaShooter};
 	QMyMap *MappingSystem;
+	int totZombies = 5;
+	Node ZombiesList[5] = { {CommonZombie, 7} ,{ CommonZombie, 14 } ,
+	{ CommonZombie, 21 } ,{ CommonZombie, 32 } ,{ CommonZombie, 40 }};	//可以修改为继承
 public:
 	QGameAdventureMode(QWidget *parent = 0);
 	~QGameAdventureMode();

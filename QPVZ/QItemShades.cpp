@@ -24,7 +24,9 @@ void QItemShade::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void QItemShade::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-	setPos(event->scenePos());//之后要让图标更加靠近中
+	QRectF PixBoundingRect = boundingRect();
+	setPos(event->scenePos().x() - (PixBoundingRect.width() / 2), event->scenePos().y() - (PixBoundingRect.height() / 2));//之后要让图标更加靠近中
+//	setPos(0, 0);
 	emit cursorMoved(event->scenePos());
 }
 

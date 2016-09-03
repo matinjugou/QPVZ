@@ -16,26 +16,28 @@ QWeapons::~QWeapons()
 QPeas::QPeas(int power, int speed, int direction, int x, int y, QWidget* parent)
 //	: QWeapons(parent)
 {
-	Pictures[0].load("Resources/pvz-material/images/weapoons/Pea.png");
-	Pictures[1].load("Resources/pvz-material/images/weapoons/PeaBulletHit.png");
+	Pictures.push_back(QPixmap("Resources/pvz-material/images/weapoons/Pea.png"));
+	Pictures.push_back(QPixmap("Resources/pvz-material/images/weapoons/PeaBulletHit.png"));
+	setMyPixmap(0);
 	Power = power;
 	Speed = speed;
 	setPos(x, y);
 	Direction = direction;
-
-	startTimer(20);
+	TimerID = startTimer(20);
+	emit addtomap(Weapons, this);
 }
 QPeas::QPeas(int x, int y, QWidget* parent)
 //	: QWeapons(parent)
 {
-	Pictures[0].load("Resources/pvz-material/images/weapoons/Pea.png");
-	Pictures[1].load("Resources/pvz-material/images/weapoons/PeaBulletHit.png");
+	Pictures.push_back(QPixmap("Resources/pvz-material/images/weapoons/Pea.png"));
+	Pictures.push_back(QPixmap("Resources/pvz-material/images/weapoons/PeaBulletHit.png"));
+	setMyPixmap(0);
 	Power = 20;
 	Speed = 10;
 	setPos(x, y);
 	Direction = 1;
-
-	startTimer(20);
+	TimerID = startTimer(20);
+	emit addtomap(Weapons, this);
 }
 
 QPeas::~QPeas()
@@ -45,7 +47,7 @@ QPeas::~QPeas()
 
 void QPeas::hurt(QMyObject* enemy)
 {
-	if (enemy->getType() == objectType::Zombies)
+	if (enemy->getType() == Zombies)
 	{
 		QZombies *zombie = (QZombies* )enemy;
 		zombie->killHP(Power);
@@ -55,6 +57,12 @@ void QPeas::hurt(QMyObject* enemy)
 
 void QPeas::timerEvent(QTimerEvent* event)
 {
-	Pos.setX(Pos.x() + Speed * Direction);
+	setPos(pos().x() + Speed * Direction, pos().y());
+}
 
+bool QPeas::inRange(QMyObject* myobject)
+{
+	if (myobject->getPointinMap() == PointinMap)
+		return true;
+	return false;
 }

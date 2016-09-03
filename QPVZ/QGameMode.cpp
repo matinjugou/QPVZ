@@ -103,6 +103,7 @@ QGameAdventureMode::QGameAdventureMode(QWidget *parent)
 	Scene->addItem(Bank);
 	Scene->addItem(Selector);
 	Scene->addItem(MappingSystem);
+//	MappingSystem->setScene(Scene);
 
 	connect(Selector, SIGNAL(moveRequest(QMyCard*)), Bank, SLOT(moveRequested(QMyCard*)));
 	connect(Selector, SIGNAL(removeInform(QMyCard*)), Bank, SLOT(removeConfirm(QMyCard*)));
@@ -127,6 +128,10 @@ void QGameAdventureMode::GameStart()
 	{
 		stage++;
 		TimerID = startTimer(20);
+		if (stage == 2)
+		{
+			MappingSystem->startTimer(20);
+		}
 	}
 }
 
@@ -176,7 +181,22 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 		else if (currentTime > 20)
 		{
 			currentTime = 0;
-			killTimer(TimerID);
+			stage++;
+		}
+	}
+	else if (stage == 3)
+	{
+		currentTime++;
+		for (int i = 0; i < totZombies; i++)
+		{
+			if ((ZombiesList[i].timetoshow * 50) == currentTime)
+			{
+				QPoint tempPoint;
+				int y = rand() % 4;
+				tempPoint.setX(8);
+				tempPoint.setY(y);
+				addItem(CommonZombie, MappingSystem->PointtoPos(tempPoint));
+			}
 		}
 	}
 }

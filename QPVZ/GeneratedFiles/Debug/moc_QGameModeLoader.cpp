@@ -35,8 +35,8 @@ QT_MOC_LITERAL(2, 32, 0), // ""
 QT_MOC_LITERAL(3, 33, 15), // "QGraphicsScene*"
 QT_MOC_LITERAL(4, 49, 7), // "addItem"
 QT_MOC_LITERAL(5, 57, 11), // "objectNames"
-QT_MOC_LITERAL(6, 69, 10), // "QMyObject*"
-QT_MOC_LITERAL(7, 80, 9), // "Itemadded"
+QT_MOC_LITERAL(6, 69, 9), // "Itemadded"
+QT_MOC_LITERAL(7, 79, 10), // "QMyObject*"
 QT_MOC_LITERAL(8, 90, 4), // "Load"
 QT_MOC_LITERAL(9, 95, 10), // "QGameMode*"
 QT_MOC_LITERAL(10, 106, 13), // "GameModeNames"
@@ -48,7 +48,7 @@ QT_MOC_LITERAL(14, 151, 14) // "QGraphicsView*"
     },
     "QGameModeLoader\0exchangetoScene\0\0"
     "QGraphicsScene*\0addItem\0objectNames\0"
-    "QMyObject*\0Itemadded\0Load\0QGameMode*\0"
+    "Itemadded\0QMyObject*\0Load\0QGameMode*\0"
     "GameModeNames\0LoadAdventure\0QuitMode\0"
     "setView\0QGraphicsView*"
 };
@@ -60,30 +60,28 @@ static const uint qt_meta_data_QGameModeLoader[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       4,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   54,    2, 0x06 /* Public */,
-       4,    2,   57,    2, 0x06 /* Public */,
-       4,    1,   62,    2, 0x06 /* Public */,
-       7,    1,   65,    2, 0x06 /* Public */,
+       1,    1,   49,    2, 0x06 /* Public */,
+       4,    2,   52,    2, 0x06 /* Public */,
+       6,    1,   57,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       8,    1,   68,    2, 0x0a /* Public */,
-      11,    0,   71,    2, 0x0a /* Public */,
-      12,    0,   72,    2, 0x0a /* Public */,
-      13,    1,   73,    2, 0x0a /* Public */,
+       8,    1,   60,    2, 0x0a /* Public */,
+      11,    0,   63,    2, 0x0a /* Public */,
+      12,    0,   64,    2, 0x0a /* Public */,
+      13,    1,   65,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    2,
     QMetaType::Void, 0x80000000 | 5, QMetaType::QPointF,    2,    2,
-    QMetaType::Void, 0x80000000 | 6,    2,
-    QMetaType::Void, 0x80000000 | 6,    2,
+    QMetaType::Void, 0x80000000 | 7,    2,
 
  // slots: parameters
     0x80000000 | 9, 0x80000000 | 10,    2,
@@ -102,13 +100,12 @@ void QGameModeLoader::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         switch (_id) {
         case 0: _t->exchangetoScene((*reinterpret_cast< QGraphicsScene*(*)>(_a[1]))); break;
         case 1: _t->addItem((*reinterpret_cast< objectNames(*)>(_a[1])),(*reinterpret_cast< QPointF(*)>(_a[2]))); break;
-        case 2: _t->addItem((*reinterpret_cast< QMyObject*(*)>(_a[1]))); break;
-        case 3: _t->Itemadded((*reinterpret_cast< QMyObject*(*)>(_a[1]))); break;
-        case 4: { QGameMode* _r = _t->Load((*reinterpret_cast< GameModeNames(*)>(_a[1])));
+        case 2: _t->Itemadded((*reinterpret_cast< QMyObject*(*)>(_a[1]))); break;
+        case 3: { QGameMode* _r = _t->Load((*reinterpret_cast< GameModeNames(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QGameMode**>(_a[0]) = _r; }  break;
-        case 5: _t->LoadAdventure(); break;
-        case 6: _t->QuitMode(); break;
-        case 7: _t->setView((*reinterpret_cast< QGraphicsView*(*)>(_a[1]))); break;
+        case 4: _t->LoadAdventure(); break;
+        case 5: _t->QuitMode(); break;
+        case 6: _t->setView((*reinterpret_cast< QGraphicsView*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -130,15 +127,8 @@ void QGameModeLoader::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         }
         {
             typedef void (QGameModeLoader::*_t)(QMyObject * );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QGameModeLoader::addItem)) {
-                *result = 2;
-                return;
-            }
-        }
-        {
-            typedef void (QGameModeLoader::*_t)(QMyObject * );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QGameModeLoader::Itemadded)) {
-                *result = 3;
+                *result = 2;
                 return;
             }
         }
@@ -170,13 +160,13 @@ int QGameModeLoader::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 8;
+        _id -= 7;
     }
     return _id;
 }
@@ -196,16 +186,9 @@ void QGameModeLoader::addItem(objectNames _t1, QPointF _t2)
 }
 
 // SIGNAL 2
-void QGameModeLoader::addItem(QMyObject * _t1)
-{
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 2, _a);
-}
-
-// SIGNAL 3
 void QGameModeLoader::Itemadded(QMyObject * _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 3, _a);
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_END_MOC_NAMESPACE

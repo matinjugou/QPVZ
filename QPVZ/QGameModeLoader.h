@@ -17,7 +17,7 @@ public:
 signals:
 	void exchangetoScene(QGraphicsScene*);
 	void addItem(objectNames, QPointF);
-	void addItem(QMyObject*);
+//	void addItem(QMyObject*);
 	void Itemadded(QMyObject*);
 public slots:
 	QGameMode* Load(GameModeNames);

@@ -2,7 +2,7 @@
 #include "QMyObject.h"
 #include "QWeapons.h"
 #include "QFightMethods.h"
-
+//#include "QMyMap.h"
 
 /* QPlants:			植物类
 *@param HP:			植物的生命值
@@ -13,19 +13,22 @@ class QPlants :public QMyObject
 {
 	Q_OBJECT
 protected:
-	int HP;
+//	QMyMap* MaptoLoad;
+	objectNames Plants_Name;
 	bool beThreatened;
 public:
 	QPlants(QWidget* parent = 0);
 	~QPlants();
 public:
-	void setHP(int);
-	void killHP(int);
-	int getHP();
+//	void setMaptoLoad(QMyMap* mymaptoload)
+//	{
+//		MaptoLoad = mymaptoload;
+//	}
+	void setThreatend(bool);
 	void setSunPrice(int);
 	int getSunPrice();
-	virtual void threadtened(){}
 	virtual bool inRange(QMyObject*) { return false; }
+	bool isThreatened();
 };
 
 /* QPlants:			射击型植物类
@@ -35,9 +38,8 @@ public:
 class QBulletPlants :public QPlants
 {
 protected:
-	int CD;
+	int CD; //50 * 冷却时间(s)
 	int lastShoot;
-	QWeapons *Weapoon;
 public:
 	QBulletPlants(QWidget *parent = 0);
 	~QBulletPlants();
@@ -59,6 +61,8 @@ public:
 class QPeaShooter :public QBulletPlants
 {
 public:
+	QPeas *weapons;
+public:
 	QPeaShooter(QWidget *parent = 0);
 	QPeaShooter(int x, int y, QWidget *parent = 0);
 	~QPeaShooter();
@@ -66,4 +70,5 @@ public:
 	void timerEvent(QTimerEvent *event);
 	void Shoot();
 	void Died();
+	bool inRange(QMyObject*);
 };

@@ -185,6 +185,18 @@
     <ClCompile Include="QWeapons.cpp">
       <Filter>Source Files\Plants</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QZombies.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QWeapons.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QZombies.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QWeapons.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qpvz.h">
@@ -232,6 +244,12 @@
     <CustomBuild Include="QMyMap.h">
       <Filter>Header Files\Component</Filter>
     </CustomBuild>
+    <CustomBuild Include="QZombies.h">
+      <Filter>Header Files\Zombies</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QWeapons.h">
+      <Filter>Header Files\Plants</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_qpvz.h">
@@ -247,12 +265,6 @@
       <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="QFightMethods.h">
-      <Filter>Header Files\Plants</Filter>
-    </ClInclude>
-    <ClInclude Include="QZombies.h">
-      <Filter>Header Files\Zombies</Filter>
-    </ClInclude>
-    <ClInclude Include="QWeapons.h">
       <Filter>Header Files\Plants</Filter>
     </ClInclude>
   </ItemGroup>

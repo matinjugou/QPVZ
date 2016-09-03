@@ -39,12 +39,61 @@ void QMyObject::pushbackPixmap(QPixmap pic)
 	Pictures.push_back(pic);
 }
 
+void QMyObject::setnewPixmap()
+{
+	setPixmap(myGif.currentPixmap());
+}
+
+void QMyObject::setnewPixmap(int i)
+{
+	setPixmap(Gifs[GifNumber]->currentPixmap());
+}
+
 void QMyObject::setMyPixmap(int i)
 {
 	setPixmap(Pictures[i]);
 }
 
+void QMyObject::setMyGif(int i)
+{
+	GifNumber = i;
+	Gifs[i]->jumpToFrame(0);
+	connect(Gifs[i], SIGNAL(frameChanged(int)), this, SLOT(setnewPixmap(int)));
+	Gifs[i]->start();
+}
+
 QPixmap QMyObject::getPicture(int i)
 {
 	return Pictures[i];
+}
+
+void QMyObject::setPointinMap(int x, int y)
+{
+	PointinMap.setX(x);
+	PointinMap.setY(y);
+}
+
+void QMyObject::setPointinMap(QPoint pointtoset)
+{
+	PointinMap = pointtoset;
+}
+
+QPoint QMyObject::getPointinMap()
+{
+	return PointinMap;
+}
+
+void QMyObject::setHP(int hp)
+{
+	HP = hp;
+}
+
+void QMyObject::killHP(int hp)
+{
+	HP -= hp;
+}
+
+int QMyObject::getHP()
+{
+	return HP;
 }
