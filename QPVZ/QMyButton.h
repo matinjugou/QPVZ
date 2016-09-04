@@ -1,19 +1,24 @@
 #pragma once
 #include <QtGui>
 #include <qgraphicsitem.h>
+#include "MyVariable.h"
 
+class QGameMode;
+class QCardSelector;
 
 class QMyButton :public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT
 private:
-	QPixmap Button_Plain;
-	QPixmap Button_Hover;
-	int PosX;
-	int PosY;
+	QPixmap		Button_Plain;	//按钮没有被遮盖时的图片
+	QPixmap		Button_Hover;	//按钮被遮盖时候的图片
+	int			PosX;			//记录按钮的初始位置，用来处理按钮被点击时候的颤动
+	int			PosY;			//记录按钮的初始位置，用来处理按钮被点击时候的颤动
 public:
-	QMyButton(QGraphicsItem *parent = 0);
-	QMyButton(const QString &filename, const QString &filenameHover, QGraphicsItem *parent = 0);
+	QMyButton(QGameMode *parent = 0);
+	QMyButton(QCardSelector *parent = 0);
+	QMyButton(const QString &filename, const QString &filenameHover, QGameMode *parent = 0);
+	QMyButton(const QString &filename, const QString &filenameHover, QCardSelector *parent = 0);
 	~QMyButton();
 signals:
 	void clicked();

@@ -1,18 +1,40 @@
 #include "QMyButton.h"
+#include "QGameMode.h"
+#include "QCardSelector.h"
 
-QMyButton::QMyButton(QGraphicsItem *parent) :
-	QGraphicsPixmapItem(parent)
+QMyButton::QMyButton(QGameMode *parent) :
+	QObject(parent)
 {
 	setAcceptHoverEvents(true);
 }
 
-QMyButton::QMyButton(const QString &filename, const QString &filenameHover, QGraphicsItem *parent) :
-	QGraphicsPixmapItem(parent)
+QMyButton::QMyButton(QCardSelector *parent) :
+	QObject(parent)
+{
+	setAcceptHoverEvents(true);
+}
+
+QMyButton::QMyButton(const QString &filename, const QString &filenameHover, QGameMode *parent) :
+	QObject(parent)
 {
 	setAcceptHoverEvents(true);
 	Button_Plain.load(filename);
 	Button_Hover.load(filenameHover);
 	setPixmap(Button_Plain);
+}
+
+QMyButton::QMyButton(const QString &filename, const QString &filenameHover, QCardSelector *parent) :
+	QObject(parent)
+{
+	setAcceptHoverEvents(true);
+	Button_Plain.load(filename);
+	Button_Hover.load(filenameHover);
+	setPixmap(Button_Plain);
+}
+
+QMyButton::~QMyButton()
+{
+
 }
 
 void QMyButton::setPlainImg(const QString &filename)
@@ -31,15 +53,11 @@ void QMyButton::setHoverImg(const QString &filename)
 	setPixmap(pixmap);
 }
 
-QMyButton::~QMyButton()
-{
-
-}
-
 void QMyButton::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
 	setPixmap(Button_Hover);
 }
+
 void QMyButton::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
 	setPixmap(Button_Plain);

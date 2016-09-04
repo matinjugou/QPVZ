@@ -30,10 +30,10 @@ struct qt_meta_stringdata_QMyMap_t {
 static const qt_meta_stringdata_QMyMap_t qt_meta_stringdata_QMyMap = {
     {
 QT_MOC_LITERAL(0, 0, 6), // "QMyMap"
-QT_MOC_LITERAL(1, 7, 11), // "RequestDone"
-QT_MOC_LITERAL(2, 19, 0), // ""
-QT_MOC_LITERAL(3, 20, 7), // "addItem"
-QT_MOC_LITERAL(4, 28, 11), // "objectNames"
+QT_MOC_LITERAL(1, 7, 7), // "addItem"
+QT_MOC_LITERAL(2, 15, 0), // ""
+QT_MOC_LITERAL(3, 16, 11), // "objectNames"
+QT_MOC_LITERAL(4, 28, 11), // "RequestDone"
 QT_MOC_LITERAL(5, 40, 18), // "Plantrequest_Ready"
 QT_MOC_LITERAL(6, 59, 19), // "Plantrequest_Update"
 QT_MOC_LITERAL(7, 79, 16), // "Plantrequest_Try"
@@ -45,7 +45,7 @@ QT_MOC_LITERAL(12, 144, 10), // "objectType"
 QT_MOC_LITERAL(13, 155, 13) // "removefromMap"
 
     },
-    "QMyMap\0RequestDone\0\0addItem\0objectNames\0"
+    "QMyMap\0addItem\0\0objectNames\0RequestDone\0"
     "Plantrequest_Ready\0Plantrequest_Update\0"
     "Plantrequest_Try\0Plantrequest_Done\0"
     "Itemadded\0QMyObject*\0addtoMap\0objectType\0"
@@ -67,8 +67,8 @@ static const uint qt_meta_data_QMyMap[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   59,    2, 0x06 /* Public */,
-       3,    2,   60,    2, 0x06 /* Public */,
+       1,    2,   59,    2, 0x06 /* Public */,
+       4,    0,   64,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
        5,    2,   65,    2, 0x0a /* Public */,
@@ -80,11 +80,11 @@ static const uint qt_meta_data_QMyMap[] = {
       13,    2,   83,    2, 0x0a /* Public */,
 
  // signals: parameters
+    QMetaType::Void, 0x80000000 | 3, QMetaType::QPointF,    2,    2,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 4, QMetaType::QPointF,    2,    2,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 4, QMetaType::QPointF,    2,    2,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::QPointF,    2,    2,
     QMetaType::Void, QMetaType::QPointF,    2,
     QMetaType::Void,
     QMetaType::Void,
@@ -101,8 +101,8 @@ void QMyMap::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         QMyMap *_t = static_cast<QMyMap *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->RequestDone(); break;
-        case 1: _t->addItem((*reinterpret_cast< objectNames(*)>(_a[1])),(*reinterpret_cast< QPointF(*)>(_a[2]))); break;
+        case 0: _t->addItem((*reinterpret_cast< objectNames(*)>(_a[1])),(*reinterpret_cast< QPointF(*)>(_a[2]))); break;
+        case 1: _t->RequestDone(); break;
         case 2: _t->Plantrequest_Ready((*reinterpret_cast< objectNames(*)>(_a[1])),(*reinterpret_cast< QPointF(*)>(_a[2]))); break;
         case 3: _t->Plantrequest_Update((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
         case 4: _t->Plantrequest_Try(); break;
@@ -116,15 +116,15 @@ void QMyMap::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (QMyMap::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QMyMap::RequestDone)) {
+            typedef void (QMyMap::*_t)(objectNames , QPointF );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QMyMap::addItem)) {
                 *result = 0;
                 return;
             }
         }
         {
-            typedef void (QMyMap::*_t)(objectNames , QPointF );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QMyMap::addItem)) {
+            typedef void (QMyMap::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QMyMap::RequestDone)) {
                 *result = 1;
                 return;
             }
@@ -169,15 +169,15 @@ int QMyMap::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void QMyMap::RequestDone()
-{
-    QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
-}
-
-// SIGNAL 1
 void QMyMap::addItem(objectNames _t1, QPointF _t2)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
-    QMetaObject::activate(this, &staticMetaObject, 1, _a);
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void QMyMap::RequestDone()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
 }
 QT_END_MOC_NAMESPACE

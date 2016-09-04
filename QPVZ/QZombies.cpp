@@ -2,10 +2,18 @@
 #include <stdlib.h>
 #include <iostream>
 
-QZombies::QZombies(QWidget* parent)
-//	:QMyObject(parent)
+QZombies::QZombies(QGraphicsScene* parent)
+	:QMyObject(parent)
 {
 	objectTypeName = Zombies;
+	beExcited = false;
+	Enemy = NULL;
+	hurtStarted = false;
+	hurtStoped = true;
+	isDead = 0;
+	Walkstop = 0;
+	DeadTimeCount = 0;
+	movestatus = 0;
 }
 
 QZombies::~QZombies()
@@ -33,13 +41,71 @@ void QZombies::setExcited(bool value)
 	beExcited = value;
 }
 
-
-QCommonZombie::QCommonZombie(QWidget *parent)
+QCommonZombie::QCommonZombie(QGraphicsScene *parent)
+	:QZombies(parent)
 {
+	QMovie *newQMovie;
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Zombies/Zombie/1.gif");
+	Gifs.push_back(newQMovie);
 
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Zombies/Zombie/2.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Zombies/Zombie/3.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Zombies/Zombie/BoomDie.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Zombies/Zombie/Zombie.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Zombies/Zombie/Zombie2.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Zombies/Zombie/Zombie3.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Zombies/Zombie/ZombieAttack.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Zombies/Zombie/ZombieDie.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Zombies/Zombie/ZombieHead.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Zombies/Zombie/ZombieLostHead.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Zombies/Zombie/ZombieLostHeadAttack.gif");
+	Gifs.push_back(newQMovie);
+
+	WalkType = (int)(rand() % 3) + 4;
+	setMyGif(WalkType);
+	Zombie_Name = CommonZombie;
+	HP = 200;
+	Speed = 1;
+	Direction = -1;
+	Power = 2;
+
+	TimerID = startTimer(20);
 }
 
-QCommonZombie::QCommonZombie(int x, int y, QWidget *parent)
+QCommonZombie::QCommonZombie(int x, int y, QGraphicsScene *parent)
+	:QZombies(parent)
 {
 	QMovie *newQMovie;
 	newQMovie = new QMovie;
@@ -90,28 +156,15 @@ QCommonZombie::QCommonZombie(int x, int y, QWidget *parent)
 	newQMovie->setFileName("Resources/pvz-material/images/Zombies/Zombie/ZombieLostHeadAttack.gif");
 	Gifs.push_back(newQMovie);
 
-//	myGif.setFileName("Resources/pvz-material/images/Zombies/Zombie/Zombie3.gif");
-
 	WalkType = (int)(rand() % 3) + 4;
 	setMyGif(WalkType);
 	Zombie_Name = CommonZombie;
-	objectTypeName = Zombies;
 	HP = 200;
 	Speed = 1;
 	Direction = -1;
 	Power = 2;
-	beExcited = false;
-	Enemy = NULL;
-	hurtStarted = false;
-	hurtStoped = true;
-	isDead = 0;
 	setPos(x, y);
-	Walkstop = 0;
-	DeadTimeCount = 0;
-	movestatus = 0;
-//	myGif.jumpToFrame(0);
-//	connect(&myGif, SIGNAL(frameChanged(int)), this, SLOT(setnewPixmap()));
-//	myGif.start();
+
 	TimerID = startTimer(20);
 }
 
@@ -131,7 +184,6 @@ void QCommonZombie::hurt()
 {
 	Enemy->killHP(Power);
 }
-
 
 void QCommonZombie::timerEvent(QTimerEvent *event)
 {

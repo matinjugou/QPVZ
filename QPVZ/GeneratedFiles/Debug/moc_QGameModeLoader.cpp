@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_QGameModeLoader_t {
-    QByteArrayData data[15];
-    char stringdata0[166];
+    QByteArrayData data[13];
+    char stringdata0[141];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,19 +38,16 @@ QT_MOC_LITERAL(5, 57, 11), // "objectNames"
 QT_MOC_LITERAL(6, 69, 9), // "Itemadded"
 QT_MOC_LITERAL(7, 79, 10), // "QMyObject*"
 QT_MOC_LITERAL(8, 90, 4), // "Load"
-QT_MOC_LITERAL(9, 95, 10), // "QGameMode*"
-QT_MOC_LITERAL(10, 106, 13), // "GameModeNames"
-QT_MOC_LITERAL(11, 120, 13), // "LoadAdventure"
-QT_MOC_LITERAL(12, 134, 8), // "QuitMode"
-QT_MOC_LITERAL(13, 143, 7), // "setView"
-QT_MOC_LITERAL(14, 151, 14) // "QGraphicsView*"
+QT_MOC_LITERAL(9, 95, 13), // "LoadAdventure"
+QT_MOC_LITERAL(10, 109, 8), // "QuitMode"
+QT_MOC_LITERAL(11, 118, 7), // "setView"
+QT_MOC_LITERAL(12, 126, 14) // "QGraphicsView*"
 
     },
     "QGameModeLoader\0exchangetoScene\0\0"
     "QGraphicsScene*\0addItem\0objectNames\0"
-    "Itemadded\0QMyObject*\0Load\0QGameMode*\0"
-    "GameModeNames\0LoadAdventure\0QuitMode\0"
-    "setView\0QGraphicsView*"
+    "Itemadded\0QMyObject*\0Load\0LoadAdventure\0"
+    "QuitMode\0setView\0QGraphicsView*"
 };
 #undef QT_MOC_LITERAL
 
@@ -74,9 +71,9 @@ static const uint qt_meta_data_QGameModeLoader[] = {
 
  // slots: name, argc, parameters, tag, flags
        8,    1,   60,    2, 0x0a /* Public */,
-      11,    0,   63,    2, 0x0a /* Public */,
-      12,    0,   64,    2, 0x0a /* Public */,
-      13,    1,   65,    2, 0x0a /* Public */,
+       9,    0,   63,    2, 0x0a /* Public */,
+      10,    0,   64,    2, 0x0a /* Public */,
+      11,    1,   65,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    2,
@@ -84,10 +81,10 @@ static const uint qt_meta_data_QGameModeLoader[] = {
     QMetaType::Void, 0x80000000 | 7,    2,
 
  // slots: parameters
-    0x80000000 | 9, 0x80000000 | 10,    2,
+    QMetaType::Void, QMetaType::Int,    2,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 14,    2,
+    QMetaType::Void, 0x80000000 | 12,    2,
 
        0        // eod
 };
@@ -101,12 +98,29 @@ void QGameModeLoader::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 0: _t->exchangetoScene((*reinterpret_cast< QGraphicsScene*(*)>(_a[1]))); break;
         case 1: _t->addItem((*reinterpret_cast< objectNames(*)>(_a[1])),(*reinterpret_cast< QPointF(*)>(_a[2]))); break;
         case 2: _t->Itemadded((*reinterpret_cast< QMyObject*(*)>(_a[1]))); break;
-        case 3: { QGameMode* _r = _t->Load((*reinterpret_cast< GameModeNames(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QGameMode**>(_a[0]) = _r; }  break;
+        case 3: _t->Load((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 4: _t->LoadAdventure(); break;
         case 5: _t->QuitMode(); break;
         case 6: _t->setView((*reinterpret_cast< QGraphicsView*(*)>(_a[1]))); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 0:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGraphicsScene* >(); break;
+            }
+            break;
+        case 6:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGraphicsView* >(); break;
+            }
+            break;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
@@ -165,7 +179,7 @@ int QGameModeLoader::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 7)
-            *reinterpret_cast<int*>(_a[0]) = -1;
+            qt_static_metacall(this, _c, _id, _a);
         _id -= 7;
     }
     return _id;

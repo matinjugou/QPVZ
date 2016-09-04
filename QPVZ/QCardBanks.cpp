@@ -1,11 +1,10 @@
 #include "QCardBanks.h"
-
-QCardBank::QCardBank(QWidget *parent)
-//	:QGraphicsItemGroup(parent)
+#include "QGameMode.h"
+QCardBank::QCardBank(QGameMode *parent)
+	:QObject(parent)
 {
 	setHandlesChildEvents(false);
 	totCard = 0;
-	statusType = 0;
 	sunshineNum = 50;
 	sunshineText = new QGraphicsTextItem;
 	sunshineText->setPlainText(QString::number(sunshineNum, 10));
@@ -23,6 +22,8 @@ QCardBank::~QCardBank()
 	delete sunshineText;
 }
 
+
+//public slots
 void QCardBank::moveRequested(QMyCard* card)
 {
 	if (totCard < 8)
@@ -41,6 +42,45 @@ void QCardBank::moveRequested(QMyCard* card)
 	}
 }
 
+void QCardBank::removeConfirm(QMyCard* cardtoremove)
+{
+//	removeFromGroup(cardtoremove);
+	totCard--;
+}
+
+void QCardBank::Initconnection()
+{
+	for (int i = 0; i < totCard; i++)
+	{
+		cardList[i]->setChosenType(inGame);
+		connect(cardList[i], SIGNAL(ReadytoPlant(objectNames, QPointF, QMyCard*)), this, SLOT(ReadytoPlantFromCard(objectNames, QPointF, QMyCard*)));
+	}
+	startTimer(20);
+}
+
+void QCardBank::ReadytoPlantFromCard(objectNames itemName, QPointF itemPos, QMyCard* cardtoplant)
+{
+	cardReadytoPlant = cardtoplant;
+	cardReadytoPlant->setOpacity(0.5);
+	itemPos.setX(itemPos.x() + pos().x());
+	itemPos.setY(itemPos.y() + pos().y());
+	emit ReadytoPlant(itemName, itemPos);
+}
+
+void QCardBank::plantRequestDone()
+{
+//	cardReadytoPlant->setPixmap(); 换回正常图片
+	cardReadytoPlant->setOpacity(1);
+	cardReadytoPlant->CDStart();
+	sunshineNum -= cardReadytoPlant->getSunPrice();
+}
+
+void QCardBank::SunShineAdded()
+{
+	sunshineNum += 25;
+}
+
+//public foo
 void QCardBank::moveTo(int x, int y, int duration)
 {
 	animation->setDuration(duration);
@@ -59,40 +99,6 @@ void QCardBank::moveTo(QPointF targetPos, int duration)
 	animation->setEndValue(QPoint(x, y));
 	animation->setEasingCurve(QEasingCurve::InOutCubic);
 	animation->start();
-}
-
-void QCardBank::removeConfirm(QMyCard* cardtoremove)
-{
-//	removeFromGroup(cardtoremove);
-	totCard--;
-}
-
-void QCardBank::Initconnection()
-{
-	for (int i = 0; i < totCard; i++)
-	{
-		cardList[i]->setChosenType(inGame);
-		connect(cardList[i], SIGNAL(ReadytoPlant(objectNames, QPointF, QMyCard*)), this, SLOT(ReadytoPlantFromCard(objectNames, QPointF, QMyCard*)));
-	}
-	startTimer(20);
-}
-
-
-void QCardBank::ReadytoPlantFromCard(objectNames itemName, QPointF itemPos, QMyCard* cardtoplant)
-{
-	cardReadytoPlant = cardtoplant;
-	cardReadytoPlant->setOpacity(0.5);
-	itemPos.setX(itemPos.x() + pos().x());
-	itemPos.setY(itemPos.y() + pos().y());
-	emit ReadytoPlant(itemName, itemPos);
-}
-
-void QCardBank::plantRequestDone()
-{
-//	cardReadytoPlant->setPixmap(); 换回正常图片
-	cardReadytoPlant->setOpacity(1);
-	cardReadytoPlant->CDStart();
-	sunshineNum -= cardReadytoPlant->getSunPrice();
 }
 
 void QCardBank::timerEvent(QTimerEvent *event)

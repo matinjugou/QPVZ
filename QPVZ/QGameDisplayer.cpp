@@ -2,8 +2,8 @@
 #include "QPlants.h"
 #include "QZombies.h"
 
-QGameDisplayer::QGameDisplayer(QWidget *parent)
-//	:QObject(parent)
+QGameDisplayer::QGameDisplayer(QObject *parent)
+	:QObject(parent)
 {
 	mainView = new QGraphicsView;
 	mainView->setRenderHint(QPainter::Antialiasing);
@@ -16,8 +16,8 @@ QGameDisplayer::QGameDisplayer(QWidget *parent)
 	mainView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-QGameDisplayer::QGameDisplayer(QGraphicsScene* scene, QWidget *parent)
-//	:QObject(parent)
+QGameDisplayer::QGameDisplayer(QGraphicsScene* scene, QObject *parent)
+	:QObject(parent)
 {
 	mainView = new QGraphicsView;
 	mainView->setRenderHint(QPainter::Antialiasing);
@@ -35,6 +35,7 @@ QGameDisplayer::~QGameDisplayer()
 	delete mainView;
 }
 
+//public slots
 void QGameDisplayer::setScene(QGraphicsScene *scene)
 {
 	currentScene = scene;
@@ -65,12 +66,15 @@ void QGameDisplayer::addItem(objectNames name, QPointF pos)
 	}
 }
 
+
+//public
+QGraphicsView* QGameDisplayer::getView()
+{
+	return mainView;
+}
+
 QGraphicsScene* QGameDisplayer::getCurrentScene()
 {
 	return currentScene;
 }
 
-QGraphicsView* QGameDisplayer::getView()
-{
-	return mainView;
-}

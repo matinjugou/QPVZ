@@ -1,6 +1,9 @@
 #pragma once
 #include "QMyObject.h"
 #include "QEquipments.h"
+#include "MyVariable.h"
+
+class QEquipments;
 
 class QZombies:public QMyObject
 {
@@ -21,7 +24,7 @@ protected:
 	bool beExcited;//%
 	QMyObject* Enemy;
 public:
-	QZombies(QWidget *parent = 0);
+	QZombies(QGraphicsScene *parent = 0);
 	~QZombies();
 public:
 	virtual void hurt();
@@ -34,8 +37,8 @@ public:
 class QCommonZombie :public QZombies
 {
 public:
-	QCommonZombie(QWidget *parent = 0);
-	QCommonZombie(int x, int y, QWidget *parent = 0);
+	QCommonZombie(QGraphicsScene *parent = 0);
+	QCommonZombie(int x, int y, QGraphicsScene *parent = 0);
 	~QCommonZombie();
 public:
 	void hurt();

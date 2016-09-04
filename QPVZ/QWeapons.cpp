@@ -2,10 +2,13 @@
 #include "QZombies.h"
 #include "QPlants.h"
 
-QWeapons::QWeapons(QWidget* parent)
-//	:QMyObject(parent)
+QWeapons::QWeapons(QGraphicsScene* parent)
+	:QMyObject(parent)
 {
-
+	isWeaponUsed = false;
+	beExcited = false;
+	isDead = 0;
+	DeadTimeCount = 0;
 }
 
 QWeapons::~QWeapons()
@@ -13,8 +16,8 @@ QWeapons::~QWeapons()
 
 }
 
-QPeas::QPeas(int power, int speed, int direction, int x, int y, QWidget* parent)
-//	: QWeapons(parent)
+QPeas::QPeas(int power, int speed, int direction, int x, int y, QGraphicsScene* parent)
+	: QWeapons(parent)
 {
 	Pictures.push_back(QPixmap("Resources/pvz-material/images/weapoons/Pea.png"));
 	Pictures.push_back(QPixmap("Resources/pvz-material/images/weapoons/PeaBulletHit.png"));
@@ -24,14 +27,10 @@ QPeas::QPeas(int power, int speed, int direction, int x, int y, QWidget* parent)
 	setPos(x, y);
 	Direction = direction;
 	TimerID = startTimer(20);
-	isWeaponUsed = false;
-	beExcited = false;
-	isDead = 0;
-	DeadTimeCount = 0;
-	//	emit addtomap(Weapons, this);
 }
-QPeas::QPeas(int x, int y, QWidget* parent)
-//	: QWeapons(parent)
+
+QPeas::QPeas(int x, int y, QGraphicsScene* parent)
+	: QWeapons(parent)
 {
 	Pictures.push_back(QPixmap("Resources/pvz-material/images/weapoons/Pea.png"));
 	Pictures.push_back(QPixmap("Resources/pvz-material/images/weapoons/PeaBulletHit.png"));
@@ -41,11 +40,6 @@ QPeas::QPeas(int x, int y, QWidget* parent)
 	setPos(x, y);
 	Direction = 1;
 	TimerID = startTimer(20);
-	DeadTimeCount = 0;
-	isDead = 0;
-//	emit addtomap(Weapons, this);
-	isWeaponUsed = false;
-	beExcited = false;
 }
 
 QPeas::~QPeas()

@@ -1,6 +1,7 @@
 #include "QMySunShine.h"
 
-QMySunShine::QMySunShine(QWidget *parent)
+QMySunShine::QMySunShine(QGameMode *parent)
+	:QMyObject(parent)
 {
 	myGif.setFileName("Resources/pvz-material/images/interface/Sun.gif");
 	myGif.jumpToFrame(0);
@@ -19,6 +20,7 @@ QMySunShine::~QMySunShine()
 
 }
 
+//public slot
 void QMySunShine::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	beTaken = true;
@@ -28,17 +30,6 @@ void QMySunShine::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	moveTo(240, 15, 700);
 	SetScaleAnimation(1, 0.5, 700);
 }
-
-
-void QMySunShine::SetScaleAnimation(qreal fromScale, qreal toScale, int duration)
-{
-	Scaleanimation->setDuration(duration);
-	Scaleanimation->setStartValue(fromScale);
-	Scaleanimation->setEndValue(toScale);
-	Scaleanimation->setEasingCurve(QEasingCurve::InOutCubic);
-	Scaleanimation->start();
-}
-
 
 void QMySunShine::timerEvent(QTimerEvent *event)
 {
@@ -63,4 +54,13 @@ void QMySunShine::timerEvent(QTimerEvent *event)
 			delete this;
 		}
 	}
+}
+
+void QMySunShine::SetScaleAnimation(qreal fromScale, qreal toScale, int duration)
+{
+	Scaleanimation->setDuration(duration);
+	Scaleanimation->setStartValue(fromScale);
+	Scaleanimation->setEndValue(toScale);
+	Scaleanimation->setEasingCurve(QEasingCurve::InOutCubic);
+	Scaleanimation->start();
 }

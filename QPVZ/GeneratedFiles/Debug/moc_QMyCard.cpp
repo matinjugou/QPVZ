@@ -30,18 +30,18 @@ struct qt_meta_stringdata_QMyCard_t {
 static const qt_meta_stringdata_QMyCard_t qt_meta_stringdata_QMyCard = {
     {
 QT_MOC_LITERAL(0, 0, 7), // "QMyCard"
-QT_MOC_LITERAL(1, 8, 14), // "moveToSelector"
-QT_MOC_LITERAL(2, 23, 0), // ""
-QT_MOC_LITERAL(3, 24, 8), // "QMyCard*"
-QT_MOC_LITERAL(4, 33, 10), // "moveToBank"
+QT_MOC_LITERAL(1, 8, 10), // "moveToBank"
+QT_MOC_LITERAL(2, 19, 0), // ""
+QT_MOC_LITERAL(3, 20, 8), // "QMyCard*"
+QT_MOC_LITERAL(4, 29, 14), // "moveToSelector"
 QT_MOC_LITERAL(5, 44, 12), // "ReadytoPlant"
 QT_MOC_LITERAL(6, 57, 11), // "objectNames"
 QT_MOC_LITERAL(7, 69, 12), // "moveAccepted"
 QT_MOC_LITERAL(8, 82, 3) // "pos"
 
     },
-    "QMyCard\0moveToSelector\0\0QMyCard*\0"
-    "moveToBank\0ReadytoPlant\0objectNames\0"
+    "QMyCard\0moveToBank\0\0QMyCard*\0"
+    "moveToSelector\0ReadytoPlant\0objectNames\0"
     "moveAccepted\0pos"
 };
 #undef QT_MOC_LITERAL
@@ -87,8 +87,8 @@ void QMyCard::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         QMyCard *_t = static_cast<QMyCard *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->moveToSelector((*reinterpret_cast< QMyCard*(*)>(_a[1]))); break;
-        case 1: _t->moveToBank((*reinterpret_cast< QMyCard*(*)>(_a[1]))); break;
+        case 0: _t->moveToBank((*reinterpret_cast< QMyCard*(*)>(_a[1]))); break;
+        case 1: _t->moveToSelector((*reinterpret_cast< QMyCard*(*)>(_a[1]))); break;
         case 2: _t->ReadytoPlant((*reinterpret_cast< objectNames(*)>(_a[1])),(*reinterpret_cast< QPointF(*)>(_a[2])),(*reinterpret_cast< QMyCard*(*)>(_a[3]))); break;
         case 3: _t->moveAccepted((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
         default: ;
@@ -123,14 +123,14 @@ void QMyCard::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         void **func = reinterpret_cast<void **>(_a[1]);
         {
             typedef void (QMyCard::*_t)(QMyCard * );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QMyCard::moveToSelector)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QMyCard::moveToBank)) {
                 *result = 0;
                 return;
             }
         }
         {
             typedef void (QMyCard::*_t)(QMyCard * );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QMyCard::moveToBank)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QMyCard::moveToSelector)) {
                 *result = 1;
                 return;
             }
@@ -219,14 +219,14 @@ int QMyCard::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void QMyCard::moveToSelector(QMyCard * _t1)
+void QMyCard::moveToBank(QMyCard * _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
 // SIGNAL 1
-void QMyCard::moveToBank(QMyCard * _t1)
+void QMyCard::moveToSelector(QMyCard * _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);

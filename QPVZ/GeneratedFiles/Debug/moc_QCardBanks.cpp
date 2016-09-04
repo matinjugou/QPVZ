@@ -35,20 +35,20 @@ QT_MOC_LITERAL(2, 23, 0), // ""
 QT_MOC_LITERAL(3, 24, 8), // "QMyCard*"
 QT_MOC_LITERAL(4, 33, 12), // "ReadytoPlant"
 QT_MOC_LITERAL(5, 46, 11), // "objectNames"
-QT_MOC_LITERAL(6, 58, 13), // "SunShineAdded"
-QT_MOC_LITERAL(7, 72, 16), // "plantRequestDone"
-QT_MOC_LITERAL(8, 89, 13), // "moveRequested"
-QT_MOC_LITERAL(9, 103, 13), // "removeConfirm"
-QT_MOC_LITERAL(10, 117, 20), // "ReadytoPlantFromCard"
-QT_MOC_LITERAL(11, 138, 14), // "Initconnection"
+QT_MOC_LITERAL(6, 58, 13), // "moveRequested"
+QT_MOC_LITERAL(7, 72, 13), // "removeConfirm"
+QT_MOC_LITERAL(8, 86, 14), // "Initconnection"
+QT_MOC_LITERAL(9, 101, 20), // "ReadytoPlantFromCard"
+QT_MOC_LITERAL(10, 122, 16), // "plantRequestDone"
+QT_MOC_LITERAL(11, 139, 13), // "SunShineAdded"
 QT_MOC_LITERAL(12, 153, 3) // "pos"
 
     },
     "QCardBank\0moveAccepted\0\0QMyCard*\0"
-    "ReadytoPlant\0objectNames\0SunShineAdded\0"
-    "plantRequestDone\0moveRequested\0"
-    "removeConfirm\0ReadytoPlantFromCard\0"
-    "Initconnection\0pos"
+    "ReadytoPlant\0objectNames\0moveRequested\0"
+    "removeConfirm\0Initconnection\0"
+    "ReadytoPlantFromCard\0plantRequestDone\0"
+    "SunShineAdded\0pos"
 };
 #undef QT_MOC_LITERAL
 
@@ -70,11 +70,11 @@ static const uint qt_meta_data_QCardBank[] = {
        4,    2,   59,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    0,   64,    2, 0x0a /* Public */,
-       7,    0,   65,    2, 0x0a /* Public */,
-       8,    1,   66,    2, 0x0a /* Public */,
-       9,    1,   69,    2, 0x0a /* Public */,
-      10,    3,   72,    2, 0x0a /* Public */,
+       6,    1,   64,    2, 0x0a /* Public */,
+       7,    1,   67,    2, 0x0a /* Public */,
+       8,    0,   70,    2, 0x0a /* Public */,
+       9,    3,   71,    2, 0x0a /* Public */,
+      10,    0,   78,    2, 0x0a /* Public */,
       11,    0,   79,    2, 0x0a /* Public */,
 
  // signals: parameters
@@ -82,11 +82,11 @@ static const uint qt_meta_data_QCardBank[] = {
     QMetaType::Void, 0x80000000 | 5, QMetaType::QPointF,    2,    2,
 
  // slots: parameters
-    QMetaType::Void,
-    QMetaType::Void,
     QMetaType::Void, 0x80000000 | 3,    2,
     QMetaType::Void, 0x80000000 | 3,    2,
+    QMetaType::Void,
     QMetaType::Void, 0x80000000 | 5, QMetaType::QPointF, 0x80000000 | 3,    2,    2,    2,
+    QMetaType::Void,
     QMetaType::Void,
 
  // properties: name, type, flags
@@ -103,12 +103,12 @@ void QCardBank::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         switch (_id) {
         case 0: _t->moveAccepted((*reinterpret_cast< QPointF(*)>(_a[1])),(*reinterpret_cast< QMyCard*(*)>(_a[2]))); break;
         case 1: _t->ReadytoPlant((*reinterpret_cast< objectNames(*)>(_a[1])),(*reinterpret_cast< QPointF(*)>(_a[2]))); break;
-        case 2: _t->SunShineAdded(); break;
-        case 3: _t->plantRequestDone(); break;
-        case 4: _t->moveRequested((*reinterpret_cast< QMyCard*(*)>(_a[1]))); break;
-        case 5: _t->removeConfirm((*reinterpret_cast< QMyCard*(*)>(_a[1]))); break;
-        case 6: _t->ReadytoPlantFromCard((*reinterpret_cast< objectNames(*)>(_a[1])),(*reinterpret_cast< QPointF(*)>(_a[2])),(*reinterpret_cast< QMyCard*(*)>(_a[3]))); break;
-        case 7: _t->Initconnection(); break;
+        case 2: _t->moveRequested((*reinterpret_cast< QMyCard*(*)>(_a[1]))); break;
+        case 3: _t->removeConfirm((*reinterpret_cast< QMyCard*(*)>(_a[1]))); break;
+        case 4: _t->Initconnection(); break;
+        case 5: _t->ReadytoPlantFromCard((*reinterpret_cast< objectNames(*)>(_a[1])),(*reinterpret_cast< QPointF(*)>(_a[2])),(*reinterpret_cast< QMyCard*(*)>(_a[3]))); break;
+        case 6: _t->plantRequestDone(); break;
+        case 7: _t->SunShineAdded(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

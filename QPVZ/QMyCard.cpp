@@ -1,13 +1,62 @@
 #include "QMyCard.h"
 
-QMyCard::QMyCard(QWidget *parent)
+QMyCard::QMyCard(QCardSelector *parent)
 	:QMyObject(parent)
 {
+	chosenType = unchosen;
 
+	QBrush mybrush;
+	mybrush.setColor(Qt::black);
+	mybrush.setStyle(Qt::Dense4Pattern);
+	
+	CardCover.setParentItem(this);
+	CardCover.setBrush(mybrush);
+	CardCover.setRect(0, 0, 50, 0);
+	CardCover.setOpacity(0.7);
+
+	currentTime = 0;
+	inCD = false;
 }
 
 QMyCard::~QMyCard()
 {
+}
+
+//public slots
+void QMyCard::moveAccepted(QPointF PostoLoad)
+{
+//	moveTo(PostoLoad.x(), PostoLoad.y(), 5);
+	moveTo(PostoLoad, 300);
+	chosenType = chosen;
+}
+
+//public
+int QMyCard::getSunPrice()
+{
+	return Sunprice;
+}
+
+bool QMyCard::getInCD()
+{
+	return inCD;
+}
+
+void QMyCard::CDStart()
+{
+	TimerID = startTimer(20);
+	inCD = true;
+}
+
+void QMyCard::timerEvent(QTimerEvent *event)
+{
+	currentTime++;
+	CardCover.setRect(0, 0, 50, 70 - ((double)currentTime / (double)(CD * 50)) * 70);
+	if (currentTime == (CD * 50))
+	{
+		killTimer(TimerID);
+		currentTime = 0;
+		inCD = false;
+	}
 }
 
 void QMyCard::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -35,13 +84,6 @@ void QMyCard::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	
 }
 
-void QMyCard::moveAccepted(QPointF PostoLoad)
-{
-//	moveTo(PostoLoad.x(), PostoLoad.y(), 5);
-	moveTo(PostoLoad, 300);
-	chosenType = chosen;
-}
-
 void QMyCard::setChosenType(cardType cardTypeName)
 {
 	chosenType = cardTypeName;
@@ -50,24 +92,6 @@ void QMyCard::setChosenType(cardType cardTypeName)
 void QMyCard::setCardOriginPos(QPointF originPos)
 {
 	cardPosinSelector = originPos;
-}
-
-void QMyCard::CDStart()
-{
-	TimerID = startTimer(20);
-	inCD = true;
-}
-
-void QMyCard::timerEvent(QTimerEvent *event)
-{
-	currentTime++;
-	CardCover.setRect(0, 0, 50, 70 - ((double)currentTime / (double)(CD * 50)) * 70);
-	if (currentTime == (CD * 50))
-	{
-		killTimer(TimerID);
-		currentTime = 0;
-		inCD = false;
-	}
 }
 
 void QMyCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -97,25 +121,16 @@ void QMyCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 	}
 }
 
-PeaShooterCard::PeaShooterCard(QWidget *parent)
+//public
+PeaShooterCard::PeaShooterCard(QCardSelector *parent)
+	:QMyCard(parent)
 {
 	objectTypeName = PeaShooter;
-	chosenType = unchosen;
 	Pictures.push_back(QPixmap("Resources/pvz-material/images/Cards/Plants/Peashooter.png"));
 	setPixmap(Pictures[0]);
 	Sunprice = 100;
 	nameText = QString::number(Sunprice, 10);
-	CardCover.setParentItem(this);
-	QBrush mybrush;
-	mybrush.setColor(Qt::black);
-	mybrush.setStyle(Qt::Dense4Pattern);
-	
-	CardCover.setBrush(mybrush);
-	CardCover.setRect(0, 0, 50, 0);
-	CardCover.setOpacity(0.7);
 	CD = 7;
-	currentTime = 0;
-	inCD = false;
 }
 
 PeaShooterCard::~PeaShooterCard()

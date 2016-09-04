@@ -113,9 +113,6 @@
     <ClCompile Include="QFightMethods.cpp">
       <Filter>Source Files\Plants</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_QGameController.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="QGameDisplayer.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
@@ -139,9 +136,6 @@
     </ClCompile>
     <ClCompile Include="QGameMode.cpp">
       <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_QGameController.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="QGameModeLoader.cpp">
       <Filter>Source Files\Component</Filter>
@@ -273,11 +267,11 @@
     <ClInclude Include="QEquipments.h">
       <Filter>Header Files\Zombies</Filter>
     </ClInclude>
-    <ClInclude Include="QGameProcessor.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
     <ClInclude Include="QFightMethods.h">
       <Filter>Header Files\Plants</Filter>
+    </ClInclude>
+    <ClInclude Include="MyVariable.h">
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

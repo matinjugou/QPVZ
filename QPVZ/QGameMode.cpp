@@ -1,8 +1,17 @@
 #include "QGameMode.h"
+#include "QGameModeLoader.h"
+#include "QCardSelector.h"
 
-QGameMode::QGameMode(QWidget* parent)
-//	:QObject(parent)
+QGameMode::QGameMode(QGameModeLoader* parent)
+	:QObject(parent)
 {
+	Scene = new QGraphicsScene(this);
+	Scene->setItemIndexMethod(QGraphicsScene::NoIndex);
+	
+	Background = new QMyObject(this);
+	Scene->addItem(Background);
+	Background->setPos(0, 0);
+	
 }
 
 QGameMode::~QGameMode()
@@ -10,51 +19,57 @@ QGameMode::~QGameMode()
 
 }
 
-QGameMainMode::QGameMainMode(QWidget* parent)
-//	:QGameMode(parent)
+//public
+QGraphicsScene* QGameMode::getScene()
 {
-	QPixmap tempPic;
-	Scene = new QGraphicsScene;
-	Scene->setSceneRect(0, 0, 900, 600);
-	Scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-	Background = new QMyObject;
-	tempPic.load("Resources/pvz-material/images/interface/Surface.png");
-	Background->setPos(0, 0);
-	Background->pushbackPixmap(tempPic);
-	Background->setMyPixmap(0);
-	Scene->addItem(Background);
+	return Scene;
+}
 
-	StartGame_Adventure = new QMyButton("Resources/pvz-material/images/Buttons/startGame_Adventure.png", "Resources/pvz-material/images/Buttons/startGame_Adventure_pressed.png");
+void QGameMode::setView(QGraphicsView *loaderView)
+{
+	View = loaderView;
+}
+
+
+QGameMainMode::QGameMainMode(QGameModeLoader* parent)
+	:QGameMode(parent)
+{
+	Scene->setSceneRect(0, 0, 900, 600);
+
+	Background->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/Surface.png"));
+	Background->setMyPixmap(0);
+
+	StartGame_Adventure = new QMyButton("Resources/pvz-material/images/Buttons/startGame_Adventure.png", "Resources/pvz-material/images/Buttons/startGame_Adventure_pressed.png", this);
 	StartGame_Adventure->setPos(507, 68);
 	Scene->addItem(StartGame_Adventure);
 
-	StartGame_NetFight = new QMyButton("Resources/pvz-material/images/Buttons/startGame_NetFight.png", "Resources/pvz-material/images/Buttons/startGame_NetFight_pressed.png");
+	StartGame_NetFight = new QMyButton("Resources/pvz-material/images/Buttons/startGame_NetFight.png", "Resources/pvz-material/images/Buttons/startGame_NetFight_pressed.png", this);
 	StartGame_NetFight->setPos(507, 172);
 	Scene->addItem(StartGame_NetFight);
 	
-	Options = new QMyButton("Resources/pvz-material/images/Buttons/SelectorScreen_Options1.png", "Resources/pvz-material/images/Buttons/SelectorScreen_Options2.png");
+	Options = new QMyButton("Resources/pvz-material/images/Buttons/SelectorScreen_Options1.png", "Resources/pvz-material/images/Buttons/SelectorScreen_Options2.png", this);
 	Options->setPos(734, 520);
 	Scene->addItem(Options);
 	
-	Help = new QMyButton("Resources/pvz-material/images/Buttons/SelectorScreen_Help1.png", "Resources/pvz-material/images/Buttons/SelectorScreen_Help2.png");
+	Help = new QMyButton("Resources/pvz-material/images/Buttons/SelectorScreen_Help1.png", "Resources/pvz-material/images/Buttons/SelectorScreen_Help2.png", this);
 	Help->setPos(657, 487);
 	Scene->addItem(Help);
 
-	Quit = new QMyButton("Resources/pvz-material/images/Buttons/SelectorScreen_Quit1.png", "Resources/pvz-material/images/Buttons/SelectorScreen_Quit2.png");
+	Quit = new QMyButton("Resources/pvz-material/images/Buttons/SelectorScreen_Quit1.png", "Resources/pvz-material/images/Buttons/SelectorScreen_Quit2.png", this);
 	Quit->setPos(805, 505);
 	Quit->setScale(0.8);
 	Scene->addItem(Quit); 
 	
-	QSignalMapper *Mapper = new QSignalMapper;
+	QSignalMapper *Mapper = new QSignalMapper(this);
 	connect(StartGame_Adventure, SIGNAL(clicked()), Mapper, SLOT(map()));
 	connect(StartGame_NetFight, SIGNAL(clicked()), Mapper, SLOT(map()));
 
-	Mapper->setMapping(StartGame_Adventure, Adventure);
-	Mapper->setMapping(StartGame_NetFight, NetFight);
+	Mapper->setMapping(StartGame_Adventure, 1);
+	Mapper->setMapping(StartGame_NetFight, 2);
 
-//	connect(Mapper, SIGNAL(mapped(GameModeNames)), this, SIGNAL(NewGameStart(GameModeNames)));
+	connect(Mapper, SIGNAL(mapped(int)), this, SIGNAL(NewGameStart(int)));
 
-	connect(StartGame_Adventure, SIGNAL(clicked()), this, SIGNAL(AdventureMode_Start()));
+//	connect(StartGame_Adventure, SIGNAL(clicked()), this, SIGNAL(AdventureMode_Start()));
 
 	connect(Options, SIGNAL(clicked()), this, SIGNAL(Setting_Options()));
 	connect(Help, SIGNAL(clicked()), this, SIGNAL(Help_Start()));
@@ -66,44 +81,36 @@ QGameMainMode::QGameMainMode(QWidget* parent)
 
 QGameMainMode::~QGameMainMode()
 {
-	delete StartGame_Adventure;
-	delete StartGame_NetFight;
-	delete Options;
-	delete Help;
-	delete Quit;
+
 }
 
+//public
 void QGameMainMode::timerEvent(QTimerEvent *event)
 {
 	
 }
 
-QGraphicsScene* QGameMode::getScene()
-{
-	return Scene;
-}
 
-QGameAdventureMode::QGameAdventureMode(QWidget *parent)
+QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
+	:QGameMode(parent)
 {
-	Scene = new QGraphicsScene;
 	Scene->setSceneRect(0, 0, 1400, 600);
-	Scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-	Selector = new QCardSelector(2, CardList);
-	Bank = new QCardBank;
-	MappingSystem = new QMyMap;
-	Background = new QMyObject;
-	QPixmap tempPix;
-	tempPix.load("Resources/pvz-material/images/interface/background1.jpg");
-	Background->pushbackPixmap(tempPix);
+
+	Selector = new QCardSelector(2, CardList, this);
+	Bank = new QCardBank(this);
+	MappingSystem = new QMyMap(this);
+	
+	Background->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/background1.jpg"));
 	Background->setMyPixmap(0);
 	Background->setPos(0, 0);
+	
 	Selector->setPos(500, 687);
 	Bank->setPos(500, -120);
-	Scene->addItem(Background);
+	
 	Scene->addItem(Bank);
 	Scene->addItem(Selector);
 	Scene->addItem(MappingSystem);
-	MappingSystem->setScene(Scene);
+	MappingSystem->setScene(Scene);	//引入对象树系统后可以优化掉
 
 	connect(Selector, SIGNAL(moveRequest(QMyCard*)), Bank, SLOT(moveRequested(QMyCard*)));
 	connect(Selector, SIGNAL(removeInform(QMyCard*)), Bank, SLOT(removeConfirm(QMyCard*)));
@@ -116,14 +123,19 @@ QGameAdventureMode::QGameAdventureMode(QWidget *parent)
 	connect(this, SIGNAL(Itemadded(QMyObject*)), MappingSystem, SLOT(Itemadded(QMyObject*)));
 	connect(Selector, SIGNAL(startGameNow()), this, SLOT(GameStart()));
 	connect(Selector, SIGNAL(startGameNow()), Bank, SLOT(Initconnection()));
+	
 	currentTime = 0;
 	stage = 0;
-	horizontalScollBarValue = 0;
 	barMoveed = 0;
-	animation = new QPropertyAnimation;
-//	emit exchangetoScene(Scene);
+	animation = new QPropertyAnimation(this);
 }
 
+QGameAdventureMode::~QGameAdventureMode()
+{
+
+}
+
+//public slot
 void QGameAdventureMode::GameStart()
 {
 	if (stage < 2)
@@ -137,17 +149,7 @@ void QGameAdventureMode::GameStart()
 	}
 }
 
-void QGameAdventureMode::moveScrollBar(int fromvalue, int arrivevalue, int duration)
-{
-	animation->setTargetObject(View->horizontalScrollBar());
-	animation->setPropertyName("value");
-	animation->setDuration(duration);
-	animation->setStartValue(fromvalue);
-	animation->setEndValue(arrivevalue);
-	animation->setEasingCurve(QEasingCurve::InOutCubic);
-	animation->start();
-}
-
+//public
 void QGameAdventureMode::timerEvent(QTimerEvent *event)
 {
 	currentTime++;
@@ -232,15 +234,13 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 	}
 }
 
-void QGameMode::setView(QGraphicsView *loaderView)
+void QGameAdventureMode::moveScrollBar(int fromvalue, int arrivevalue, int duration)
 {
-	View = loaderView;
-}
-
-QGameAdventureMode::~QGameAdventureMode()
-{
-	delete Selector;
-	delete Bank;
-	delete animation;
-	delete MappingSystem;
+	animation->setTargetObject(View->horizontalScrollBar());
+	animation->setPropertyName("value");
+	animation->setDuration(duration);
+	animation->setStartValue(fromvalue);
+	animation->setEndValue(arrivevalue);
+	animation->setEasingCurve(QEasingCurve::InOutCubic);
+	animation->start();
 }

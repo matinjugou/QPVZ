@@ -1,7 +1,7 @@
 #include "QPlants.h"
 
-QPlants::QPlants(QWidget* parent)
-//	:QMyObject(parent)
+QPlants::QPlants(QGraphicsScene* parent)
+	:QMyObject(parent)
 {
 	objectTypeName = Plants;
 	beThreatened = false;
@@ -22,48 +22,47 @@ QPlants::~QPlants()
 
 }
 
-QBulletPlants::QBulletPlants(QWidget* parent)
-//	:QPlants(parent)
+QBulletPlants::QBulletPlants(QGraphicsScene * parent)
+	:QPlants(parent)
 {
-	lastShoot = 0;
 }
 
 QBulletPlants::~QBulletPlants()
 {
-
 }
 
-QPeaShooter::QPeaShooter(QWidget* parent)
-//	: QBulletPlants(parent)
+QPeaShooter::QPeaShooter(QGraphicsScene *parent)
+	: QBulletPlants(parent)
 {
 	Plants_Name = PeaShooter;
-	objectTypeName = Plants;
 	HP = 300;
 	CD = 70;
 	lastShoot = CD;
-	TimerID = startTimer(20);
+	
 	myGif.setFileName("Resources/pvz-material/images/Plants/Peashooter/Peashooter.gif");
 	myGif.jumpToFrame(0);
 	connect(&myGif, SIGNAL(frameChanged(int)), this, SLOT(setnewPixmap()));
 	myGif.start();
+
+	TimerID = startTimer(20);
 }
 
-QPeaShooter::QPeaShooter(int x, int y, QWidget *parent)
-//	: QBulletPlants(parent)
+QPeaShooter::QPeaShooter(int x, int y, QGraphicsScene *parent)
+	: QBulletPlants(parent)
 {
 	Plants_Name = PeaShooter;
-	objectTypeName = Plants;
 	HP = 300;
 	CD = 70;
 	lastShoot = CD;
 	setPos(x, y);
-	TimerID = startTimer(20);
+	
 	myGif.setFileName("Resources/pvz-material/images/Plants/Peashooter/Peashooter.gif");
 	myGif.jumpToFrame(0);
 	connect(&myGif, SIGNAL(frameChanged(int)), this, SLOT(setnewPixmap()));
 	myGif.start();
-}
 
+	TimerID = startTimer(20);
+}
 
 QPeaShooter::~QPeaShooter()
 {
@@ -105,14 +104,12 @@ void QPeaShooter::Died()
 
 void QPeaShooter::Shoot()
 {
-	weapons = new QPeas(pos().x() + 10, pos().y());
-//	weapons->setParentItem(this);
+	weapons = new QPeas(pos().x() + 50, pos().y());
 	qDebug() << "Hello, wordld";
 	emit addtomap(Weapons, weapons);
 //	connect(weapons, SIGNAL(addtomap(objectType, QMyObject*)), MaptoLoad, SLOT(addtoMap(objectType, QMyObject*)));
 //	connect(weapons, SIGNAL(removefrommap(objectType, QMyObject*)), MaptoLoad, SLOT(removefromMap(objectType, QMyObject*)));
 }
-
 
 bool QPeaShooter::inRange(QMyObject* myobject)
 {

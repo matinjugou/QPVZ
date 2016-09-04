@@ -1,10 +1,11 @@
 #include "QCardSelector.h"
+#include "QGameMode.h"
 
-QCardSelector::QCardSelector(QWidget *parent)
-//	:QGraphicsItemGroup(parent)
+QCardSelector::QCardSelector(QGameMode *parent)
+	:QObject(parent)
 {
 	setHandlesChildEvents(false);
-	Board = new QGraphicsPixmapItem(QPixmap("Resources/pvz-material/images/interface/SeedChooser_Background.png"));
+	Board = new QGraphicsPixmapItem(QPixmap("Resources/pvz-material/images/interface/SeedChooser_Background.png"), this);
 	Board->setPos(0, 0);
 	Board->setScale(0.9);
 	addToGroup(Board);
@@ -12,18 +13,37 @@ QCardSelector::QCardSelector(QWidget *parent)
 	currentPos.setY(1);
 	maxX = 8;
 	maxY = 6;
-	startGame = new QMyButton("Resources/pvz-material/images/Buttons/SeedChooser_Button_Disabled.png", "Resources/pvz-material/images/Buttons/SeedChooser_Button.png");
+	startGame = new QMyButton("Resources/pvz-material/images/Buttons/SeedChooser_Button_Disabled.png", "Resources/pvz-material/images/Buttons/SeedChooser_Button.png", this);
 	startGame->setPos(137, 420);
 	addToGroup(startGame);
 	connect(startGame, SIGNAL(clicked()), this, SIGNAL(startGameNow()));
-	animation = new QPropertyAnimation(this, "pos");
+	animation = new QPropertyAnimation(this, "pos", this);
 }
 
-QCardSelector::QCardSelector(int totcard, const objectNames cardlist[], QWidget *parent)
-//	:QGraphicsItemGroup(parent)
+QCardSelector::QCardSelector(QGameAdventureMode *parent)
+	:QObject(parent)
 {
 	setHandlesChildEvents(false);
-	Board = new QGraphicsPixmapItem(QPixmap("Resources/pvz-material/images/interface/SeedChooser_Background.png"));
+	Board = new QGraphicsPixmapItem(QPixmap("Resources/pvz-material/images/interface/SeedChooser_Background.png"), this);
+	Board->setPos(0, 0);
+	Board->setScale(0.9);
+	addToGroup(Board);
+	currentPos.setX(1);
+	currentPos.setY(1);
+	maxX = 8;
+	maxY = 6;
+	startGame = new QMyButton("Resources/pvz-material/images/Buttons/SeedChooser_Button_Disabled.png", "Resources/pvz-material/images/Buttons/SeedChooser_Button.png", this);
+	startGame->setPos(137, 420);
+	addToGroup(startGame);
+	connect(startGame, SIGNAL(clicked()), this, SIGNAL(startGameNow()));
+	animation = new QPropertyAnimation(this, "pos", this);
+}
+
+QCardSelector::QCardSelector(int totcard, const objectNames cardlist[], QGameMode *parent)
+	:QObject(parent)
+{
+	setHandlesChildEvents(false);
+	Board = new QGraphicsPixmapItem(QPixmap("Resources/pvz-material/images/interface/SeedChooser_Background.png"), this);
 	Board->setPos(0, 0);
 	Board->setScale(0.9);
 	addToGroup(Board);
@@ -36,11 +56,35 @@ QCardSelector::QCardSelector(int totcard, const objectNames cardlist[], QWidget 
 	{
 		addNewCard(cardlist[i]); //之后要补充
 	}
-	startGame = new QMyButton("Resources/pvz-material/images/Buttons/SeedChooser_Button_Disabled.png", "Resources/pvz-material/images/Buttons/SeedChooser_Button.png");
+	startGame = new QMyButton("Resources/pvz-material/images/Buttons/SeedChooser_Button_Disabled.png", "Resources/pvz-material/images/Buttons/SeedChooser_Button.png", this);
 	startGame->setPos(137, 420);
 	addToGroup(startGame);
 	connect(startGame, SIGNAL(clicked()), this, SIGNAL(startGameNow()));
-	animation = new QPropertyAnimation(this, "pos");
+	animation = new QPropertyAnimation(this, "pos", this);
+}
+
+QCardSelector::QCardSelector(int totcard, const objectNames cardlist[], QGameAdventureMode *parent)
+	:QObject(parent)
+{
+	setHandlesChildEvents(false);
+	Board = new QGraphicsPixmapItem(QPixmap("Resources/pvz-material/images/interface/SeedChooser_Background.png"), this);
+	Board->setPos(0, 0);
+	Board->setScale(0.9);
+	addToGroup(Board);
+	currentPos.setX(1);
+	currentPos.setY(1);
+
+	maxX = 8;
+	maxY = 6;
+	for (int i = 0; i < totcard; i++)
+	{
+		addNewCard(cardlist[i]); //之后要补充
+	}
+	startGame = new QMyButton("Resources/pvz-material/images/Buttons/SeedChooser_Button_Disabled.png", "Resources/pvz-material/images/Buttons/SeedChooser_Button.png", this);
+	startGame->setPos(137, 420);
+	addToGroup(startGame);
+	connect(startGame, SIGNAL(clicked()), this, SIGNAL(startGameNow()));
+	animation = new QPropertyAnimation(this, "pos", this);
 }
 
 QCardSelector::~QCardSelector()
@@ -49,6 +93,19 @@ QCardSelector::~QCardSelector()
 
 }
 
+//public slots
+void QCardSelector::moveAccepted(QPointF itemPos, QMyCard* cardtomove)
+{
+	cardtomove->moveAccepted(itemPos);
+}
+
+void QCardSelector::resetIn(QMyCard* cardtoset)
+{
+	addToGroup(cardtoset);
+	emit removeInform(cardtoset);
+}
+
+//public
 void QCardSelector::moveTo(int x, int y, int duration)
 {
 	animation->setDuration(duration);
@@ -67,17 +124,6 @@ void QCardSelector::moveTo(QPointF targetPos, int duration)
 	animation->setEndValue(QPoint(x, y));
 	animation->setEasingCurve(QEasingCurve::InOutCubic);
 	animation->start();
-}
-
-void QCardSelector::moveAccepted(QPointF itemPos, QMyCard* cardtomove)
-{
-	cardtomove->moveAccepted(itemPos);
-}
-
-void QCardSelector::resetIn(QMyCard* cardtoset)
-{
-	addToGroup(cardtoset);
-	emit removeInform(cardtoset);
 }
 
 void QCardSelector::addNewCard(objectNames name)

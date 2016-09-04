@@ -3,63 +3,91 @@
 #include <QtGui>
 #include "qgraphicsitem.h"
 #include "qvector.h"
+#include "MyVariable.h"
 
-enum objectType { Plants, Zombies, CommonObjects, Weapons};
-enum objectNames { PeaShooter, CommonZombie, SunShine};
+
+
+class QGameMode;
+class QCardBank;
+class QCardSelector;
+class QPlants;
+class QZombies;
+class QWeapons;
+class QEquipments;
+class QFightMethods;
+class QMySunShine;
 
 class QMyObject :public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT
 	Q_PROPERTY(QPointF pos READ pos WRITE setPos)
-public:
-	int TimerID;
 protected:
-	int HP;
-	int GifNumber;
-	int isDead;
-	QVector<QPixmap> Pictures;
-	QVector<QMovie*> Gifs;
-	QMovie myGif;
-	objectType objectTypeName;
-	QPropertyAnimation *animation;
-	QTimeLine *timer;
-	QPoint PointinMap;
+	int						TimerID;		//计时器ID
+	int						HP;				//血量
+	int						GifNumber;		//要播放的GIF的编号
+	int						isDead;			//是否死亡
+	QVector<QPixmap>		Pictures;		//图片数组
+	QVector<QMovie*>		Gifs;			//GIF数组
+	QMovie					myGif;			//GIF
+	objectType				objectTypeName; //物品种类
+	QPropertyAnimation		*animation;		//动画
+	QPoint					PointinMap;		//物品在地图上的位置
+
 public:
-	QMyObject(QWidget* parent = 0);
+	QMyObject(QObject *parent = 0);
+	QMyObject(QGameMode *parent = 0);
+	QMyObject(QCardBank *parent = 0);
+	QMyObject(QCardSelector *parent = 0);
+	QMyObject(QPlants *parent = 0);
+	QMyObject(QZombies *parent = 0);
+	QMyObject(QGraphicsScene *parent = 0);
 	~QMyObject();
+
 signals:
-	void moveStop();
 	void addtomap(objectType, QMyObject*);
+	//将自己加入地图处理事件
 	void removefrommap(objectType, QMyObject*);
+	//将自己从地图中移除
+
 public slots:
 	void moveTo(int x, int y, int duration);
+	//移动动画
 	void moveTo(int x, int y, int duration, QEasingCurve::Type type);
+	//移动动画
 	void moveTo(QPointF targetPos, int duration);
+	//移动动画
 	void moveTo(QPointF targetPos, int duration, QEasingCurve::Type type);
+	//移动动画
 	void setnewPixmap();
+	//播放GIf时切换帧
 	void setnewPixmap(int);
+	//播放GIF时切换帧
+
 public:
-	void setHP(int);
-	void killHP(int);
-	void killMyTimer()
-	{
-		killTimer(TimerID);
-	}
 	int getHP();
-	void setPointinMap(int x, int y);
-	void setPointinMap(QPoint);
-	objectType getType();
-	void setType(objectType Typename)
-	{
-		objectTypeName = Typename;
-	}
-	QPoint getPointinMap();
-	virtual void Died()
-	{
-		//TODO 等待继承者重写死亡动画
-	}
-	void pushbackPixmap(QPixmap);
-	void setMyPixmap(int);
-	void setMyGif(int);
+	//得到当前生命值
 	QPixmap getPicture(int i);
+	//得到图片数组中对应的图片
+	objectType getType();
+	//得到物品的种类
+	QPoint getPointinMap();
+	//得到物品在地图上的坐标
+	void setPointinMap(int x, int y);
+	//设置物品在地图内的坐标
+	void setPointinMap(QPoint);
+	//设置物品在地图内的坐标
+	void setHP(int);
+	//设置生命值
+	void killHP(int);
+	//减少生命值
+	void setType(objectType Typename);
+	//设置物品的种类
+	void pushbackPixmap(QPixmap);
+	//存入新的图片
+	void setMyPixmap(int);
+	//播放GIF动画时候切换帧数
+	void setMyGif(int);
+	//设置播放对应的GIF
+	virtual void Died(){}
+	//死亡动画
 };

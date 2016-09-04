@@ -196,8 +196,8 @@ void QGameMode::Itemadded(QMyObject * _t1)
     QMetaObject::activate(this, &staticMetaObject, 3, _a);
 }
 struct qt_meta_stringdata_QGameMainMode_t {
-    QByteArrayData data[8];
-    char stringdata0[99];
+    QByteArrayData data[7];
+    char stringdata0[94];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -209,16 +209,15 @@ static const qt_meta_stringdata_QGameMainMode_t qt_meta_stringdata_QGameMainMode
 QT_MOC_LITERAL(0, 0, 13), // "QGameMainMode"
 QT_MOC_LITERAL(1, 14, 19), // "AdventureMode_Start"
 QT_MOC_LITERAL(2, 34, 0), // ""
-QT_MOC_LITERAL(3, 35, 12), // "NewGameStart"
-QT_MOC_LITERAL(4, 48, 13), // "GameModeNames"
-QT_MOC_LITERAL(5, 62, 10), // "Help_Start"
-QT_MOC_LITERAL(6, 73, 15), // "Setting_Options"
-QT_MOC_LITERAL(7, 89, 9) // "Quit_Game"
+QT_MOC_LITERAL(3, 35, 18), // "NetFightMode_Start"
+QT_MOC_LITERAL(4, 54, 12), // "NewGameStart"
+QT_MOC_LITERAL(5, 67, 10), // "Help_Start"
+QT_MOC_LITERAL(6, 78, 15) // "Setting_Options"
 
     },
     "QGameMainMode\0AdventureMode_Start\0\0"
-    "NewGameStart\0GameModeNames\0Help_Start\0"
-    "Setting_Options\0Quit_Game"
+    "NetFightMode_Start\0NewGameStart\0"
+    "Help_Start\0Setting_Options"
 };
 #undef QT_MOC_LITERAL
 
@@ -237,15 +236,15 @@ static const uint qt_meta_data_QGameMainMode[] = {
 
  // signals: name, argc, parameters, tag, flags
        1,    0,   39,    2, 0x06 /* Public */,
-       3,    1,   40,    2, 0x06 /* Public */,
-       5,    0,   43,    2, 0x06 /* Public */,
-       6,    0,   44,    2, 0x06 /* Public */,
-       7,    0,   45,    2, 0x06 /* Public */,
+       3,    0,   40,    2, 0x06 /* Public */,
+       4,    1,   41,    2, 0x06 /* Public */,
+       5,    0,   44,    2, 0x06 /* Public */,
+       6,    0,   45,    2, 0x06 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 4,    2,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    2,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -259,10 +258,10 @@ void QGameMainMode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->AdventureMode_Start(); break;
-        case 1: _t->NewGameStart((*reinterpret_cast< GameModeNames(*)>(_a[1]))); break;
-        case 2: _t->Help_Start(); break;
-        case 3: _t->Setting_Options(); break;
-        case 4: _t->Quit_Game(); break;
+        case 1: _t->NetFightMode_Start(); break;
+        case 2: _t->NewGameStart((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->Help_Start(); break;
+        case 4: _t->Setting_Options(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -276,29 +275,29 @@ void QGameMainMode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
             }
         }
         {
-            typedef void (QGameMainMode::*_t)(GameModeNames );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QGameMainMode::NewGameStart)) {
+            typedef void (QGameMainMode::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QGameMainMode::NetFightMode_Start)) {
                 *result = 1;
                 return;
             }
         }
         {
-            typedef void (QGameMainMode::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QGameMainMode::Help_Start)) {
+            typedef void (QGameMainMode::*_t)(int );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QGameMainMode::NewGameStart)) {
                 *result = 2;
                 return;
             }
         }
         {
             typedef void (QGameMainMode::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QGameMainMode::Setting_Options)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QGameMainMode::Help_Start)) {
                 *result = 3;
                 return;
             }
         }
         {
             typedef void (QGameMainMode::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QGameMainMode::Quit_Game)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QGameMainMode::Setting_Options)) {
                 *result = 4;
                 return;
             }
@@ -349,26 +348,26 @@ void QGameMainMode::AdventureMode_Start()
 }
 
 // SIGNAL 1
-void QGameMainMode::NewGameStart(GameModeNames _t1)
+void QGameMainMode::NetFightMode_Start()
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 1, _a);
+    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
 }
 
 // SIGNAL 2
-void QGameMainMode::Help_Start()
+void QGameMainMode::NewGameStart(int _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 2, Q_NULLPTR);
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 
 // SIGNAL 3
-void QGameMainMode::Setting_Options()
+void QGameMainMode::Help_Start()
 {
     QMetaObject::activate(this, &staticMetaObject, 3, Q_NULLPTR);
 }
 
 // SIGNAL 4
-void QGameMainMode::Quit_Game()
+void QGameMainMode::Setting_Options()
 {
     QMetaObject::activate(this, &staticMetaObject, 4, Q_NULLPTR);
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "QMyObject.h"
+#include "MyVariable.h"
 
 class QWeapons :public QMyObject
 {
@@ -12,7 +13,7 @@ protected:
 	bool isWeaponUsed;
 	QMyObject* enemy;
 public:
-	QWeapons(QWidget* parent = 0);
+	QWeapons(QGraphicsScene* parent = 0);
 	~QWeapons();
 public:
 	virtual void hurt(){}
@@ -39,8 +40,8 @@ public:
 class QPeas :public QWeapons
 {
 public:
-	QPeas(int x, int y, QWidget* parent = 0);
-	QPeas(int power, int speed, int direction, int x, int y, QWidget* parent = 0);
+	QPeas(int x, int y, QGraphicsScene* parent = 0);
+	QPeas(int power, int speed, int direction, int x, int y, QGraphicsScene* parent = 0);
 	~QPeas();
 public:
 	void hurt();
