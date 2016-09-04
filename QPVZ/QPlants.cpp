@@ -1,4 +1,7 @@
 #include "QPlants.h"
+#include "QMySunShine.h"
+#include "QWeapons.h"
+#include "QFightMethods.h"
 
 QPlants::QPlants(QGraphicsScene* parent)
 	:QMyObject(parent)
@@ -76,6 +79,7 @@ void QPeaShooter::timerEvent(QTimerEvent *event)
 		killTimer(TimerID);
 		emit removefrommap(Plants, this);
 		Died();
+		return;
 	}
 	if (beThreatened)
 	{
@@ -120,4 +124,70 @@ bool QPeaShooter::inRange(QMyObject* myobject)
 		return true;
 	}
 	return false;
+}
+
+QSunFlower::QSunFlower(QGraphicsScene *parent)
+	:QPlants(parent)
+{
+	Plants_Name = SunFlower;
+	HP = 300;
+	lastSunShine = 0;
+
+	myGif.setFileName("Resources/pvz-material/images/Plants/SunFlower/SunFlower1.gif");
+	myGif.jumpToFrame(0);
+	connect(&myGif, SIGNAL(frameChanged(int)), this, SLOT(setnewPixmap()));
+	myGif.start();
+
+	TimerID = startTimer(20);
+}
+
+QSunFlower::QSunFlower(int x, int y, QGraphicsScene *parent)
+	:QPlants(parent)
+{
+	Plants_Name = SunFlower;
+	HP = 300;
+	lastSunShine = 0;
+	setPos(x, y);
+
+	myGif.setFileName("Resources/pvz-material/images/Plants/SunFlower/SunFlower1.gif");
+	myGif.jumpToFrame(0);
+	connect(&myGif, SIGNAL(frameChanged(int)), this, SLOT(setnewPixmap()));
+	myGif.start();
+
+	TimerID = startTimer(20);
+}
+
+QSunFlower::~QSunFlower()
+{
+
+}
+
+void QSunFlower::makeSunShine()
+{
+	newSunShine = new QMySunShine(this->scene());
+	QPointF tempPos;
+	tempPos.setX();
+	tempPos.setY();
+	newSunShine->setPos(tempPos);
+	Scene->addItem(newSunShine);
+	tempPos.setY(MappingSystem->getRect().height() / 5 * (rand() % 4) + MappingSystem->getRect().y());
+	newSunShine->moveTo(tempPos, 3000, QEasingCurve::Linear);
+	connect(newSunShine, SIGNAL(BeTaken()), Bank, SLOT(SunShineAdded()));
+}
+
+void QSunFlower::timerEvent(QTimerEvent *event)
+{
+	if (HP <= 0)
+	{
+		killTimer(TimerID);
+		emit removefrommap(Plants, this);
+		Died();
+		return;
+	}
+	lastSunShine++;
+	if (lastSunShine == 1200)
+	{
+		makeSunShine();
+		lastSunShine = 0;
+	}
 }

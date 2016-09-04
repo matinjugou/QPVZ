@@ -13,7 +13,7 @@ protected:
 	QPropertyAnimation	*Scaleanimation;	//Ëõ·Å¶¯»­
 
 public:
-	QMySunShine(QGameMode *parent = 0);
+	QMySunShine(QGraphicsScene *parent = 0);
 	~QMySunShine();
 
 signals:

@@ -1,7 +1,7 @@
 #pragma once
 
 enum objectType { Plants, Zombies, CommonObjects, Weapons };
-enum objectNames { PeaShooter, CommonZombie, SunShine };
+enum objectNames { PeaShooter, CommonZombie, SunFlower };
 enum GameModeNames { Surface, Adventure, NetFight };
 
 struct Node

@@ -48,19 +48,24 @@ void QGameDisplayer::addItem(objectNames name, QPointF pos)
 	{
 	case PeaShooter:
 	{
-		QPeaShooter* newPeashooter = new QPeaShooter(pos.x(), pos.y());
+		QPeaShooter* newPeashooter = new QPeaShooter(pos.x(), pos.y(), this->currentScene);
 		currentScene->addItem(newPeashooter);
 		emit Itemadded(newPeashooter);
 	}
 	break;
 	case CommonZombie:
 	{
-		QPointF tempPos = pos;
-		QCommonZombie* newCommonZombie = new QCommonZombie(pos.x(), pos.y());
+		QCommonZombie* newCommonZombie = new QCommonZombie(pos.x(), pos.y(), this->currentScene);
 		currentScene->addItem(newCommonZombie);
 		emit Itemadded(newCommonZombie);
 	}
 	break;
+	case SunFlower:
+	{
+		QSunFlower* newSunFlower = new QSunFlower(pos.x(), pos.y(), this->currentScene);
+		currentScene->addItem(newSunFlower);
+		emit Itemadded(newSunFlower);
+	}
 	default:
 		break;
 	}

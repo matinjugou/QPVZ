@@ -1,6 +1,6 @@
 #include "QMySunShine.h"
 
-QMySunShine::QMySunShine(QGameMode *parent)
+QMySunShine::QMySunShine(QGraphicsScene *parent)
 	:QMyObject(parent)
 {
 	myGif.setFileName("Resources/pvz-material/images/interface/Sun.gif");

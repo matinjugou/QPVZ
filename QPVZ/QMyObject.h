@@ -2,6 +2,7 @@
 #include <QtWidgets>
 #include <QtGui>
 #include "qgraphicsitem.h"
+#include "qgraphicsscene.h"
 #include "qvector.h"
 #include "MyVariable.h"
 

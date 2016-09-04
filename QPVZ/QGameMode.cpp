@@ -221,7 +221,7 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 		}
 		if (currentTime % 500 == 0)
 		{
-			newSunShine = new QMySunShine;
+			newSunShine = new QMySunShine(Scene);
 			QPointF tempPos;
 			tempPos.setX(MappingSystem->getRect().width() / 12 * (rand() % 9) + MappingSystem->getRect().x());
 			tempPos.setY(-60);

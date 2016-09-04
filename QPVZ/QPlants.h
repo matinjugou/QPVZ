@@ -1,14 +1,14 @@
 #pragma once
 #include "QMyObject.h"
-#include "QWeapons.h"
-#include "QFightMethods.h"
 #include "MyVariable.h"
-//#include "QMyMap.h"
+
+
+class QMySunShine;
+class QFightMethods;
+class QPeas;
 
 /* QPlants:			植物类
 *@param HP:			植物的生命值
-*@param Sunprice:	植物的阳关值
-*@param CD:			植物的刷新时间
 */
 class QPlants :public QMyObject
 {
@@ -20,16 +20,12 @@ public:
 	QPlants(QGraphicsScene* parent = 0);
 	~QPlants();
 public:
-	int getSunPrice();
-	//返回阳光值
 	bool isThreatened();
 	//返回是否被威胁
 	virtual bool inRange(QMyObject*) { return false; }
 	//设置攻击范围判定函数
 	void setThreatend(bool);
 	//设置是否被威胁
-	void setSunPrice(int);
-	//设置阳光值
 };
 
 /* QPlants:			射击型植物类
@@ -81,4 +77,20 @@ public:
 	//死亡动画
 	bool inRange(QMyObject*);
 	//在攻击范围
+};
+
+class QSunFlower :public QPlants
+{
+protected:
+	int				lastSunShine;	//上一次创建阳光的间隔
+	QMySunShine		*newSunShine;	//新的阳光指针
+public:
+	QSunFlower(QGraphicsScene *parent = 0);
+	QSunFlower(int x, int y, QGraphicsScene *parent = 0);
+	~QSunFlower();
+public:
+	void makeSunShine();
+	//制作一个阳光
+	void timerEvent(QTimerEvent *event);
+	//计时器事件
 };
