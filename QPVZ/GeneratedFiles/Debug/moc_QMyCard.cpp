@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_QMyCard_t {
-    QByteArrayData data[8];
-    char stringdata0[82];
+    QByteArrayData data[9];
+    char stringdata0[86];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,12 +36,13 @@ QT_MOC_LITERAL(3, 24, 8), // "QMyCard*"
 QT_MOC_LITERAL(4, 33, 10), // "moveToBank"
 QT_MOC_LITERAL(5, 44, 12), // "ReadytoPlant"
 QT_MOC_LITERAL(6, 57, 11), // "objectNames"
-QT_MOC_LITERAL(7, 69, 12) // "moveAccepted"
+QT_MOC_LITERAL(7, 69, 12), // "moveAccepted"
+QT_MOC_LITERAL(8, 82, 3) // "pos"
 
     },
     "QMyCard\0moveToSelector\0\0QMyCard*\0"
     "moveToBank\0ReadytoPlant\0objectNames\0"
-    "moveAccepted"
+    "moveAccepted\0pos"
 };
 #undef QT_MOC_LITERAL
 
@@ -52,7 +53,7 @@ static const uint qt_meta_data_QMyCard[] = {
        0,       // classname
        0,    0, // classinfo
        4,   14, // methods
-       0,    0, // properties
+       1,   50, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
@@ -73,6 +74,9 @@ static const uint qt_meta_data_QMyCard[] = {
 
  // slots: parameters
     QMetaType::Void, QMetaType::QPointF,    2,
+
+ // properties: name, type, flags
+       8, QMetaType::QPointF, 0x00095103,
 
        0        // eod
 };
@@ -139,6 +143,26 @@ void QMyCard::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
             }
         }
     }
+#ifndef QT_NO_PROPERTIES
+    else if (_c == QMetaObject::ReadProperty) {
+        QMyCard *_t = static_cast<QMyCard *>(_o);
+        Q_UNUSED(_t)
+        void *_v = _a[0];
+        switch (_id) {
+        case 0: *reinterpret_cast< QPointF*>(_v) = _t->pos(); break;
+        default: break;
+        }
+    } else if (_c == QMetaObject::WriteProperty) {
+        QMyCard *_t = static_cast<QMyCard *>(_o);
+        Q_UNUSED(_t)
+        void *_v = _a[0];
+        switch (_id) {
+        case 0: _t->setPos(*reinterpret_cast< QPointF*>(_v)); break;
+        default: break;
+        }
+    } else if (_c == QMetaObject::ResetProperty) {
+    }
+#endif // QT_NO_PROPERTIES
 }
 
 const QMetaObject QMyCard::staticMetaObject = {
@@ -174,6 +198,23 @@ int QMyCard::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
             qt_static_metacall(this, _c, _id, _a);
         _id -= 4;
     }
+#ifndef QT_NO_PROPERTIES
+   else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
+            || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
+        qt_static_metacall(this, _c, _id, _a);
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyDesignable) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyScriptable) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyStored) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyEditable) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyUser) {
+        _id -= 1;
+    }
+#endif // QT_NO_PROPERTIES
     return _id;
 }
 

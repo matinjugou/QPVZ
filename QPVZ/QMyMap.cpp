@@ -6,7 +6,6 @@ QMyMap::QMyMap(QWidget *parent)
 	for (int i = 0; i < 5; i++)
 		for (int j = 0; j < 9; j++)
 		{
-			Map[i][j] = NULL;
 			isPlantedMap[i][j] = false;
 		}
 	MapRect.setX(245);
@@ -90,7 +89,6 @@ QPointF QMyMap::PointtoPos(QPoint itemPoint)
 void QMyMap::Plantrequest_Ready(objectNames itemname, QPointF itemPos)
 {
 	ReadytoPlant->setVisible(true);
-	QPoint tempPoint = PostoPoint(itemPos);
 	QRectF Pixbounding = ReadytoPlant->boundingRect();
 	changePixmap(itemname);
 	ReadytoPlant->setPos(itemPos.x() - (Pixbounding.width() / 2), itemPos.y() - (Pixbounding.height() / 2));
@@ -108,14 +106,20 @@ void QMyMap::Plantrequest_Update(QPointF itemPos)
 		QPoint tempPoint = PostoPoint(itemPos);
 		int x = tempPoint.x();
 		int y = tempPoint.y();
-		if (isPlantedMap[x][y] == true)
+		if ((isPlantedMap[x][y] == true) || (x >= 9))
 		{
 			ReadytoPlant_Shadow->setVisible(false);
 			QStatusString.setPlainText(QString::number(x, 10) + " " + QString::number(y, 10) + ":True");
 		}
 		else
 		{
-			ReadytoPlant_Shadow->setPos(PointtoPos(tempPoint));
+			ReadytoPlant_Shadow->setPointinMap(tempPoint);
+			QPointF tempPos;
+			tempPos = PointtoPos(tempPoint);
+			QRectF tempRect = ReadytoPlant_Shadow->boundingRect();
+			tempPos.setX(tempPos.x() + (MapRect.width() / 12 - tempRect.width()) / 2);
+			tempPos.setY(tempPos.y() + (MapRect.height() / 5) - 27 - tempRect.height());
+			ReadytoPlant_Shadow->setPos(tempPos);
 			ReadytoPlant_Shadow->setVisible(true);
 			QStatusString.setPlainText(QString::number(x, 10) + " " + QString::number(y, 10) + ":False");
 		}
@@ -126,14 +130,14 @@ void QMyMap::Plantrequest_Try()
 {
 	if (ReadytoPlant_Shadow->isVisible())
 	{
-		pointNewItemtoPlantOn = PostoPoint(ReadytoPlant_Shadow->scenePos());
+		pointNewItemtoPlantOn = ReadytoPlant_Shadow->getPointinMap();
 		emit addItem(ReadytoPlant->objectTypeNames, ReadytoPlant_Shadow->scenePos());
 		QStatusString.setPlainText(QString::number(pointNewItemtoPlantOn.x(), 10) + " " + QString::number(pointNewItemtoPlantOn.y(), 10));
 		Plantrequest_Done();
 	}
 	else
 	{
-		//判断如果点在画面的其他位置就取消
+		Plantrequest_Done();
 	}
 }
 
@@ -167,7 +171,8 @@ void QMyMap::examineMap()
 {
 	for (const auto &i : PlantsinMap)
 	{
-		if (i->getHP() > 0)
+		qDebug() << &i << " ";
+//		if (i->getHP() > 0)
 		{
 			i->setThreatend(false);
 			for (const auto &j : ZombiesinMap)
@@ -179,12 +184,15 @@ void QMyMap::examineMap()
 				}
 			}
 		}
-		else if (i->getHP() < 0)
-		{
-			PlantsinMap.removeAll(i);
-			i->Died();
-		}
+//		else if (i->getHP() < 0)
+//		{
+//			PlantsinMap.removeAll(i);
+//			i->Died();
+//
+//			qDebug() << &i << ":Dead ";
+//		}
 	}
+	qDebug() << PlantsinMap.size() << "";
 	for (const auto &i : ZombiesinMap)
 	{
 		i->setExcited(false);
@@ -208,15 +216,15 @@ void QMyMap::examineMap()
 		{
 			if (i->inRange(j))
 			{
-				i->hurt(j);
+				i->setIsExcited(true, j);
 				break;
 			}
 		}
 		i->setPointinMap(PostoPoint(i->pos()));
-		if (i->pos().x() > 1000)
-		{
-			removefromMap(Weapons, i);
-		}
+//		if (i->pos().x() > 1000)
+//		{
+//			removefromMap(Weapons, i);
+//		}
 	}
 /*	debugweek++;
 	if (debugweek > 50)
@@ -251,18 +259,21 @@ void QMyMap::Itemadded(QMyObject* newItemAdded)
 		int x = pointNewItemtoPlantOn.x();
 		int y = pointNewItemtoPlantOn.y();
 		isPlantedMap[x][y] = true;
-		Map[x][y] = newPlanttoLoad;
 		newPlanttoLoad->setPointinMap(x, y);
 		PlantsinMap.push_back(newPlanttoLoad);
-		//newPlanttoLoad->setMaptoLoad(this);
 		connect(newPlanttoLoad, SIGNAL(addtomap(objectType, QMyObject*)), this, SLOT(addtoMap(objectType, QMyObject*)));
 		connect(newPlanttoLoad, SIGNAL(removefrommap(objectType, QMyObject*)), this, SLOT(removefromMap(objectType, QMyObject*)));
 	}
 	else if (newItemAdded->getType() == Zombies)
 	{
-		newItemAdded->setPointinMap(PostoPoint(newItemAdded->pos()));
+		QPointF tempPos = newItemAdded->pos();
+		tempPos.setX(tempPos.x() + (MapRect.width() / 12 - newItemAdded->boundingRect().width()) / 2);
+		tempPos.setY(tempPos.y() + MapRect.height() / 5 - newItemAdded->boundingRect().height() - 27);
+		newItemAdded->setPos(tempPos);
+		tempPos.setX(tempPos.x() + newItemAdded->boundingRect().width() / 2);
+		tempPos.setY(tempPos.y() + newItemAdded->boundingRect().height() - 27);
+		newItemAdded->setPointinMap(PostoPoint(tempPos));
 		ZombiesinMap.push_back((QZombies*)newItemAdded);
-		connect(newItemAdded, SIGNAL(addtomap(objectType, QMyObject*)), this, SLOT(addtoMap(objectType, QMyObject*)));
 		connect(newItemAdded, SIGNAL(removefrommap(objectType, QMyObject*)), this, SLOT(removefromMap(objectType, QMyObject*)));
 	}
 	
@@ -291,6 +302,8 @@ void QMyMap::addtoMap(objectType mytypename, QMyObject* myobject)
 	case Weapons:
 	{
 		WeaponsinMap.push_back((QWeapons*)myobject);
+		Mapscene->addItem(myobject);
+		connect(myobject, SIGNAL(removefrommap(objectType, QMyObject*)), this, SLOT(removefromMap(objectType, QMyObject*)));
 	}
 	break;
 	default:
@@ -305,21 +318,18 @@ void QMyMap::removefromMap(objectType mytypename, QMyObject* myobject)
 	case Plants:
 	{
 		PlantsinMap.removeAll((QPlants*)myobject);
-		myobject->Died();
+		QPoint tempPoint = myobject->getPointinMap();
+		isPlantedMap[tempPoint.x()][tempPoint.y()] = false;
 	}
 	break;
 	case Zombies:
 	{
 		ZombiesinMap.removeAll((QZombies*)myobject);
-		myobject->killMyTimer();
-		delete myobject;
 	}
 	break;
 	case Weapons:
 	{
 		WeaponsinMap.removeAll((QWeapons*)myobject);
-		myobject->killMyTimer();
-		delete myobject;
 	}
 	break;
 	default:

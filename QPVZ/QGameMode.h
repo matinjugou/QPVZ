@@ -7,6 +7,8 @@
 #include "QCardBanks.h"
 #include "QCardSelector.h"
 #include "QMyMap.h"
+#include "QMySunShine.h"
+
 struct Node
 {
 	objectNames Zombie_Type;
@@ -66,6 +68,9 @@ private:
 	int stage;
 	int horizontalScollBarValue;
 	int TimerID;
+	int barMoveed;
+	QMySunShine *newSunShine;
+	QPropertyAnimation *animation;
 	QCardSelector *Selector;	//应该在(0, 87)的位置
 	QCardBank *Bank;
 	QMyObject *Background;
@@ -79,6 +84,7 @@ public:
 	~QGameAdventureMode();
 public:
 	void timerEvent(QTimerEvent *event);
+	void moveScrollBar(int fromvalue, int arrivevalue, int duration);
 public slots:
 	void GameStart();
 };

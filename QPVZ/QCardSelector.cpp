@@ -16,6 +16,7 @@ QCardSelector::QCardSelector(QWidget *parent)
 	startGame->setPos(137, 420);
 	addToGroup(startGame);
 	connect(startGame, SIGNAL(clicked()), this, SIGNAL(startGameNow()));
+	animation = new QPropertyAnimation(this, "pos");
 }
 
 QCardSelector::QCardSelector(int totcard, const objectNames cardlist[], QWidget *parent)
@@ -39,12 +40,33 @@ QCardSelector::QCardSelector(int totcard, const objectNames cardlist[], QWidget 
 	startGame->setPos(137, 420);
 	addToGroup(startGame);
 	connect(startGame, SIGNAL(clicked()), this, SIGNAL(startGameNow()));
+	animation = new QPropertyAnimation(this, "pos");
 }
 
 QCardSelector::~QCardSelector()
 {
 
 
+}
+
+void QCardSelector::moveTo(int x, int y, int duration)
+{
+	animation->setDuration(duration);
+	animation->setStartValue(pos());
+	animation->setEndValue(QPoint(x, y));
+	animation->setEasingCurve(QEasingCurve::InOutCubic);
+	animation->start();
+}
+
+void QCardSelector::moveTo(QPointF targetPos, int duration)
+{
+	qreal x = targetPos.x();
+	qreal y = targetPos.y();
+	animation->setDuration(duration);
+	animation->setStartValue(pos());
+	animation->setEndValue(QPoint(x, y));
+	animation->setEasingCurve(QEasingCurve::InOutCubic);
+	animation->start();
 }
 
 void QCardSelector::moveAccepted(QPointF itemPos, QMyCard* cardtomove)

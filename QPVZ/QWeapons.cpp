@@ -24,7 +24,11 @@ QPeas::QPeas(int power, int speed, int direction, int x, int y, QWidget* parent)
 	setPos(x, y);
 	Direction = direction;
 	TimerID = startTimer(20);
-	emit addtomap(Weapons, this);
+	isWeaponUsed = false;
+	beExcited = false;
+	isDead = 0;
+	DeadTimeCount = 0;
+	//	emit addtomap(Weapons, this);
 }
 QPeas::QPeas(int x, int y, QWidget* parent)
 //	: QWeapons(parent)
@@ -33,11 +37,15 @@ QPeas::QPeas(int x, int y, QWidget* parent)
 	Pictures.push_back(QPixmap("Resources/pvz-material/images/weapoons/PeaBulletHit.png"));
 	setMyPixmap(0);
 	Power = 20;
-	Speed = 10;
+	Speed = 5;
 	setPos(x, y);
 	Direction = 1;
 	TimerID = startTimer(20);
-	emit addtomap(Weapons, this);
+	DeadTimeCount = 0;
+	isDead = 0;
+//	emit addtomap(Weapons, this);
+	isWeaponUsed = false;
+	beExcited = false;
 }
 
 QPeas::~QPeas()
@@ -45,24 +53,55 @@ QPeas::~QPeas()
 
 }
 
-void QPeas::hurt(QMyObject* enemy)
+void QPeas::hurt()
 {
-	if (enemy->getType() == Zombies)
+	if (!isWeaponUsed)
 	{
-		QZombies *zombie = (QZombies* )enemy;
-		zombie->killHP(Power);
+		if (enemy->getType() == Zombies)
+		{
+			QZombies *zombie = (QZombies*)enemy;
+			zombie->killHP(Power);
+			isWeaponUsed = true;
+		}
 	}
-	Died();
+//	Died();
 }
 
 void QPeas::timerEvent(QTimerEvent* event)
 {
+	if (beExcited)
+	{
+		hurt();
+	}
+	if (isWeaponUsed)
+	{
+		emit removefrommap(Weapons, this);
+		if (isDead == 0)
+		{
+			setPixmap(Pictures[1]);
+			isDead++;
+		}
+		DeadTimeCount++;
+		if ((DeadTimeCount > 7) && (isDead == 1))
+		{
+			setVisible(false);
+			isDead++;
+		}
+		if ((DeadTimeCount > 50) && (isDead == 2))
+		{
+			killTimer(TimerID);
+			delete this;
+		}
+		return;
+	}
 	setPos(pos().x() + Speed * Direction, pos().y());
 }
 
 bool QPeas::inRange(QMyObject* myobject)
 {
-	if (myobject->getPointinMap() == PointinMap)
+	QPointF tempPos = myobject->pos();
+	tempPos.setX(tempPos.x() + myobject->boundingRect().width() / 2);
+	if ((((tempPos.x() - 5) < pos().x()) && ((tempPos.x() + 5) > pos().x())) && (myobject->getPointinMap().y() == PointinMap.y()))
 		return true;
 	return false;
 }

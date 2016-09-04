@@ -9,6 +9,7 @@ class QItemShade :public QObject, public QGraphicsPixmapItem
 public:
 	QPixmap ShadePixmap;
 	objectNames objectTypeNames;
+	QPoint PointinMap;
 public:
 	QItemShade(QWidget *parent = 0);
 	~QItemShade();
@@ -20,4 +21,12 @@ public:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void LoadPixmap(const QString &filename);
+	QPoint getPointinMap()
+	{
+		return PointinMap;
+	}
+	void setPointinMap(QPoint temppoint)
+	{
+		PointinMap = temppoint;
+	}
 };

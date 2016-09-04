@@ -5,14 +5,17 @@
 class QZombies:public QMyObject
 {
 	Q_OBJECT
+	Q_PROPERTY(QPointF pos READ pos WRITE setPos)
 protected:
 	int Power;
 	int Speed;
 	int Direction;
 	int WalkType;
 	int Walkstop;
+	int movestatus;
 	bool hurtStoped;
 	bool hurtStarted;
+	int DeadTimeCount;
 	objectNames Zombie_Name;
 	QEquipments *Equipment;
 	bool beExcited;//%
@@ -38,5 +41,6 @@ public:
 	void hurt();
 	bool inRange(QMyObject*);
 	void timerEvent(QTimerEvent *event);
+	void walk();
 };
 

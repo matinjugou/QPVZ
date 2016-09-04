@@ -6,8 +6,12 @@ enum cardType{chosen, unchosen, inGame};
 class QMyCard :public QMyObject
 {
 	Q_OBJECT
+	Q_PROPERTY(QPointF pos READ pos WRITE setPos)
 protected:
 	int Sunprice;
+	int CD;
+	bool inCD;
+	int currentTime;
 	cardType chosenType;
 	QString nameText;
 	objectNames objectTypeName;
@@ -23,9 +27,19 @@ signals:
 public slots:
 	void moveAccepted(QPointF);
 public:
+	void CDStart();
+	void timerEvent(QTimerEvent *event);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void setChosenType(cardType);
 	void setCardOriginPos(QPointF);
+	int getSunPrice()
+	{
+		return Sunprice;
+	}
+	bool getInCD()
+	{
+		return inCD;
+	}
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 };
 

@@ -8,18 +8,31 @@ protected:
 	int Power;
 	int Speed;
 	int Direction;
+	bool beExcited;
+	bool isWeaponUsed;
+	QMyObject* enemy;
 public:
 	QWeapons(QWidget* parent = 0);
 	~QWeapons();
 public:
-	virtual void hurt(QMyObject *enemy){}
+	virtual void hurt(){}
 	void setPower(int);
 	int getPower();
 	void setSpeed(int);
 	int getSpeed();
 	void setDirection(int);
 	int getDirection();
-
+	int DeadTimeCount;
+	int isDead;
+	void setIsUsed(bool value)
+	{
+		isWeaponUsed = value;
+	}
+	void setIsExcited(bool value, QMyObject* myobject)
+	{
+		beExcited = value;
+		enemy = myobject;
+	}
 	virtual bool inRange(QMyObject*) { return false; }
 };
 
@@ -30,7 +43,7 @@ public:
 	QPeas(int power, int speed, int direction, int x, int y, QWidget* parent = 0);
 	~QPeas();
 public:
-	void hurt(QMyObject *enemy);
+	void hurt();
 	void timerEvent(QTimerEvent* event);
 	bool inRange(QMyObject*);
 };

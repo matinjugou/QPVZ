@@ -25,10 +25,11 @@ void QMyCard::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	{
 		emit moveToSelector(this);
 		chosenType = unchosen;
-		setPos(cardPosinSelector);
+		moveTo(cardPosinSelector, 300);
 	}
 	else
 	{
+		qDebug() << pos().x() << " " << pos().y() << "\n";
 		emit ReadytoPlant(objectTypeName, pos(), this);
 	}
 	
@@ -37,7 +38,7 @@ void QMyCard::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void QMyCard::moveAccepted(QPointF PostoLoad)
 {
 //	moveTo(PostoLoad.x(), PostoLoad.y(), 5);
-	setPos(PostoLoad);
+	moveTo(PostoLoad, 300);
 	chosenType = chosen;
 }
 
@@ -51,13 +52,30 @@ void QMyCard::setCardOriginPos(QPointF originPos)
 	cardPosinSelector = originPos;
 }
 
+void QMyCard::CDStart()
+{
+	TimerID = startTimer(20);
+	inCD = true;
+}
+
+void QMyCard::timerEvent(QTimerEvent *event)
+{
+	currentTime++;
+	CardCover.setRect(0, 0, 50, 70 - ((double)currentTime / (double)(CD * 50)) * 70);
+	if (currentTime == (CD * 50))
+	{
+		killTimer(TimerID);
+		currentTime = 0;
+		inCD = false;
+	}
+}
+
 void QMyCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	QPixmap pixmap = this->pixmap();
 	QRect rect = pixmap.rect();
 
 	painter->drawPixmap(rect, pixmap);
-
 
 	//print name,calculate the text's heigh & width for center layout
 	QPen pen(Qt::black);
@@ -87,8 +105,17 @@ PeaShooterCard::PeaShooterCard(QWidget *parent)
 	setPixmap(Pictures[0]);
 	Sunprice = 100;
 	nameText = QString::number(Sunprice, 10);
-	CardCover.setRect(0, 0, 50, 70);
+	CardCover.setParentItem(this);
+	QBrush mybrush;
+	mybrush.setColor(Qt::black);
+	mybrush.setStyle(Qt::Dense4Pattern);
+	
+	CardCover.setBrush(mybrush);
+	CardCover.setRect(0, 0, 50, 0);
 	CardCover.setOpacity(0.7);
+	CD = 7;
+	currentTime = 0;
+	inCD = false;
 }
 
 PeaShooterCard::~PeaShooterCard()

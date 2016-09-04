@@ -1,2 +1,16 @@
-﻿  QPlants.cpp
+﻿  Moc'ing QMyCard.h...
+  moc_QCardBanks.cpp
+  moc_QCardSelector.cpp
+  moc_QGameMode.cpp
+  moc_QMyCard.cpp
+  moc_qpvz.cpp
+  QCardBanks.cpp
+  QCardSelector.cpp
+  QGameController.cpp
+  QGameMode.cpp
+  QGameModeLoader.cpp
+  QMyCard.cpp
+  main.cpp
+  qpvz.cpp
+  正在生成代码...
   QPVZ.vcxproj -> D:\文档\清华大学\程序设计实训\作业\QPVZ\x64\Debug\QPVZ.exe

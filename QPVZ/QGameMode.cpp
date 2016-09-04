@@ -103,7 +103,7 @@ QGameAdventureMode::QGameAdventureMode(QWidget *parent)
 	Scene->addItem(Bank);
 	Scene->addItem(Selector);
 	Scene->addItem(MappingSystem);
-//	MappingSystem->setScene(Scene);
+	MappingSystem->setScene(Scene);
 
 	connect(Selector, SIGNAL(moveRequest(QMyCard*)), Bank, SLOT(moveRequested(QMyCard*)));
 	connect(Selector, SIGNAL(removeInform(QMyCard*)), Bank, SLOT(removeConfirm(QMyCard*)));
@@ -119,6 +119,8 @@ QGameAdventureMode::QGameAdventureMode(QWidget *parent)
 	currentTime = 0;
 	stage = 0;
 	horizontalScollBarValue = 0;
+	barMoveed = 0;
+	animation = new QPropertyAnimation;
 //	emit exchangetoScene(Scene);
 }
 
@@ -135,6 +137,17 @@ void QGameAdventureMode::GameStart()
 	}
 }
 
+void QGameAdventureMode::moveScrollBar(int fromvalue, int arrivevalue, int duration)
+{
+	animation->setTargetObject(View->horizontalScrollBar());
+	animation->setPropertyName("value");
+	animation->setDuration(duration);
+	animation->setStartValue(fromvalue);
+	animation->setEndValue(arrivevalue);
+	animation->setEasingCurve(QEasingCurve::InOutCubic);
+	animation->start();
+}
+
 void QGameAdventureMode::timerEvent(QTimerEvent *event)
 {
 	currentTime++;
@@ -142,46 +155,52 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 	{
 		if ((currentTime >= 50) && (currentTime < 75))
 		{
-			horizontalScollBarValue += 20;
-			View->horizontalScrollBar()->setValue(horizontalScollBarValue);
+			if (barMoveed == 0)
+			{
+				moveScrollBar(0, 500, 700);
+				barMoveed = 1;
+			}
 		}
-		else if ((currentTime > 100) && (currentTime <= 150))
+		else if ((currentTime > 75) && (currentTime <= 85))
 		{
-			if (Selector->pos().y() > 87)
+			if (barMoveed == 1)
 			{
-				Selector->setPos(Selector->pos().x(), Selector->pos().y() - 100);
+				Selector->moveTo(500, 87, 200);
+				Bank->moveTo(500, 0, 200);
+				barMoveed = 2;
 			}
-			if (Bank->pos().y() < 0)
-			{
-				Bank->setPos(Bank->pos().x(), Bank->pos().y() + 20);
-			}
-
 		}
-		else if (currentTime >= 150)
+		else if (currentTime >= 85)
 		{
 			currentTime = 0;
 			killTimer(TimerID);
+			barMoveed = 0;
 		}
 	}
 	else if (stage == 2)
 	{
 		if (currentTime <= 5)
 		{
-			Selector->setPos(Selector->pos().x(), Selector->pos().y() + 200);
-		}
-		else if ((currentTime > 5) && (currentTime <= 20))
-		{
-			horizontalScollBarValue -= 20;
-			View->horizontalScrollBar()->setValue(horizontalScollBarValue);
-			if (Bank->pos().x() > 20)
+			if (barMoveed == 0)
 			{
-				Bank->setPos(Bank->pos().x() - 18, Bank->pos().y());
+				Selector->moveTo(500, 600, 100);
+				barMoveed = 1;
+			}
+		}
+		else if ((currentTime > 5) && (currentTime <= 30))
+		{
+			if (barMoveed == 1)
+			{
+				moveScrollBar(500, 200, 500);
+				Bank->moveTo(220, 0, 500);
+				barMoveed = 2;
 			}
 		}
 		else if (currentTime > 20)
 		{
 			currentTime = 0;
 			stage++;
+			barMoveed = 0;
 		}
 	}
 	else if (stage == 3)
@@ -193,10 +212,22 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 			{
 				QPoint tempPoint;
 				int y = rand() % 4;
-				tempPoint.setX(8);
+				tempPoint.setX(10);
 				tempPoint.setY(y);
 				addItem(CommonZombie, MappingSystem->PointtoPos(tempPoint));
 			}
+		}
+		if (currentTime % 500 == 0)
+		{
+			newSunShine = new QMySunShine;
+			QPointF tempPos;
+			tempPos.setX(MappingSystem->getRect().width() / 12 * (rand() % 9) + MappingSystem->getRect().x());
+			tempPos.setY(-60);
+			newSunShine->setPos(tempPos);
+			Scene->addItem(newSunShine);
+			tempPos.setY(MappingSystem->getRect().height() / 5 * (rand() % 4) + MappingSystem->getRect().y());
+			newSunShine->moveTo(tempPos, 3000, QEasingCurve::Linear);
+			connect(newSunShine, SIGNAL(BeTaken()), Bank, SLOT(SunShineAdded()));
 		}
 	}
 }
@@ -210,5 +241,6 @@ QGameAdventureMode::~QGameAdventureMode()
 {
 	delete Selector;
 	delete Bank;
+	delete animation;
 	delete MappingSystem;
 }

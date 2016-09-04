@@ -5,21 +5,23 @@
 #include "qvector.h"
 
 enum objectType { Plants, Zombies, CommonObjects, Weapons};
-enum objectNames { PeaShooter, CommonZombie };
+enum objectNames { PeaShooter, CommonZombie, SunShine};
 
 class QMyObject :public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT
+	Q_PROPERTY(QPointF pos READ pos WRITE setPos)
 public:
 	int TimerID;
 protected:
 	int HP;
 	int GifNumber;
+	int isDead;
 	QVector<QPixmap> Pictures;
 	QVector<QMovie*> Gifs;
 	QMovie myGif;
 	objectType objectTypeName;
-	QGraphicsItemAnimation *animation;
+	QPropertyAnimation *animation;
 	QTimeLine *timer;
 	QPoint PointinMap;
 public:
@@ -30,7 +32,10 @@ signals:
 	void addtomap(objectType, QMyObject*);
 	void removefrommap(objectType, QMyObject*);
 public slots:
-	void moveTo(int x, int y, int speed);
+	void moveTo(int x, int y, int duration);
+	void moveTo(int x, int y, int duration, QEasingCurve::Type type);
+	void moveTo(QPointF targetPos, int duration);
+	void moveTo(QPointF targetPos, int duration, QEasingCurve::Type type);
 	void setnewPixmap();
 	void setnewPixmap(int);
 public:

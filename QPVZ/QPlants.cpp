@@ -74,6 +74,8 @@ void QPeaShooter::timerEvent(QTimerEvent *event)
 {
 	if (HP <= 0)
 	{
+		killTimer(TimerID);
+		emit removefrommap(Plants, this);
 		Died();
 	}
 	if (beThreatened)
@@ -81,7 +83,7 @@ void QPeaShooter::timerEvent(QTimerEvent *event)
 		if (lastShoot == CD)
 		{
 			lastShoot = 0;
-//			Shoot();
+			Shoot();
 		}
 		lastShoot++;
 	}
@@ -94,15 +96,17 @@ void QPeaShooter::timerEvent(QTimerEvent *event)
 void QPeaShooter::Died()
 {
 	//TODO ËÀÍö¶¯»­
-	killTimer(TimerID);
+	qDebug() << "TimerKilled\n";
 	setVisible(false);
-	delete this;
+	deleteLater();
+	QPeaShooter *pPea = this;
+	qDebug() << &pPea << "Dead\n";
 }
 
 void QPeaShooter::Shoot()
 {
-	weapons = new QPeas(50, 0);
-	weapons->setParentItem(this);
+	weapons = new QPeas(pos().x() + 10, pos().y());
+//	weapons->setParentItem(this);
 	qDebug() << "Hello, wordld";
 	emit addtomap(Weapons, weapons);
 //	connect(weapons, SIGNAL(addtomap(objectType, QMyObject*)), MaptoLoad, SLOT(addtoMap(objectType, QMyObject*)));
@@ -112,7 +116,7 @@ void QPeaShooter::Shoot()
 
 bool QPeaShooter::inRange(QMyObject* myobject)
 {
-	if (myobject->getPointinMap().y() == PointinMap.y())
+	if ((myobject->getPointinMap().y() == PointinMap.y()) && (myobject->getPointinMap().x() <= 8))
 	{
 		qDebug() << "Plants" << " " << getPointinMap().x() << " " << getPointinMap().y();
 		qDebug() << "Zombie" << " " << myobject->getPointinMap().x() << " " << myobject->getPointinMap().y() << "\n";

@@ -16,22 +16,48 @@ objectType QMyObject::getType()
 	return objectTypeName;
 }
 
-void QMyObject::moveTo(int x, int y, int speed)	//ÐèÒªÖØÐ´
+void QMyObject::moveTo(int x, int y, int duration)
 {
-	int totFrame = abs((pos().y() - y)) / ((double)speed);
-	int stepx = (x - pos().x()) / ((double)speed);
-	int stepy = (y - pos().y()) / ((double)speed);
-	timer = new QTimeLine(totFrame * 20);
-	timer->setFrameRange(0, totFrame);
+	animation = new QPropertyAnimation(this, "pos");
+	animation->setDuration(duration);
+	animation->setStartValue(pos());
+	animation->setEndValue(QPoint(x, y));
+	animation->setEasingCurve(QEasingCurve::InOutCubic);
+	animation->start();
+}
 
-	animation = new QGraphicsItemAnimation;
-	animation->setItem(this);
-	animation->setTimeLine(timer);
+void QMyObject::moveTo(int x, int y, int duration, QEasingCurve::Type type)
+{
+	animation = new QPropertyAnimation(this, "pos");
+	animation->setDuration(duration);
+	animation->setStartValue(pos());
+	animation->setEndValue(QPoint(x, y));
+	animation->setEasingCurve(type);
+	animation->start();
+}
 
-	for (int i = 0; i < totFrame; ++i)
-		animation->setPosAt(i / ((double)totFrame), QPointF(pos().x() + stepx, pos().y() + stepy));
+void QMyObject::moveTo(QPointF targetPos, int duration)
+{
+	animation = new QPropertyAnimation(this, "pos");
+	qreal x = targetPos.x();
+	qreal y = targetPos.y();
+	animation->setDuration(duration);
+	animation->setStartValue(pos());
+	animation->setEndValue(QPoint(x, y));
+	animation->setEasingCurve(QEasingCurve::InOutCubic);
+	animation->start();
+}
 
-	timer->start();
+void QMyObject::moveTo(QPointF targetPos, int duration, QEasingCurve::Type type)
+{
+	animation = new QPropertyAnimation(this, "pos");
+	qreal x = targetPos.x();
+	qreal y = targetPos.y();
+	animation->setDuration(duration);
+	animation->setStartValue(pos());
+	animation->setEndValue(QPoint(x, y));
+	animation->setEasingCurve(type);
+	animation->start();
 }
 
 void QMyObject::pushbackPixmap(QPixmap pic)

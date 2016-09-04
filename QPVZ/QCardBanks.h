@@ -4,11 +4,13 @@
 class QCardBank :public QObject, public QGraphicsItemGroup
 {
 	Q_OBJECT
+	Q_PROPERTY(QPointF pos READ pos WRITE setPos)
 private:
 	int statusType; //0 presen out of game, 1 pres in game
 	int sunshineNum;
 	QGraphicsPixmapItem *Board;
 	QGraphicsTextItem *sunshineText;
+	QPropertyAnimation *animation;
 	QMyCard* cardList[8];
 	QMyCard* cardReadytoPlant;
 	int totCard;
@@ -19,9 +21,18 @@ signals:
 	void moveAccepted(QPointF, QMyCard*); //接受置入请求并回传位置给卡片,position与QPointF之后需要统一
 	void ReadytoPlant(objectNames, QPointF);
 public slots:
+	void SunShineAdded()
+	{
+		sunshineNum += 25;
+	}
 	void plantRequestDone();
 	void moveRequested(QMyCard*);	//接收卡片的置入请求，并得到地址便于回传
 	void removeConfirm(QMyCard*);
 	void ReadytoPlantFromCard(objectNames, QPointF, QMyCard*);
 	void Initconnection();
+public:
+	void moveTo(int x, int y, int duration);
+	void moveTo(QPointF targetPos, int duration);
+	void timerEvent(QTimerEvent *event);
+
 };

@@ -104,9 +104,11 @@ QCommonZombie::QCommonZombie(int x, int y, QWidget *parent)
 	Enemy = NULL;
 	hurtStarted = false;
 	hurtStoped = true;
+	isDead = 0;
 	setPos(x, y);
 	Walkstop = 0;
-
+	DeadTimeCount = 0;
+	movestatus = 0;
 //	myGif.jumpToFrame(0);
 //	connect(&myGif, SIGNAL(frameChanged(int)), this, SLOT(setnewPixmap()));
 //	myGif.start();
@@ -130,8 +132,34 @@ void QCommonZombie::hurt()
 	Enemy->killHP(Power);
 }
 
+
 void QCommonZombie::timerEvent(QTimerEvent *event)
 {
+	if (HP < 0)
+	{
+		if (isDead == 0)
+		{
+			emit removefrommap(Zombies, this);
+			setMyGif(10);
+			isDead++;
+		}
+		DeadTimeCount++;
+		if (DeadTimeCount <= 70)
+		{
+			walk();
+		}
+		if ((DeadTimeCount > 70) && (isDead == 1))
+		{
+			setMyGif(8);
+			isDead++;
+		}
+		if (DeadTimeCount > 100)
+		{
+			killTimer(TimerID);
+			delete this;
+		}
+		return;
+	}
 	if (beExcited)
 	{
 		if (!hurtStarted)
@@ -151,12 +179,68 @@ void QCommonZombie::timerEvent(QTimerEvent *event)
 			Walkstop = 0;
 			setMyGif(WalkType);
 		}
-		Walkstop++;	//等待调参数
-		if ((Walkstop < 16))
-			setPos(pos().x() + Direction * Speed, pos().y());
-	//	else if (Walkstop > 36)
-		else if (Walkstop > 40)
+		walk();
+	}
+}
+
+void QCommonZombie::walk()
+{
+	Walkstop++;
+	switch (WalkType)
+	{
+	case 4:
+	{
+		if ((Walkstop < 55))
+		{
+			if (movestatus == 0)
+			{
+				moveTo(pos().x() - 16, pos().y(), 550);
+				movestatus = 1;
+			}
+		}
+		else if (Walkstop > 55)
+		{
 			Walkstop = 0;
+			movestatus = 0;
+		}
+	}
+	break;
+	case 5:
+	{
+		if ((Walkstop < 75))
+		{
+			if (movestatus == 0)
+			{
+				moveTo(pos().x() - 16, pos().y(), 750);
+				movestatus = 1;
+			}
+		}
+		else if (Walkstop > 75)
+		{
+			Walkstop = 0;
+			movestatus = 0;
+		}
+	}
+	break;
+	case 6:
+	{
+		if ((Walkstop < 45))
+		{
+			if (movestatus == 0)
+			{
+				moveTo(pos().x() - 16, pos().y(), 450);
+				movestatus = 1;
+			}
+		}
+		else if (Walkstop > 45)
+		{
+			Walkstop = 0;
+			movestatus = 0;
+		}
+	}
+	break;
+	default:
+		break;
 	}
 }
 

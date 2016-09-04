@@ -12,8 +12,7 @@ private:
 
 	int debugweek = 0;
 
-//	QGraphicsScene* Mapscene;
-	QMyObject *Map[12][5];	//初始化为全部为空指针
+	QGraphicsScene* Mapscene;
 	bool isPlantedMap[12][5];		//初始化为全false
 	QRectF MapRect;
 	QPoint pointNewItemtoPlantOn;
@@ -43,6 +42,10 @@ public:
 public:
 	QPoint PostoPoint(QPointF);
 	QPointF PointtoPos(QPoint);
+	QRectF getRect()
+	{
+		return MapRect;
+	}
 	void changePixmap(objectNames);
 	void timerEvent(QTimerEvent *event);
 	void examineMap();
@@ -55,5 +58,8 @@ public:
 		return horizontalLines[i];
 	}
 
-//	void setScene(QGraphicsScene*);
+	void setScene(QGraphicsScene* scene)
+	{
+		Mapscene = scene;
+	}
 };
