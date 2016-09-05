@@ -62,7 +62,7 @@ MAPPING SYSTEM Finished(about 50%)</br>
 明天一天搞定冒险模式和音乐！不能再等了！</br>
 感觉时间已经很紧张了QAQ</br>
 
-<h1>Update 6</h1>
+<h1>Update 7</h1>
 时间：2016年9月6日 2:56
 ---------
 <ol>实现了一些小目标
