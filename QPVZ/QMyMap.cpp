@@ -4,10 +4,11 @@
 QMyMap::QMyMap(QGameMode *parent)
 	:QMyObject(parent)
 {
-	for (int i = 0; i < 5; i++)
-		for (int j = 0; j < 9; j++)
+	for (int i = 0; i < 12; i++)
+		for (int j = 0; j < 5; j++)
 		{
 			isPlantedMap[i][j] = false;
+			objectPointMap[i][j] = NULL;
 		}
 	MapRect.setX(245);
 	MapRect.setY(87);
@@ -123,6 +124,7 @@ void QMyMap::Itemadded(QMyObject* newItemAdded)
 		int x = pointNewItemtoPlantOn.x();
 		int y = pointNewItemtoPlantOn.y();
 		isPlantedMap[x][y] = true;
+		objectPointMap[x][y] = newItemAdded;
 		newPlanttoLoad->setZValue(y);
 		newPlanttoLoad->setPointinMap(x, y);
 		PlantsinMap.push_back(newPlanttoLoad);
@@ -182,6 +184,7 @@ void QMyMap::removefromMap(objectType mytypename, QMyObject* myobject)
 		PlantsinMap.removeAll((QPlants*)myobject);
 		QPoint tempPoint = myobject->getPointinMap();
 		isPlantedMap[tempPoint.x()][tempPoint.y()] = false;
+		objectPointMap[tempPoint.x()][tempPoint.y()] = NULL;
 	}
 	break;
 	case Zombies:
@@ -196,6 +199,15 @@ void QMyMap::removefromMap(objectType mytypename, QMyObject* myobject)
 	break;
 	default:
 		break;
+	}
+}
+
+void QMyMap::ShovelMessage(QPointF shovelPoint)
+{
+	QPoint tempPoint = PostoPoint(shovelPoint);
+	if (objectPointMap[tempPoint.x()][tempPoint.y()] != NULL)
+	{
+		objectPointMap[tempPoint.x()][tempPoint.y()]->setHP(-1);
 	}
 }
 

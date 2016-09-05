@@ -13,7 +13,8 @@ class QMyMap :public QMyObject
 {
 	Q_OBJECT
 private:
-	bool					isPlantedMap[12][5];	//初始化为全false
+	bool					isPlantedMap[12][5];	//是否种植
+	QMyObject				*objectPointMap[12][5];	//在此处种植的物品指针
 	QRectF					MapRect;				//地图区域
 	QPoint					pointNewItemtoPlantOn;	//记录一下新的植物要放置的地点
 	qreal					verticalLines[12];		//竖直边界线
@@ -52,6 +53,9 @@ public slots:
 	void addtoMap(objectType, QMyObject*);
 	//将植物、僵尸、武器从地图的管理序列中去除
 	void removefromMap(objectType, QMyObject*);
+
+	//接收铲子消息
+	void ShovelMessage(QPointF);
 
 public:
 	QMyMap(QGameMode *parent = 0);

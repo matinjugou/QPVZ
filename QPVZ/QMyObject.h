@@ -9,6 +9,7 @@
 
 
 class QGameMode;
+class QGameAdventureMode;
 class QCardBank;
 class QCardSelector;
 class QPlants;
@@ -22,6 +23,7 @@ class QMyObject :public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT
 	Q_PROPERTY(QPointF pos READ pos WRITE setPos)
+	Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity)
 protected:
 	int						TimerID;		//¼ÆÊ±Æ÷ID
 	int						HP;				//ÑªÁ¿

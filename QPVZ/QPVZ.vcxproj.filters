@@ -200,6 +200,24 @@
     <ClCompile Include="GeneratedFiles\Release\moc_QMySunShine.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QMyShovel.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="QMyShovel.cpp">
+      <Filter>Source Files\Plants</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QMyShovel.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QMyProcessor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QMyProcessor.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="QMyProcessor.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qpvz.h">
@@ -255,6 +273,12 @@
     </CustomBuild>
     <CustomBuild Include="QMySunShine.h">
       <Filter>Header Files\Cards</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QMyShovel.h">
+      <Filter>Header Files\Plants</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QMyProcessor.h">
+      <Filter>Header Files\Component</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

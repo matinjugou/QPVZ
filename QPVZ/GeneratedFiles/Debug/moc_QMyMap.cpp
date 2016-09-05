@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_QMyMap_t {
-    QByteArrayData data[17];
-    char stringdata0[223];
+    QByteArrayData data[18];
+    char stringdata0[237];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -45,7 +45,8 @@ QT_MOC_LITERAL(12, 168, 9), // "Itemadded"
 QT_MOC_LITERAL(13, 178, 10), // "QMyObject*"
 QT_MOC_LITERAL(14, 189, 8), // "addtoMap"
 QT_MOC_LITERAL(15, 198, 10), // "objectType"
-QT_MOC_LITERAL(16, 209, 13) // "removefromMap"
+QT_MOC_LITERAL(16, 209, 13), // "removefromMap"
+QT_MOC_LITERAL(17, 223, 13) // "ShovelMessage"
 
     },
     "QMyMap\0addItem\0\0objectNames\0RequestDone\0"
@@ -54,7 +55,7 @@ QT_MOC_LITERAL(16, 209, 13) // "removefromMap"
     "Plantrequest_Try\0Plantrequest_Done\0"
     "Plantrequest_Cancelled\0Itemadded\0"
     "QMyObject*\0addtoMap\0objectType\0"
-    "removefromMap"
+    "removefromMap\0ShovelMessage"
 };
 #undef QT_MOC_LITERAL
 
@@ -64,7 +65,7 @@ static const uint qt_meta_data_QMyMap[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -72,20 +73,21 @@ static const uint qt_meta_data_QMyMap[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   74,    2, 0x06 /* Public */,
-       4,    0,   79,    2, 0x06 /* Public */,
-       5,    0,   80,    2, 0x06 /* Public */,
-       6,    0,   81,    2, 0x06 /* Public */,
+       1,    2,   79,    2, 0x06 /* Public */,
+       4,    0,   84,    2, 0x06 /* Public */,
+       5,    0,   85,    2, 0x06 /* Public */,
+       6,    0,   86,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    2,   82,    2, 0x0a /* Public */,
-       8,    1,   87,    2, 0x0a /* Public */,
-       9,    0,   90,    2, 0x0a /* Public */,
-      10,    0,   91,    2, 0x0a /* Public */,
-      11,    0,   92,    2, 0x0a /* Public */,
-      12,    1,   93,    2, 0x0a /* Public */,
-      14,    2,   96,    2, 0x0a /* Public */,
-      16,    2,  101,    2, 0x0a /* Public */,
+       7,    2,   87,    2, 0x0a /* Public */,
+       8,    1,   92,    2, 0x0a /* Public */,
+       9,    0,   95,    2, 0x0a /* Public */,
+      10,    0,   96,    2, 0x0a /* Public */,
+      11,    0,   97,    2, 0x0a /* Public */,
+      12,    1,   98,    2, 0x0a /* Public */,
+      14,    2,  101,    2, 0x0a /* Public */,
+      16,    2,  106,    2, 0x0a /* Public */,
+      17,    1,  111,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::QPointF,    2,    2,
@@ -102,6 +104,7 @@ static const uint qt_meta_data_QMyMap[] = {
     QMetaType::Void, 0x80000000 | 13,    2,
     QMetaType::Void, 0x80000000 | 15, 0x80000000 | 13,    2,    2,
     QMetaType::Void, 0x80000000 | 15, 0x80000000 | 13,    2,    2,
+    QMetaType::Void, QMetaType::QPointF,    2,
 
        0        // eod
 };
@@ -124,6 +127,7 @@ void QMyMap::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 9: _t->Itemadded((*reinterpret_cast< QMyObject*(*)>(_a[1]))); break;
         case 10: _t->addtoMap((*reinterpret_cast< objectType(*)>(_a[1])),(*reinterpret_cast< QMyObject*(*)>(_a[2]))); break;
         case 11: _t->removefromMap((*reinterpret_cast< objectType(*)>(_a[1])),(*reinterpret_cast< QMyObject*(*)>(_a[2]))); break;
+        case 12: _t->ShovelMessage((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -185,13 +189,13 @@ int QMyMap::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 13)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 13;
     }
     return _id;
 }

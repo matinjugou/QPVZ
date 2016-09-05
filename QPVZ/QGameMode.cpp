@@ -125,17 +125,28 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	Selector = new QCardSelector(totCards, CardList, this);
 	Bank = new QCardBank(this);
 	MappingSystem = new QMyMap(this);
-	
+	Shovel = new QMyShovel(this);
+	Shovel_Bank = new QMyObject(this);
+
+	Shovel_Bank->setPixmap(QPixmap("Resources/pvz-material/images/interface/ShovelBank.png"));
+
 	Background->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/background1.jpg"));
 	Background->setMyPixmap(0);
 	Background->setPos(0, 0);
 	
 	Selector->setPos(500, 687);
 	Bank->setPos(500, -120);
-	
+	Shovel_Bank->setPos(666, 0);
+	Shovel->setPos(666, 0);
+	Shovel->setOriginPos(Shovel->pos());
+	Shovel->setOpacity(0);
+	Shovel_Bank->setOpacity(0);
+
 	Scene->addItem(Bank);
 	Scene->addItem(Selector);
 	Scene->addItem(MappingSystem);
+	Scene->addItem(Shovel_Bank);
+	Scene->addItem(Shovel);
 
 	connect(Selector, SIGNAL(moveRequest(QMyCard*)), Bank, SLOT(moveRequested(QMyCard*)));
 	connect(Selector, SIGNAL(removeInform(QMyCard*)), Bank, SLOT(removeConfirm(QMyCard*)));
@@ -149,6 +160,8 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	connect(this, SIGNAL(Itemadded(QMyObject*)), MappingSystem, SLOT(Itemadded(QMyObject*)));
 	connect(Selector, SIGNAL(startGameNow()), this, SLOT(GameStart()));
 	connect(Selector, SIGNAL(startGameNow()), Bank, SLOT(Initconnection()));
+
+	connect(Shovel, SIGNAL(leftButtonClicked(QPointF)), MappingSystem, SLOT(ShovelMessage(QPointF)));
 
 	connect(MappingSystem, SIGNAL(SunShineAdded()), Bank, SLOT(SunShineAdded()));
 	
@@ -226,8 +239,20 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 				barMoveed = 2;
 			}
 		}
-		else if (currentTime > 20)
+		else if (currentTime > 30)
 		{
+			QPropertyAnimation *ShovelAnimation = new QPropertyAnimation(Shovel, "opacity", Shovel);
+			QPropertyAnimation *ShovelBankAnimation = new QPropertyAnimation(Shovel_Bank, "opacity", Shovel_Bank);
+			ShovelAnimation->setDuration(100);
+			ShovelAnimation->setStartValue(0);
+			ShovelAnimation->setEndValue(1);
+			ShovelAnimation->setEasingCurve(QEasingCurve::Linear);
+			ShovelBankAnimation->setDuration(100);
+			ShovelBankAnimation->setStartValue(0);
+			ShovelBankAnimation->setEndValue(1);
+			ShovelBankAnimation->setEasingCurve(QEasingCurve::Linear);
+			ShovelAnimation->start();
+			ShovelBankAnimation->start();
 			currentTime = 0;
 			stage++;
 			barMoveed = 0;

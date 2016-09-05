@@ -10,7 +10,7 @@
 #include "MyVariable.h"
 #include "qfile.h"
 #include "qdatastream.h"
-
+#include "QMyShovel.h"
 
 class QMySunShine;
 class QGameModeLoader;
@@ -95,6 +95,8 @@ private:
 	QPropertyAnimation		*animation;					//动画
 	QCardSelector			*Selector;					//卡片选择器
 	QCardBank				*Bank;						//卡片商
+	QMyShovel				*Shovel;					//铲子
+	QMyObject				*Shovel_Bank;				//铲子槽
 	QMyMap					*MappingSystem;				//地图处理
 	int						totCards;					//可选卡片的种类数
 	QVector<objectNames>	CardList;					//可选卡片的种类，之后改写为文件读取

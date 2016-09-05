@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_QMyObject_t {
-    QByteArrayData data[15];
-    char stringdata0[127];
+    QByteArrayData data[16];
+    char stringdata0[135];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,13 +43,14 @@ QT_MOC_LITERAL(10, 76, 18), // "QEasingCurve::Type"
 QT_MOC_LITERAL(11, 95, 4), // "type"
 QT_MOC_LITERAL(12, 100, 9), // "targetPos"
 QT_MOC_LITERAL(13, 110, 12), // "setnewPixmap"
-QT_MOC_LITERAL(14, 123, 3) // "pos"
+QT_MOC_LITERAL(14, 123, 3), // "pos"
+QT_MOC_LITERAL(15, 127, 7) // "opacity"
 
     },
     "QMyObject\0addtomap\0\0objectType\0"
     "QMyObject*\0removefrommap\0moveTo\0x\0y\0"
     "duration\0QEasingCurve::Type\0type\0"
-    "targetPos\0setnewPixmap\0pos"
+    "targetPos\0setnewPixmap\0pos\0opacity"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,7 +61,7 @@ static const uint qt_meta_data_QMyObject[] = {
        0,       // classname
        0,    0, // classinfo
        8,   14, // methods
-       1,   96, // properties
+       2,   96, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
@@ -92,6 +93,7 @@ static const uint qt_meta_data_QMyObject[] = {
 
  // properties: name, type, flags
       14, QMetaType::QPointF, 0x00095103,
+      15, QMetaType::QReal, 0x00095103,
 
        0        // eod
 };
@@ -155,6 +157,7 @@ void QMyObject::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         void *_v = _a[0];
         switch (_id) {
         case 0: *reinterpret_cast< QPointF*>(_v) = _t->pos(); break;
+        case 1: *reinterpret_cast< qreal*>(_v) = _t->opacity(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
@@ -163,6 +166,7 @@ void QMyObject::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         void *_v = _a[0];
         switch (_id) {
         case 0: _t->setPos(*reinterpret_cast< QPointF*>(_v)); break;
+        case 1: _t->setOpacity(*reinterpret_cast< qreal*>(_v)); break;
         default: break;
         }
     } else if (_c == QMetaObject::ResetProperty) {
@@ -209,17 +213,17 @@ int QMyObject::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 1;
+        _id -= 2;
     }
 #endif // QT_NO_PROPERTIES
     return _id;
