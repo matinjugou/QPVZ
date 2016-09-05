@@ -11,6 +11,7 @@
 #include "qfile.h"
 #include "qdatastream.h"
 #include "QMyShovel.h"
+#include "QMyProcessor.h"
 
 class QMySunShine;
 class QGameModeLoader;
@@ -30,20 +31,20 @@ public:
 	~QGameMode();
 
 signals:
-	void exit();
 	//退出当前模式
-	void exchangetoScene(QGraphicsScene*);
+	void exit();
 	//切换到该模式的场景
-	void addItem(objectNames, QPointF);
+	void exchangetoScene(QGraphicsScene*);
 	//添加物品
-	void Itemadded(QMyObject*);
+	void addItem(objectNames, QPointF);
 	//将物品已经添加的消息向下传递
+	void Itemadded(QMyObject*);
 
 public:
-	QGraphicsScene* getScene();
 	//得到当前模式的场景
-	void setView(QGraphicsView*);
+	QGraphicsScene* getScene();
 	//设置当前模式的视角，引入对象树系统后可以优化掉
+	void setView(QGraphicsView*);
 };
 
 class QGameMainMode :public QGameMode
@@ -63,16 +64,13 @@ public:
 	~QGameMainMode();
 
 signals:
-	void AdventureMode_Start(); 
-	//冒险模式开始,用signalmap改写
-	void NetFightMode_Start();
-	//网络对战模式开始
-	void NewGameStart(int);
 	//开启某种游戏模式
-	void Help_Start();
+	void NewGameStart(int);
 	//帮助开始
-	void Setting_Options();
+	void Help_Start();
 	//设置启动
+	void Setting_Options();
+
 
 public:
 	void timerEvent(QTimerEvent* event);
@@ -89,6 +87,7 @@ private:
 	int						stage;						//游戏阶段
 	int						TimerID;					//计时器ID
 	int						barMoveed;					//滚动条是否已经移动
+	bool					firstZombieShowed;			//第一只僵尸是否已经出现
 	qint32					Level;						//当前关卡
 	QFile					SettingsFile;				//配置文件
 	QMySunShine				*newSunShine;				//创建新阳光的指针
@@ -97,11 +96,14 @@ private:
 	QCardBank				*Bank;						//卡片商
 	QMyShovel				*Shovel;					//铲子
 	QMyObject				*Shovel_Bank;				//铲子槽
+	QMyProcessor			*MyProcessorBar;			//进度条
 	QMyMap					*MappingSystem;				//地图处理
+	QMyButton				*QuitGame;					//退出按鈕
 	int						totCards;					//可选卡片的种类数
 	QVector<objectNames>	CardList;					//可选卡片的种类，之后改写为文件读取
 	qint32					totZombies;					//总共的僵尸数量，可以改为文件读取
 	QVector<Node>			ZombiesList;				//僵尸名字和出现的时间，可以修改外接文件
+
 public:
 	QGameAdventureMode(QGameModeLoader *parent = 0);
 	~QGameAdventureMode();

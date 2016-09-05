@@ -169,5 +169,7 @@ void QCardSelector::addNewCard(objectNames name)
 		currentPos.setX(1);
 		currentPos.setY(currentPos.y() + 1);
 	}
+	newCard = NULL;
+	newCardBoard = NULL;
 }
 

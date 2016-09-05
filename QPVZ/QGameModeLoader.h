@@ -29,8 +29,6 @@ signals:
 public slots:
 	void Load(int);
 	//加载游戏模式
-	void LoadAdventure();
-	//加载冒险魔术，引入map之后可以优化掉
 	void QuitMode();
 	//退出当前模式
 	void setView(QGraphicsView*);

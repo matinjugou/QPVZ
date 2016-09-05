@@ -121,6 +121,10 @@ void QMyObject::setMyPixmap(int i)
 
 void QMyObject::setMyGif(int i)
 {
+	for (const auto &i : Gifs)
+	{
+		i->stop();
+	}
 	GifNumber = i;
 	Gifs[i]->jumpToFrame(0);
 	connect(Gifs[i], SIGNAL(frameChanged(int)), this, SLOT(setnewPixmap(int)));

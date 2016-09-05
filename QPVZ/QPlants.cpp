@@ -127,6 +127,7 @@ QSunFlower::QSunFlower(QGraphicsScene *parent)
 	myGif.setFileName("Resources/pvz-material/images/Plants/SunFlower/SunFlower1.gif");
 	myGif.jumpToFrame(0);
 	connect(&myGif, SIGNAL(frameChanged(int)), this, SLOT(setnewPixmap()));
+	myGif.setSpeed(140);
 	myGif.start();
 
 	TimerID = startTimer(20);
@@ -143,6 +144,7 @@ QSunFlower::QSunFlower(int x, int y, QGraphicsScene *parent)
 	myGif.setFileName("Resources/pvz-material/images/Plants/SunFlower/SunFlower1.gif");
 	myGif.jumpToFrame(0);
 	connect(&myGif, SIGNAL(frameChanged(int)), this, SLOT(setnewPixmap()));
+	myGif.setSpeed(140);
 	myGif.start();
 
 	TimerID = startTimer(20);
@@ -160,6 +162,7 @@ void QSunFlower::makeSunShine()
 	tempPos.setX(pos().x() + (boundingRect().width() - newSunShine->boundingRect().width()) / 2);
 	tempPos.setY(pos().y() - newSunShine->boundingRect().height() + 5);
 	newSunShine->setPos(tempPos);
+	newSunShine->setZValue(PointinMap.y() + 10);
 	scene()->addItem(newSunShine);
 	
 	QPropertyAnimation *SunShineAnimation = new QPropertyAnimation(newSunShine, "pos");

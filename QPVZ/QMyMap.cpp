@@ -37,8 +37,7 @@ QMyMap::QMyMap(QGameMode *parent)
 
 QMyMap::~QMyMap()
 {
-	delete ReadytoPlant;
-	delete ReadytoPlant_Shadow;
+
 }
 
 //public slots

@@ -60,6 +60,20 @@ void QGameDisplayer::addItem(objectNames name, QPointF pos)
 		emit Itemadded(newCommonZombie);
 	}
 	break;
+	case BucketHeadZombie:
+	{
+		QBucketHeadZombie* newBucketHeadZombie = new QBucketHeadZombie(pos.x(), pos.y(), this->currentScene);
+		currentScene->addItem(newBucketHeadZombie);
+		emit Itemadded(newBucketHeadZombie);
+	}
+	break;
+	case PoleVaultingZombie:
+	{
+		QPoleVaultingZombie* newPoleVaultingZombie = new QPoleVaultingZombie(pos.x(), pos.y(), this->currentScene);
+		currentScene->addItem(newPoleVaultingZombie);
+		emit Itemadded(newPoleVaultingZombie);
+	}
+	break;
 	case SunFlower:
 	{
 		QSunFlower* newSunFlower = new QSunFlower(pos.x(), pos.y(), this->currentScene);

@@ -14,12 +14,14 @@ QCardBank::QCardBank(QGameMode *parent)
 	addToGroup(Board);
 	addToGroup(sunshineText);
 	animation = new QPropertyAnimation(this, "pos");
+
+	for (int i = 0; i < 8; i++)
+		cardList[i] = NULL;
+	cardReadytoPlant = NULL;
 }
 
 QCardBank::~QCardBank()
 {
-	delete Board;
-	delete sunshineText;
 }
 
 
@@ -72,11 +74,13 @@ void QCardBank::plantRequestDone()
 	cardReadytoPlant->setOpacity(1);
 	cardReadytoPlant->CDStart();
 	sunshineNum -= cardReadytoPlant->getSunPrice();
+	cardReadytoPlant = NULL;
 }
 
 void QCardBank::plantRequestCancelled()
 {
 	cardReadytoPlant->setOpacity(1);
+	cardReadytoPlant = NULL;
 }
 
 void QCardBank::SunShineAdded()

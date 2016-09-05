@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_QMyButton_t {
-    QByteArrayData data[3];
-    char stringdata0[19];
+    QByteArrayData data[4];
+    char stringdata0[23];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -31,10 +31,11 @@ static const qt_meta_stringdata_QMyButton_t qt_meta_stringdata_QMyButton = {
     {
 QT_MOC_LITERAL(0, 0, 9), // "QMyButton"
 QT_MOC_LITERAL(1, 10, 7), // "clicked"
-QT_MOC_LITERAL(2, 18, 0) // ""
+QT_MOC_LITERAL(2, 18, 0), // ""
+QT_MOC_LITERAL(3, 19, 3) // "pos"
 
     },
-    "QMyButton\0clicked\0"
+    "QMyButton\0clicked\0\0pos"
 };
 #undef QT_MOC_LITERAL
 
@@ -45,7 +46,7 @@ static const uint qt_meta_data_QMyButton[] = {
        0,       // classname
        0,    0, // classinfo
        1,   14, // methods
-       0,    0, // properties
+       1,   20, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
@@ -56,6 +57,9 @@ static const uint qt_meta_data_QMyButton[] = {
 
  // signals: parameters
     QMetaType::Void,
+
+ // properties: name, type, flags
+       3, QMetaType::QPointF, 0x00095103,
 
        0        // eod
 };
@@ -80,6 +84,26 @@ void QMyButton::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
             }
         }
     }
+#ifndef QT_NO_PROPERTIES
+    else if (_c == QMetaObject::ReadProperty) {
+        QMyButton *_t = static_cast<QMyButton *>(_o);
+        Q_UNUSED(_t)
+        void *_v = _a[0];
+        switch (_id) {
+        case 0: *reinterpret_cast< QPointF*>(_v) = _t->pos(); break;
+        default: break;
+        }
+    } else if (_c == QMetaObject::WriteProperty) {
+        QMyButton *_t = static_cast<QMyButton *>(_o);
+        Q_UNUSED(_t)
+        void *_v = _a[0];
+        switch (_id) {
+        case 0: _t->setPos(*reinterpret_cast< QPointF*>(_v)); break;
+        default: break;
+        }
+    } else if (_c == QMetaObject::ResetProperty) {
+    }
+#endif // QT_NO_PROPERTIES
     Q_UNUSED(_a);
 }
 
@@ -118,6 +142,23 @@ int QMyButton::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
             *reinterpret_cast<int*>(_a[0]) = -1;
         _id -= 1;
     }
+#ifndef QT_NO_PROPERTIES
+   else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
+            || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
+        qt_static_metacall(this, _c, _id, _a);
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyDesignable) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyScriptable) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyStored) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyEditable) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyUser) {
+        _id -= 1;
+    }
+#endif // QT_NO_PROPERTIES
     return _id;
 }
 

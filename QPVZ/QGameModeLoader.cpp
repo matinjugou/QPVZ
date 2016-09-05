@@ -7,7 +7,6 @@ QGameModeLoader::QGameModeLoader(QObject *parent)
 	CurrentMode = MainMode;
 	connect(CurrentMode, SIGNAL(exit()), this, SLOT(QuitMode()));
 	connect(MainMode, SIGNAL(NewGameStart(int)), this, SLOT(Load(int)));
-	connect(MainMode, SIGNAL(AdventureMode_Start()), this, SLOT(LoadAdventure()));
 }
 
 QGameModeLoader::~QGameModeLoader()
@@ -29,6 +28,7 @@ void QGameModeLoader::Load(int name)
 		AdventureMode->setView(LoaderView);
 		connect(CurrentMode, SIGNAL(addItem(objectNames, QPointF)), this, SIGNAL(addItem(objectNames, QPointF)));
 		connect(this, SIGNAL(Itemadded(QMyObject*)), CurrentMode, SIGNAL(Itemadded(QMyObject*)));
+		connect(AdventureMode, SIGNAL(exit()), this, SLOT(QuitMode()));
 		AdventureMode->GameStart();
 	}
 		break;
@@ -37,22 +37,11 @@ void QGameModeLoader::Load(int name)
 	}
 }
 
-void QGameModeLoader::LoadAdventure()
-{
-	//TODO ¼ÓÔØÄ£Ê½
-		QGameAdventureMode *AdventureMode = new QGameAdventureMode(this);
-		CurrentMode = AdventureMode;
-		emit exchangetoScene(AdventureMode->getScene());
-		connect(CurrentMode, SIGNAL(addItem(objectNames, QPointF)), this, SIGNAL(addItem(objectNames, QPointF)));
-		connect(this, SIGNAL(Itemadded(QMyObject*)), CurrentMode, SIGNAL(Itemadded(QMyObject*)));
-		AdventureMode->setView(LoaderView);
-		AdventureMode->GameStart();
-}
-
 void QGameModeLoader::QuitMode()
 {
 	exchangetoScene(MainMode->getScene());
-	delete CurrentMode;
+	if (CurrentMode != MainMode)
+		delete CurrentMode;
 }
 
 void QGameModeLoader::setView(QGraphicsView* view)

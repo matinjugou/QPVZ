@@ -69,11 +69,9 @@ QGameMainMode::QGameMainMode(QGameModeLoader* parent)
 
 	connect(Mapper, SIGNAL(mapped(int)), this, SIGNAL(NewGameStart(int)));
 
-//	connect(StartGame_Adventure, SIGNAL(clicked()), this, SIGNAL(AdventureMode_Start()));
-
 	connect(Options, SIGNAL(clicked()), this, SIGNAL(Setting_Options()));
 	connect(Help, SIGNAL(clicked()), this, SIGNAL(Help_Start()));
-	connect(Quit, SIGNAL(clicked()), this, SIGNAL(Quit_Game()));
+	connect(Quit, SIGNAL(clicked()), this, SIGNAL(exit()));
 
 	emit exchangetoScene(Scene);
 //	startTimer(20);
@@ -121,12 +119,25 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 		inStream >> tempplantType;
 		CardList.push_back(plantTypeInttoEnum(tempplantType));
 	}
+	int tempHighPoint;
+	QVector<int> tempHighPos;
+	inStream >> tempHighPoint;
+	for (int i = 0; i < tempHighPoint; i++)
+	{
+		int singletempHighPos;
+		inStream >> singletempHighPos;
+		tempHighPos.push_back(singletempHighPos);
+	}
+	SettingsFile.close();
 
 	Selector = new QCardSelector(totCards, CardList, this);
 	Bank = new QCardBank(this);
 	MappingSystem = new QMyMap(this);
 	Shovel = new QMyShovel(this);
 	Shovel_Bank = new QMyObject(this);
+	MyProcessorBar = new QMyProcessor(100, 0, tempHighPos, this);
+	QuitGame = new QMyButton("Resources/pvz-material/images/Buttons/QuitGamePlain.png", "Resources/pvz-material/images/Buttons/QuitGameHover.png", this);
+
 
 	Shovel_Bank->setPixmap(QPixmap("Resources/pvz-material/images/interface/ShovelBank.png"));
 
@@ -141,12 +152,17 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	Shovel->setOriginPos(Shovel->pos());
 	Shovel->setOpacity(0);
 	Shovel_Bank->setOpacity(0);
+	MyProcessorBar->setPos(900, 550);
+	MyProcessorBar->setOpacity(0);
+	QuitGame->setPos(787, 0);
 
 	Scene->addItem(Bank);
 	Scene->addItem(Selector);
 	Scene->addItem(MappingSystem);
 	Scene->addItem(Shovel_Bank);
 	Scene->addItem(Shovel);
+	Scene->addItem(MyProcessorBar);
+	Scene->addItem(QuitGame);
 
 	connect(Selector, SIGNAL(moveRequest(QMyCard*)), Bank, SLOT(moveRequested(QMyCard*)));
 	connect(Selector, SIGNAL(removeInform(QMyCard*)), Bank, SLOT(removeConfirm(QMyCard*)));
@@ -156,6 +172,8 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	connect(MappingSystem, SIGNAL(RequestDone()), Bank, SLOT(plantRequestDone()));
 	connect(MappingSystem, SIGNAL(RequestCancelled()), Bank, SLOT(plantRequestCancelled()));
 	connect(MappingSystem, SIGNAL(addItem(objectNames, QPointF)), this, SIGNAL(addItem(objectNames, QPointF)));
+	
+	connect(QuitGame, SIGNAL(clicked()), this, SIGNAL(exit()));
 
 	connect(this, SIGNAL(Itemadded(QMyObject*)), MappingSystem, SLOT(Itemadded(QMyObject*)));
 	connect(Selector, SIGNAL(startGameNow()), this, SLOT(GameStart()));
@@ -168,6 +186,8 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	currentTime = 0;
 	stage = 0;
 	barMoveed = 0;
+	firstZombieShowed = false;
+
 	animation = new QPropertyAnimation(this);
 }
 
@@ -186,6 +206,7 @@ void QGameAdventureMode::GameStart()
 		if (stage == 2)
 		{
 			MappingSystem->startTimer(20);
+			
 		}
 	}
 }
@@ -201,6 +222,12 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 			if (barMoveed == 0)
 			{
 				moveScrollBar(0, 500, 700);
+				QPropertyAnimation *ButtonAnimation = new QPropertyAnimation(QuitGame, "pos", QuitGame);
+				ButtonAnimation->setStartValue(QuitGame->pos());
+				ButtonAnimation->setEndValue(QPointF(1400 - QuitGame->boundingRect().width(), 0));
+				ButtonAnimation->setDuration(700);
+				ButtonAnimation->setEasingCurve(QEasingCurve::InOutCubic);
+				ButtonAnimation->start();
 				barMoveed = 1;
 			}
 		}
@@ -235,6 +262,12 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 			if (barMoveed == 1)
 			{
 				moveScrollBar(500, 200, 500);
+				QPropertyAnimation *ButtonAnimation = new QPropertyAnimation(QuitGame, "pos", QuitGame);
+				ButtonAnimation->setStartValue(QuitGame->pos());
+				ButtonAnimation->setEndValue(QPointF(987, 0));
+				ButtonAnimation->setDuration(500);
+				ButtonAnimation->setEasingCurve(QEasingCurve::InOutCubic);
+				ButtonAnimation->start();
 				Bank->moveTo(220, 0, 500);
 				barMoveed = 2;
 			}
@@ -266,10 +299,22 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 			if ((ZombiesList[i].timetoshow * 50) == currentTime)
 			{
 				QPoint tempPoint;
-				int y = rand() % 4;
+				int y = rand() % 5;
 				tempPoint.setX(10);
 				tempPoint.setY(y);
-				addItem(CommonZombie, MappingSystem->PointtoPos(tempPoint));
+				addItem(ZombiesList[i].Zombie_Type, MappingSystem->PointtoPos(tempPoint));
+				MyProcessorBar->addtocurrentProcess(1.0 / (double)totZombies);
+				if (!firstZombieShowed)
+				{
+					firstZombieShowed = true;
+					MyProcessorBar->Init();
+					QPropertyAnimation *ProcessorAnimation = new QPropertyAnimation(MyProcessorBar, "opacity", MyProcessorBar);
+					ProcessorAnimation->setDuration(100);
+					ProcessorAnimation->setStartValue(0);
+					ProcessorAnimation->setEndValue(1);
+					ProcessorAnimation->setEasingCurve(QEasingCurve::Linear);
+					ProcessorAnimation->start();
+				}
 			}
 		}
 		if (currentTime % 500 == 0)
@@ -282,6 +327,7 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 			Scene->addItem(newSunShine);
 			tempPos.setY(MappingSystem->getRect().height() / 5 * (rand() % 4) + MappingSystem->getRect().y());
 			newSunShine->moveTo(tempPos, 3000, QEasingCurve::Linear);
+			newSunShine->setZValue(100);
 			connect(newSunShine, SIGNAL(BeTaken()), Bank, SLOT(SunShineAdded()));
 		}
 	}
@@ -305,6 +351,16 @@ objectNames QGameAdventureMode::zombieTypeInttoEnum(int zombieTypeint)
 	case 1:
 	{
 		return CommonZombie;
+	}
+	break;
+	case 2:
+	{
+		return BucketHeadZombie;
+	}
+	break; 
+	case 3:
+	{
+		return PoleVaultingZombie;
 	}
 	break;
 	default:

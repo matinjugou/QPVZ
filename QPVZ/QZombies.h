@@ -10,6 +10,7 @@ class QZombies:public QMyObject
 	Q_OBJECT
 	Q_PROPERTY(QPointF pos READ pos WRITE setPos)
 protected:
+	int status;
 	int Power;
 	int Speed;
 	int Direction;
@@ -47,3 +48,37 @@ public:
 	void walk();
 };
 
+class QBucketHeadZombie :public QZombies
+{
+public:
+	QBucketHeadZombie(QGraphicsScene *parent = 0);
+	QBucketHeadZombie(int x, int y, QGraphicsScene *parent = 0);
+	~QBucketHeadZombie();
+public:
+	void hurt();
+	bool inRange(QMyObject*);
+	void timerEvent(QTimerEvent *event);
+	void walk();
+};
+
+class QPoleVaultingZombie :public QZombies
+{
+	Q_OBJECT
+protected:
+	int Jumping;
+
+public:
+	QPoleVaultingZombie(QGraphicsScene *parent = 0);
+	QPoleVaultingZombie(int x, int y, QGraphicsScene *parent = 0);
+	~QPoleVaultingZombie();
+
+public slots:
+	void ChangeGif();
+	void ChangeGif2();
+
+public:
+	void hurt();
+	bool inRange(QMyObject*);
+	void timerEvent(QTimerEvent *event);
+	void walk();
+};

@@ -9,6 +9,7 @@ class QCardSelector;
 class QMyButton :public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT
+	Q_PROPERTY(QPointF pos READ pos WRITE setPos)
 private:
 	QPixmap		Button_Plain;	//按钮没有被遮盖时的图片
 	QPixmap		Button_Hover;	//按钮被遮盖时候的图片
