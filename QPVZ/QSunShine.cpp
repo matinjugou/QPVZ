@@ -8,6 +8,8 @@ QMySunShine::QMySunShine(QGraphicsScene *parent)
 	connect(&myGif, SIGNAL(frameChanged(int)), this, SLOT(setnewPixmap()));
 	myGif.start();
 
+	objectTypeName = SunShine;
+
 	beTaken = false;
 	currentTime = 0;
 	TimerID = startTimer(20);

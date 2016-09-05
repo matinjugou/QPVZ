@@ -66,11 +66,18 @@ void QGameDisplayer::addItem(objectNames name, QPointF pos)
 		currentScene->addItem(newSunFlower);
 		emit Itemadded(newSunFlower);
 	}
+	break;
+	case WallNut:
+	{
+		QWallNut* newWallNut = new QWallNut(pos.x(), pos.y(), this->currentScene);
+		currentScene->addItem(newWallNut);
+		emit Itemadded(newWallNut);
+	}
+	break;
 	default:
 		break;
 	}
 }
-
 
 //public
 QGraphicsView* QGameDisplayer::getView()

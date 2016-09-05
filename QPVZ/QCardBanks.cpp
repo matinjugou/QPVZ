@@ -69,10 +69,14 @@ void QCardBank::ReadytoPlantFromCard(objectNames itemName, QPointF itemPos, QMyC
 
 void QCardBank::plantRequestDone()
 {
-//	cardReadytoPlant->setPixmap(); »»»ØÕý³£Í¼Æ¬
 	cardReadytoPlant->setOpacity(1);
 	cardReadytoPlant->CDStart();
 	sunshineNum -= cardReadytoPlant->getSunPrice();
+}
+
+void QCardBank::plantRequestCancelled()
+{
+	cardReadytoPlant->setOpacity(1);
 }
 
 void QCardBank::SunShineAdded()
@@ -117,6 +121,11 @@ void QCardBank::timerEvent(QTimerEvent *event)
 			{
 				cardList[i]->setAcceptedMouseButtons(Qt::AllButtons);
 				cardList[i]->setOpacity(1);
+			}
+			else
+			{
+				cardList[i]->setAcceptedMouseButtons(Qt::NoButton);
+				cardList[i]->setOpacity(0.7);
 			}
 		}
 	}

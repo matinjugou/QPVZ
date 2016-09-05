@@ -96,7 +96,33 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 {
 	Scene->setSceneRect(0, 0, 1400, 600);
 
-	Selector = new QCardSelector(2, CardList, this);
+	SettingsFile.setFileName("Resources/files/SettingsFiles.txt");
+	if (!SettingsFile.open(QIODevice::ReadOnly))
+	{
+		qDebug() << "Failed";
+	}
+	QTextStream inStream(&SettingsFile);
+	inStream >> Level;
+	inStream >> totZombies;
+	for (int i = 0; i < totZombies; i++)
+	{
+		Node tempNode;
+		int tempzombieType;
+		int tempzombieShowTime;
+		inStream >> tempzombieType >> tempzombieShowTime;
+		tempNode.Zombie_Type = zombieTypeInttoEnum(tempzombieType);
+		tempNode.timetoshow = tempzombieShowTime;
+		ZombiesList.push_back(tempNode);
+	}
+	inStream >> totCards;
+	for (int i = 0; i < totCards; i++)
+	{
+		int tempplantType;
+		inStream >> tempplantType;
+		CardList.push_back(plantTypeInttoEnum(tempplantType));
+	}
+
+	Selector = new QCardSelector(totCards, CardList, this);
 	Bank = new QCardBank(this);
 	MappingSystem = new QMyMap(this);
 	
@@ -110,7 +136,6 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	Scene->addItem(Bank);
 	Scene->addItem(Selector);
 	Scene->addItem(MappingSystem);
-	MappingSystem->setScene(Scene);	//引入对象树系统后可以优化掉
 
 	connect(Selector, SIGNAL(moveRequest(QMyCard*)), Bank, SLOT(moveRequested(QMyCard*)));
 	connect(Selector, SIGNAL(removeInform(QMyCard*)), Bank, SLOT(removeConfirm(QMyCard*)));
@@ -118,11 +143,14 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 
 	connect(Bank, SIGNAL(ReadytoPlant(objectNames, QPointF)), MappingSystem, SLOT(Plantrequest_Ready(objectNames, QPointF)));
 	connect(MappingSystem, SIGNAL(RequestDone()), Bank, SLOT(plantRequestDone()));
+	connect(MappingSystem, SIGNAL(RequestCancelled()), Bank, SLOT(plantRequestCancelled()));
 	connect(MappingSystem, SIGNAL(addItem(objectNames, QPointF)), this, SIGNAL(addItem(objectNames, QPointF)));
 
 	connect(this, SIGNAL(Itemadded(QMyObject*)), MappingSystem, SLOT(Itemadded(QMyObject*)));
 	connect(Selector, SIGNAL(startGameNow()), this, SLOT(GameStart()));
 	connect(Selector, SIGNAL(startGameNow()), Bank, SLOT(Initconnection()));
+
+	connect(MappingSystem, SIGNAL(SunShineAdded()), Bank, SLOT(SunShineAdded()));
 	
 	currentTime = 0;
 	stage = 0;
@@ -243,4 +271,42 @@ void QGameAdventureMode::moveScrollBar(int fromvalue, int arrivevalue, int durat
 	animation->setEndValue(arrivevalue);
 	animation->setEasingCurve(QEasingCurve::InOutCubic);
 	animation->start();
+}
+
+objectNames QGameAdventureMode::zombieTypeInttoEnum(int zombieTypeint)
+{
+	switch (zombieTypeint)
+	{
+	case 1:
+	{
+		return CommonZombie;
+	}
+	break;
+	default:
+		break;
+	}
+}
+
+objectNames QGameAdventureMode::plantTypeInttoEnum(int plantTypeint)
+{
+	switch (plantTypeint)
+	{
+	case 1:
+	{
+		return PeaShooter;
+	}
+	break;
+	case 2:
+	{
+		return SunFlower;
+	}
+	break;
+	case 3:
+	{
+		return WallNut;
+	}
+	break;
+	default:
+		break;
+	}
 }

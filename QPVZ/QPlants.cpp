@@ -98,29 +98,20 @@ void QPeaShooter::timerEvent(QTimerEvent *event)
 
 void QPeaShooter::Died()
 {
-	//TODO À¿Õˆ∂Øª≠
-	qDebug() << "TimerKilled\n";
 	setVisible(false);
 	deleteLater();
-	QPeaShooter *pPea = this;
-	qDebug() << &pPea << "Dead\n";
 }
 
 void QPeaShooter::Shoot()
 {
 	weapons = new QPeas(pos().x() + 50, pos().y());
-	qDebug() << "Hello, wordld";
 	emit addtomap(Weapons, weapons);
-//	connect(weapons, SIGNAL(addtomap(objectType, QMyObject*)), MaptoLoad, SLOT(addtoMap(objectType, QMyObject*)));
-//	connect(weapons, SIGNAL(removefrommap(objectType, QMyObject*)), MaptoLoad, SLOT(removefromMap(objectType, QMyObject*)));
 }
 
 bool QPeaShooter::inRange(QMyObject* myobject)
 {
 	if ((myobject->getPointinMap().y() == PointinMap.y()) && (myobject->getPointinMap().x() <= 8))
 	{
-		qDebug() << "Plants" << " " << getPointinMap().x() << " " << getPointinMap().y();
-		qDebug() << "Zombie" << " " << myobject->getPointinMap().x() << " " << myobject->getPointinMap().y() << "\n";
 		return true;
 	}
 	return false;
@@ -131,7 +122,7 @@ QSunFlower::QSunFlower(QGraphicsScene *parent)
 {
 	Plants_Name = SunFlower;
 	HP = 300;
-	lastSunShine = 0;
+	lastSunShine = 800;
 
 	myGif.setFileName("Resources/pvz-material/images/Plants/SunFlower/SunFlower1.gif");
 	myGif.jumpToFrame(0);
@@ -146,7 +137,7 @@ QSunFlower::QSunFlower(int x, int y, QGraphicsScene *parent)
 {
 	Plants_Name = SunFlower;
 	HP = 300;
-	lastSunShine = 0;
+	lastSunShine = 800;
 	setPos(x, y);
 
 	myGif.setFileName("Resources/pvz-material/images/Plants/SunFlower/SunFlower1.gif");
@@ -166,13 +157,27 @@ void QSunFlower::makeSunShine()
 {
 	newSunShine = new QMySunShine(this->scene());
 	QPointF tempPos;
-	tempPos.setX();
-	tempPos.setY();
+	tempPos.setX(pos().x() + (boundingRect().width() - newSunShine->boundingRect().width()) / 2);
+	tempPos.setY(pos().y() - newSunShine->boundingRect().height() + 5);
 	newSunShine->setPos(tempPos);
-	Scene->addItem(newSunShine);
-	tempPos.setY(MappingSystem->getRect().height() / 5 * (rand() % 4) + MappingSystem->getRect().y());
-	newSunShine->moveTo(tempPos, 3000, QEasingCurve::Linear);
-	connect(newSunShine, SIGNAL(BeTaken()), Bank, SLOT(SunShineAdded()));
+	scene()->addItem(newSunShine);
+	
+	QPropertyAnimation *SunShineAnimation = new QPropertyAnimation(newSunShine, "pos");
+	SunShineAnimation->setDuration(800);
+	SunShineAnimation->setStartValue(tempPos);
+	
+	tempPos.setX(tempPos.x() + 7);
+	tempPos.setY(tempPos.y() - 15);
+	SunShineAnimation->setKeyValueAt(0.3, tempPos);
+
+	tempPos.setX(tempPos.x() + 8);
+	tempPos.setY(tempPos.y() + 75);
+	SunShineAnimation->setEndValue(tempPos);
+
+	SunShineAnimation->setEasingCurve(QEasingCurve::OutInCubic);
+	SunShineAnimation->start();
+
+	emit addtomap(SunShine, newSunShine);
 }
 
 void QSunFlower::timerEvent(QTimerEvent *event)
@@ -190,4 +195,101 @@ void QSunFlower::timerEvent(QTimerEvent *event)
 		makeSunShine();
 		lastSunShine = 0;
 	}
+}
+
+void QSunFlower::Died()
+{
+	//TODO À¿Õˆ∂Øª≠
+	setVisible(false);
+	deleteLater();
+}
+
+QWallNut::QWallNut(QGraphicsScene *parent)
+	:QPlants(parent)
+{
+	Plants_Name = WallNut;
+	HP = 4000;
+	status = 0;
+
+	QMovie *newQMovie;
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Plants/WallNut/WallNut.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Plants/WallNut/Wallnut_cracked1.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Plants/WallNut/Wallnut_cracked2.gif");
+	Gifs.push_back(newQMovie);
+
+	setMyGif(0);
+
+	TimerID = startTimer(20);
+}
+
+QWallNut::QWallNut(int x, int y, QGraphicsScene *parent)
+	:QPlants(parent)
+{
+	Plants_Name = WallNut;
+	HP = 4000;
+	status = 0;
+	setPos(x, y);
+
+	QMovie *newQMovie;
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Plants/WallNut/WallNut.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Plants/WallNut/Wallnut_cracked1.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Plants/WallNut/Wallnut_cracked2.gif");
+	Gifs.push_back(newQMovie);
+
+	setMyGif(0);
+
+	TimerID = startTimer(20);
+}
+
+QWallNut::~QWallNut()
+{
+
+}
+
+void QWallNut::timerEvent(QTimerEvent *event)
+{
+	if (HP <= 0)
+	{
+		killTimer(TimerID);
+		emit removefrommap(Plants, this);
+		Died();
+		return;
+	}
+	else if ((HP > 0) && (HP <= 1333))
+	{
+		if (status == 1)
+		{
+			status = 2;
+			setMyGif(2);
+		}
+	}
+	else if ((HP > 1333) && (HP <= 2666))
+	{
+		if (status == 0)
+		{
+			status = 1;
+			setMyGif(1);
+		}
+	}
+}
+
+void QWallNut::Died()
+{
+	//TODO À¿Õˆ∂Øª≠
+	setVisible(false);
+	deleteLater();
 }

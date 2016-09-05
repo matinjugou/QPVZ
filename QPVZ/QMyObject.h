@@ -45,12 +45,14 @@ public:
 	~QMyObject();
 
 signals:
-	void addtomap(objectType, QMyObject*);
+
 	//将自己加入地图处理事件
-	void removefrommap(objectType, QMyObject*);
+	void addtomap(objectType, QMyObject*);
 	//将自己从地图中移除
+	void removefrommap(objectType, QMyObject*);
 
 public slots:
+	//移动动画
 	void moveTo(int x, int y, int duration);
 	//移动动画
 	void moveTo(int x, int y, int duration, QEasingCurve::Type type);
@@ -58,37 +60,36 @@ public slots:
 	void moveTo(QPointF targetPos, int duration);
 	//移动动画
 	void moveTo(QPointF targetPos, int duration, QEasingCurve::Type type);
-	//移动动画
-	void setnewPixmap();
 	//播放GIf时切换帧
-	void setnewPixmap(int);
+	void setnewPixmap();
 	//播放GIF时切换帧
+	void setnewPixmap(int);
 
 public:
-	int getHP();
 	//得到当前生命值
-	QPixmap getPicture(int i);
+	int getHP();
 	//得到图片数组中对应的图片
-	objectType getType();
+	QPixmap getPicture(int i);
 	//得到物品的种类
-	QPoint getPointinMap();
+	objectType getType();
 	//得到物品在地图上的坐标
+	QPoint getPointinMap();
+	//设置物品在地图内的坐标
 	void setPointinMap(int x, int y);
 	//设置物品在地图内的坐标
 	void setPointinMap(QPoint);
-	//设置物品在地图内的坐标
-	void setHP(int);
 	//设置生命值
-	void killHP(int);
+	void setHP(int);
 	//减少生命值
-	void setType(objectType Typename);
+	void killHP(int);
 	//设置物品的种类
-	void pushbackPixmap(QPixmap);
+	void setType(objectType Typename);
 	//存入新的图片
-	void setMyPixmap(int);
+	void pushbackPixmap(QPixmap);
 	//播放GIF动画时候切换帧数
-	void setMyGif(int);
+	void setMyPixmap(int);
 	//设置播放对应的GIF
-	virtual void Died(){}
+	void setMyGif(int);
 	//死亡动画
+	virtual void Died(){}
 };

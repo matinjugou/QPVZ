@@ -62,3 +62,17 @@ public:
 	PeaShooterCard(QCardSelector *parent = 0);
 	~PeaShooterCard();
 };
+
+class SunFlowerCard :public QMyCard
+{
+public:
+	SunFlowerCard(QCardSelector *parent = 0);
+	~SunFlowerCard();
+};
+
+class WallNutCard :public QMyCard
+{
+public:
+	WallNutCard(QCardSelector *parent = 0);
+	~WallNutCard();
+};

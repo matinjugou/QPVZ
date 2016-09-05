@@ -8,6 +8,8 @@
 #include "QMyMap.h"
 #include "QMySunShine.h"
 #include "MyVariable.h"
+#include "qfile.h"
+#include "qdatastream.h"
 
 
 class QMySunShine;
@@ -82,31 +84,37 @@ class QGameAdventureMode :public QGameMode
 {
 	Q_OBJECT
 private:
-	int					currentTime;				//计时器时间
-	int					currentGame;				//当前关卡
-	int					stage;						//游戏阶段
-	int					TimerID;					//计时器ID
-	int					barMoveed;					//滚动条是否已经移动
-	QMySunShine			*newSunShine;				//创建新阳光的指针
-	QPropertyAnimation	*animation;					//动画
-	QCardSelector		*Selector;					//卡片选择器
-	QCardBank			*Bank;						//卡片商
-	QMyMap				*MappingSystem;				//地图处理
-	objectNames			CardList[2] = {PeaShooter, PeaShooter};		//可选卡片的种类，之后改写为文件读取
-	int					totZombies = 5;				//总共的僵尸数量，可以改为文件读取
-	Node				ZombiesList[5] = { {CommonZombie, 7} ,{ CommonZombie, 14 } ,
-						{ CommonZombie, 21 } ,{ CommonZombie, 32 } ,{ CommonZombie, 40 }};	//僵尸名字和出现的时间，可以修改外接文件
+	int						currentTime;				//计时器时间
+	int						currentGame;				//当前关卡
+	int						stage;						//游戏阶段
+	int						TimerID;					//计时器ID
+	int						barMoveed;					//滚动条是否已经移动
+	qint32					Level;						//当前关卡
+	QFile					SettingsFile;				//配置文件
+	QMySunShine				*newSunShine;				//创建新阳光的指针
+	QPropertyAnimation		*animation;					//动画
+	QCardSelector			*Selector;					//卡片选择器
+	QCardBank				*Bank;						//卡片商
+	QMyMap					*MappingSystem;				//地图处理
+	int						totCards;					//可选卡片的种类数
+	QVector<objectNames>	CardList;					//可选卡片的种类，之后改写为文件读取
+	qint32					totZombies;					//总共的僵尸数量，可以改为文件读取
+	QVector<Node>			ZombiesList;				//僵尸名字和出现的时间，可以修改外接文件
 public:
 	QGameAdventureMode(QGameModeLoader *parent = 0);
 	~QGameAdventureMode();
 
 public slots:
-	void GameStart();
 	//游戏开始
+	void GameStart();
 
 public:
-	void timerEvent(QTimerEvent *event);
 	//计时器时间
-	void moveScrollBar(int fromvalue, int arrivevalue, int duration);
+	void timerEvent(QTimerEvent *event);
 	//移动View的滚动条
+	void moveScrollBar(int fromvalue, int arrivevalue, int duration);
+	//将读取的僵尸数字转化为对应的枚举类型
+	objectNames zombieTypeInttoEnum(int);
+	//将读取的植物数字转化为对应的枚举类型
+	objectNames plantTypeInttoEnum(int);
 };

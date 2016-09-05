@@ -26,21 +26,23 @@ signals:
 	//向map发送准备种植的消息
 
 public slots:
-	void moveRequested(QMyCard*);				
 	//接收卡片的置入请求，并得到卡片地址便于回传
-	void removeConfirm(QMyCard*);				
+	void moveRequested(QMyCard*);				
 	//接收卡片的离开请求，并得到卡片的地址便于从group中除去
+	void removeConfirm(QMyCard*);				
 	
-	void Initconnection();						
 	//初始化卡槽内所有卡片和bank之间用来种植新植物的连接
+	void Initconnection();						
 	
-	void ReadytoPlantFromCard(objectNames, QPointF, QMyCard*);
 	//接受从卡片传来的准备种植的消息，处理后传给map用于种植
-	void plantRequestDone();
+	void ReadytoPlantFromCard(objectNames, QPointF, QMyCard*);
 	//种植请求处理完毕
+	void plantRequestDone();
+	//种植请求处理取消
+	void plantRequestCancelled();
 	
-	void SunShineAdded();
 	//增加阳光值
+	void SunShineAdded();
 
 public:
 	void moveTo(int x, int y, int duration);

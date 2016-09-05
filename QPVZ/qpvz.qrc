@@ -1,3 +1,5 @@
 <RCC>
-    <qresource prefix="/QPVZ"/>
+    <qresource prefix="/QPVZ">
+        <file alias="SettingsFile">Resources/files/SettingsFiles.txt</file>
+    </qresource>
 </RCC>

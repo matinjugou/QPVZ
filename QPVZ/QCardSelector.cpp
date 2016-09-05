@@ -39,7 +39,7 @@ QCardSelector::QCardSelector(QGameAdventureMode *parent)
 	animation = new QPropertyAnimation(this, "pos", this);
 }
 
-QCardSelector::QCardSelector(int totcard, const objectNames cardlist[], QGameMode *parent)
+QCardSelector::QCardSelector(int totcard, const QVector<objectNames> &cardlist, QGameMode *parent)
 	:QObject(parent)
 {
 	setHandlesChildEvents(false);
@@ -63,7 +63,7 @@ QCardSelector::QCardSelector(int totcard, const objectNames cardlist[], QGameMod
 	animation = new QPropertyAnimation(this, "pos", this);
 }
 
-QCardSelector::QCardSelector(int totcard, const objectNames cardlist[], QGameAdventureMode *parent)
+QCardSelector::QCardSelector(int totcard, const QVector<objectNames> &cardlist, QGameAdventureMode *parent)
 	:QObject(parent)
 {
 	setHandlesChildEvents(false);
@@ -138,6 +138,22 @@ void QCardSelector::addNewCard(objectNames name)
 		connect(newCard, SIGNAL(moveToSelector(QMyCard*)), this, SLOT(resetIn(QMyCard*)));
 	}
 		break;
+	case SunFlower:
+	{
+		newCard = new SunFlowerCard;
+		newCardBoard = new SunFlowerCard;
+		connect(newCard, SIGNAL(moveToBank(QMyCard*)), this, SIGNAL(moveRequest(QMyCard*)));
+		connect(newCard, SIGNAL(moveToSelector(QMyCard*)), this, SLOT(resetIn(QMyCard*)));
+	}
+	break;
+	case WallNut:
+	{
+		newCard = new WallNutCard;
+		newCardBoard = new WallNutCard;
+		connect(newCard, SIGNAL(moveToBank(QMyCard*)), this, SIGNAL(moveRequest(QMyCard*)));
+		connect(newCard, SIGNAL(moveToSelector(QMyCard*)), this, SLOT(resetIn(QMyCard*)));
+	}
+	break;
 	default:
 		break;
 	}

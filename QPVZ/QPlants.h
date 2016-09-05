@@ -81,6 +81,7 @@ public:
 
 class QSunFlower :public QPlants
 {
+	Q_OBJECT
 protected:
 	int				lastSunShine;	//上一次创建阳光的间隔
 	QMySunShine		*newSunShine;	//新的阳光指针
@@ -88,9 +89,30 @@ public:
 	QSunFlower(QGraphicsScene *parent = 0);
 	QSunFlower(int x, int y, QGraphicsScene *parent = 0);
 	~QSunFlower();
+
 public:
 	void makeSunShine();
 	//制作一个阳光
 	void timerEvent(QTimerEvent *event);
 	//计时器事件
+	void Died();
+	//死亡处理
+};
+
+class QWallNut :public QPlants
+{
+	Q_OBJECT
+protected:
+	int status;
+
+public:
+	QWallNut(QGraphicsScene *parent = 0);
+	QWallNut(int x, int y, QGraphicsScene *parent = 0);
+	~QWallNut();
+
+public:
+	void timerEvent(QTimerEvent *event);
+	//计时器事件
+	void Died();
+	//死亡处理
 };

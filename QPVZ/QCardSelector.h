@@ -25,8 +25,8 @@ private:
 public:
 	QCardSelector(QGameMode *parent = 0);
 	QCardSelector(QGameAdventureMode *parent = 0);
-	QCardSelector(int totcard, const objectNames cardlist[], QGameMode *parent = 0);
-	QCardSelector(int totcard, const objectNames cardlist[], QGameAdventureMode *parent = 0);
+	QCardSelector(int totcard, const QVector<objectNames> &cardlist, QGameMode *parent = 0);
+	QCardSelector(int totcard, const QVector<objectNames> &cardlist, QGameAdventureMode *parent = 0);
 	~QCardSelector();
 
 signals:

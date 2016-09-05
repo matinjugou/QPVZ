@@ -50,8 +50,8 @@ void QMyCard::CDStart()
 void QMyCard::timerEvent(QTimerEvent *event)
 {
 	currentTime++;
-	CardCover.setRect(0, 0, 50, 70 - ((double)currentTime / (double)(CD * 50)) * 70);
-	if (currentTime == (CD * 50))
+	CardCover.setRect(0, 0, 50, 70 - ((double)currentTime / (double)CD) * 70);
+	if (currentTime == CD)
 	{
 		killTimer(TimerID);
 		currentTime = 0;
@@ -78,7 +78,6 @@ void QMyCard::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	}
 	else
 	{
-		qDebug() << pos().x() << " " << pos().y() << "\n";
 		emit ReadytoPlant(objectTypeName, pos(), this);
 	}
 	
@@ -130,10 +129,42 @@ PeaShooterCard::PeaShooterCard(QCardSelector *parent)
 	setPixmap(Pictures[0]);
 	Sunprice = 100;
 	nameText = QString::number(Sunprice, 10);
-	CD = 7;
+	CD = 375;
 }
 
 PeaShooterCard::~PeaShooterCard()
+{
+
+}
+
+SunFlowerCard::SunFlowerCard(QCardSelector *parent)
+	:QMyCard(parent)
+{
+	objectTypeName = SunFlower;
+	Pictures.push_back(QPixmap("Resources/pvz-material/images/Cards/Plants/SunFlower.png"));
+	setPixmap(Pictures[0]);
+	Sunprice = 50;
+	nameText = QString::number(Sunprice, 10);
+	CD = 375;
+}
+
+SunFlowerCard::~SunFlowerCard()
+{
+
+}
+
+WallNutCard::WallNutCard(QCardSelector *parent)
+	:QMyCard(parent)
+{
+	objectTypeName = WallNut;
+	Pictures.push_back(QPixmap("Resources/pvz-material/images/Cards/Plants/WallNut.png"));
+	setPixmap(Pictures[0]);
+	Sunprice = 50;
+	nameText = QString::number(Sunprice, 10);
+	CD = 1500;
+}
+
+WallNutCard::~WallNutCard()
 {
 
 }
