@@ -35,6 +35,7 @@ QGameMainMode::QGameMainMode(QGameModeLoader* parent)
 	:QGameMode(parent)
 {
 	Scene->setSceneRect(0, 0, 900, 600);
+	currentTime = 0;
 
 	Background->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/Surface.png"));
 	Background->setMyPixmap(0);
@@ -59,15 +60,20 @@ QGameMainMode::QGameMainMode(QGameModeLoader* parent)
 	Quit->setPos(805, 505);
 	Quit->setScale(0.8);
 	Scene->addItem(Quit); 
+
+	zombieHand = new QMyObject(this);
+	zombieHand->setOneGif("Resources/pvz-material/images/interface/SelectorZombieHand.gif");
+	Scene->addItem(zombieHand);
+	zombieHand->setPos(270, 270);
 	
-	QSignalMapper *Mapper = new QSignalMapper(this);
+	Mapper = new QSignalMapper(this);
 	connect(StartGame_Adventure, SIGNAL(clicked()), Mapper, SLOT(map()));
 	connect(StartGame_NetFight, SIGNAL(clicked()), Mapper, SLOT(map()));
 
 	Mapper->setMapping(StartGame_Adventure, 1);
 	Mapper->setMapping(StartGame_NetFight, 2);
 
-	connect(Mapper, SIGNAL(mapped(int)), this, SIGNAL(NewGameStart(int)));
+	connect(Mapper, SIGNAL(mapped(int)), this, SLOT(beforeNewGameStart(int)));
 
 	connect(Options, SIGNAL(clicked()), this, SIGNAL(Setting_Options()));
 	connect(Help, SIGNAL(clicked()), this, SIGNAL(Help_Start()));
@@ -82,10 +88,68 @@ QGameMainMode::~QGameMainMode()
 
 }
 
+void QGameMainMode::beforeNewGameStart(int gameModeType)
+{
+	ModetoStart = gameModeType;
+	TimerID = startTimer(20);
+}
+
 //public
 void QGameMainMode::timerEvent(QTimerEvent *event)
 {
-	
+	if (currentTime == 0)
+	{
+		ModeButtonStatus = 1;
+		zombieHand->getMyGif()->jumpToFrame(1);
+		disconnect(Mapper, SIGNAL(mapped(int)), this, SLOT(beforeNewGameStart(int)));
+//		connect(zombieHand->getMyGif(), SIGNAL(finished()), zombieHand->getMyGif(), SLOT(stop()));
+		zombieHand->getMyGif()->start();
+	}
+	if (currentTime % 5 == 0)
+	{
+		switch (ModetoStart)
+		{
+		case 1:
+		{
+			if (ModeButtonStatus == 1)
+			{
+				StartGame_Adventure->changetoHoverImg();
+				ModeButtonStatus = 2;
+			}
+			else
+			{
+				StartGame_Adventure->changetoPlainImg();
+				ModeButtonStatus = 1;
+			}
+		}
+		break;
+		case 2:
+		{
+			if (ModeButtonStatus == 1)
+			{
+				StartGame_NetFight->changetoHoverImg();
+				ModeButtonStatus = 2;
+			}
+			else
+			{
+				StartGame_NetFight->changetoPlainImg();
+				ModeButtonStatus = 1;
+			}
+		}
+		break;
+		default:
+			break;
+		}
+	}
+	currentTime++;
+	if (currentTime == 125)
+	{
+		killTimer(TimerID);
+		currentTime = 0;
+		emit NewGameStart(ModetoStart);
+		connect(Mapper, SIGNAL(mapped(int)), this, SLOT(beforeNewGameStart(int)));
+		zombieHand->getMyGif()->jumpToFrame(0);
+	}
 }
 
 

@@ -76,6 +76,8 @@ public:
 	objectType getType();
 	//得到物品在地图上的坐标
 	QPoint getPointinMap();
+	//得到QMovie指针
+	QMovie* getMyGif();
 	//设置物品在地图内的坐标
 	void setPointinMap(int x, int y);
 	//设置物品在地图内的坐标
@@ -88,6 +90,8 @@ public:
 	void setType(objectType Typename);
 	//存入新的图片
 	void pushbackPixmap(QPixmap);
+	//设置一张单独的GIF
+	void setOneGif(const QString &filename);
 	//播放GIF动画时候切换帧数
 	void setMyPixmap(int);
 	//设置播放对应的GIF

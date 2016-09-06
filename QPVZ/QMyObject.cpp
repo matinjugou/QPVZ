@@ -55,6 +55,11 @@ objectType QMyObject::getType()
 	return objectTypeName;
 }
 
+QMovie* QMyObject::getMyGif()
+{
+	return &myGif;
+}
+
 void QMyObject::moveTo(int x, int y, int duration)
 {
 	animation = new QPropertyAnimation(this, "pos", this);
@@ -112,6 +117,13 @@ void QMyObject::setnewPixmap()
 void QMyObject::setnewPixmap(int i)
 {
 	setPixmap(Gifs[GifNumber]->currentPixmap());
+}
+
+void QMyObject::setOneGif(const QString &filename)
+{
+	myGif.setFileName(filename);
+	myGif.jumpToFrame(0);
+	connect(&myGif, SIGNAL(frameChanged(int)), this, SLOT(setnewPixmap()));
 }
 
 void QMyObject::setMyPixmap(int i)

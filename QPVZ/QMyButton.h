@@ -31,5 +31,7 @@ public:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 public:
 	void setPlainImg(const QString &filename);
+	void changetoPlainImg();
 	void setHoverImg(const QString &filename);
+	void changetoHoverImg();
 };

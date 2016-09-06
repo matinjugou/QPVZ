@@ -45,12 +45,22 @@ void QMyButton::setPlainImg(const QString &filename)
 	setPixmap(pixmap);
 }
 
+void QMyButton::changetoPlainImg()
+{
+	setPixmap(Button_Plain);
+}
+
 void QMyButton::setHoverImg(const QString &filename)
 {
 	QPixmap pixmap;
 	pixmap.load(filename);
 	pixmap = pixmap.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 	setPixmap(pixmap);
+}
+
+void QMyButton::changetoHoverImg()
+{
+	setPixmap(Button_Hover);
 }
 
 void QMyButton::hoverEnterEvent(QGraphicsSceneHoverEvent *event)

@@ -51,13 +51,19 @@ class QGameMainMode :public QGameMode
 {
 	Q_OBJECT
 private:
-	QMyButton	*StartGame_Adventure;	//冒险模式按钮
-	QMyButton	*StartGame_NetFight;	//冒险模式按钮
-	QMyButton	*Options;				//选项按钮
-	QMyButton	*Help;					//帮助按钮
-	QMyButton	*Quit;					//退出按钮
-	QMyObject	*Name_Card;				//姓名牌
-	QMyButton	*Name_Change;			//改姓名
+	int				currentTime;			//当前时间
+	int				TimerID;				//计时器ID
+	int				ModetoStart;			//将要开启的游戏模式
+	int				ModeButtonStatus;				//将要开启的游戏模式的按钮的样式
+	QMyButton		*StartGame_Adventure;	//冒险模式按钮
+	QMyButton		*StartGame_NetFight;	//冒险模式按钮
+	QMyButton		*Options;				//选项按钮
+	QMyButton		*Help;					//帮助按钮
+	QMyButton		*Quit;					//退出按钮
+	QMyObject		*Name_Card;				//姓名牌
+	QMyButton		*Name_Change;			//改姓名
+	QMyObject		*zombieHand;			//开场僵尸的手
+	QSignalMapper	*Mapper;				//信号地图
 
 public:
 	QGameMainMode(QGameModeLoader* parent = 0);
@@ -71,6 +77,9 @@ signals:
 	//设置启动
 	void Setting_Options();
 
+public slots:
+	//开启某种游戏模式与动画
+	void beforeNewGameStart(int);
 
 public:
 	void timerEvent(QTimerEvent* event);

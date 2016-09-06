@@ -132,24 +132,24 @@ void QCardSelector::addNewCard(objectNames name)
 	{
 	case PeaShooter:
 	{
-		newCard = new PeaShooterCard;
-		newCardBoard = new PeaShooterCard;
+		newCard = new PeaShooterCard(this);
+		newCardBoard = new PeaShooterCard(this);
 		connect(newCard, SIGNAL(moveToBank(QMyCard*)), this, SIGNAL(moveRequest(QMyCard*)));
 		connect(newCard, SIGNAL(moveToSelector(QMyCard*)), this, SLOT(resetIn(QMyCard*)));
 	}
 		break;
 	case SunFlower:
 	{
-		newCard = new SunFlowerCard;
-		newCardBoard = new SunFlowerCard;
+		newCard = new SunFlowerCard(this);
+		newCardBoard = new SunFlowerCard(this);
 		connect(newCard, SIGNAL(moveToBank(QMyCard*)), this, SIGNAL(moveRequest(QMyCard*)));
 		connect(newCard, SIGNAL(moveToSelector(QMyCard*)), this, SLOT(resetIn(QMyCard*)));
 	}
 	break;
 	case WallNut:
 	{
-		newCard = new WallNutCard;
-		newCardBoard = new WallNutCard;
+		newCard = new WallNutCard(this);
+		newCardBoard = new WallNutCard(this);
 		connect(newCard, SIGNAL(moveToBank(QMyCard*)), this, SIGNAL(moveRequest(QMyCard*)));
 		connect(newCard, SIGNAL(moveToSelector(QMyCard*)), this, SLOT(resetIn(QMyCard*)));
 	}

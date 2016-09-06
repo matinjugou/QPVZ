@@ -33,10 +33,6 @@ void QCardBank::moveRequested(QMyCard* card)
 		QPointF tmpPos;
 		tmpPos.setX(totCard * 51 + 79);
 		tmpPos.setY(9);
-//		tmpPos.setX(0);
-//		tmpPos.setY(0);
-//		card->setParent(this);
-//		card->setParentItem(this);
 		addToGroup(card);
 		emit moveAccepted(tmpPos, card);
 		cardList[totCard] = card;
@@ -46,7 +42,21 @@ void QCardBank::moveRequested(QMyCard* card)
 
 void QCardBank::removeConfirm(QMyCard* cardtoremove)
 {
-//	removeFromGroup(cardtoremove);
+	int tempMark;
+	for (int i = 0; i < totCard; i++)
+	{
+		if (cardList[i] == cardtoremove)
+		{
+			tempMark = i;
+			break;
+		}
+	}
+	for (int i = tempMark; i < totCard - 1; i++)
+	{
+		cardList[i] = cardList[i + 1];
+		cardList[i]->moveTo(i * 51 + 79, 9, 200);
+	}
+	cardList[totCard] = NULL;
 	totCard--;
 }
 

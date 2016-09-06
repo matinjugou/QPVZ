@@ -1,4 +1,4 @@
 ﻿  QGameMode.cpp
-d:\文档\清华大学\程序设计实训\作业\qpvz\qpvz\qgamemode.cpp(369): warning C4715: “QGameAdventureMode::zombieTypeInttoEnum”: 不是所有的控件路径都返回值
-d:\文档\清华大学\程序设计实训\作业\qpvz\qpvz\qgamemode.cpp(393): warning C4715: “QGameAdventureMode::plantTypeInttoEnum”: 不是所有的控件路径都返回值
+d:\文档\清华大学\程序设计实训\作业\qpvz\qpvz\qgamemode.cpp(433): warning C4715: “QGameAdventureMode::zombieTypeInttoEnum”: 不是所有的控件路径都返回值
+d:\文档\清华大学\程序设计实训\作业\qpvz\qpvz\qgamemode.cpp(457): warning C4715: “QGameAdventureMode::plantTypeInttoEnum”: 不是所有的控件路径都返回值
   QPVZ.vcxproj -> D:\文档\清华大学\程序设计实训\作业\QPVZ\x64\Debug\QPVZ.exe

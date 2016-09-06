@@ -19,24 +19,24 @@ public:
 	~QGameModeLoader();
 
 signals:
-	void exchangetoScene(QGraphicsScene*);
 	//传递消息给Displayer切换到某个场景
-	void addItem(objectNames, QPointF);
+	void exchangetoScene(QGraphicsScene*);
 	//传递消息给Displayer添加物品
-	void Itemadded(QMyObject*);
+	void addItem(objectNames, QPointF);
 	//物品添加成功
+	void Itemadded(QMyObject*);
 
 public slots:
-	void Load(int);
 	//加载游戏模式
-	void QuitMode();
+	void Load(int);
 	//退出当前模式
-	void setView(QGraphicsView*);
+	void QuitMode();
 	//设置视角，引入对象树系统后可以优化掉
+	void setView(QGraphicsView*);
 
 public:
-	QGameMainMode* getMainMode();
 	//得到主要游戏模式指针
-	QGameMode* getCurrentMode();
+	QGameMainMode* getMainMode();
 	//得到当前游戏模式指针
+	QGameMode* getCurrentMode();
 };

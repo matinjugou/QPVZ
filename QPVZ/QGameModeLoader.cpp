@@ -1,5 +1,6 @@
 #include "QGameModeLoader.h"
 #include "QGameMode.h"
+#include "qdebug.h"
 QGameModeLoader::QGameModeLoader(QObject *parent)
 	:QObject(parent)
 {
@@ -39,9 +40,11 @@ void QGameModeLoader::Load(int name)
 
 void QGameModeLoader::QuitMode()
 {
-	exchangetoScene(MainMode->getScene());
 	if (CurrentMode != MainMode)
-		delete CurrentMode;
+		CurrentMode->deleteLater();
+	CurrentMode = MainMode;
+	exchangetoScene(MainMode->getScene());
+	qDebug() << &MainMode;
 }
 
 void QGameModeLoader::setView(QGraphicsView* view)
