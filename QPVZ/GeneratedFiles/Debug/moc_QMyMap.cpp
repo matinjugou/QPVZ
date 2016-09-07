@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_QMyMap_t {
-    QByteArrayData data[18];
-    char stringdata0[237];
+    QByteArrayData data[19];
+    char stringdata0[246];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,21 +36,22 @@ QT_MOC_LITERAL(3, 16, 11), // "objectNames"
 QT_MOC_LITERAL(4, 28, 11), // "RequestDone"
 QT_MOC_LITERAL(5, 40, 16), // "RequestCancelled"
 QT_MOC_LITERAL(6, 57, 13), // "SunShineAdded"
-QT_MOC_LITERAL(7, 71, 18), // "Plantrequest_Ready"
-QT_MOC_LITERAL(8, 90, 19), // "Plantrequest_Update"
-QT_MOC_LITERAL(9, 110, 16), // "Plantrequest_Try"
-QT_MOC_LITERAL(10, 127, 17), // "Plantrequest_Done"
-QT_MOC_LITERAL(11, 145, 22), // "Plantrequest_Cancelled"
-QT_MOC_LITERAL(12, 168, 9), // "Itemadded"
-QT_MOC_LITERAL(13, 178, 10), // "QMyObject*"
-QT_MOC_LITERAL(14, 189, 8), // "addtoMap"
-QT_MOC_LITERAL(15, 198, 10), // "objectType"
-QT_MOC_LITERAL(16, 209, 13), // "removefromMap"
-QT_MOC_LITERAL(17, 223, 13) // "ShovelMessage"
+QT_MOC_LITERAL(7, 71, 8), // "GameOver"
+QT_MOC_LITERAL(8, 80, 18), // "Plantrequest_Ready"
+QT_MOC_LITERAL(9, 99, 19), // "Plantrequest_Update"
+QT_MOC_LITERAL(10, 119, 16), // "Plantrequest_Try"
+QT_MOC_LITERAL(11, 136, 17), // "Plantrequest_Done"
+QT_MOC_LITERAL(12, 154, 22), // "Plantrequest_Cancelled"
+QT_MOC_LITERAL(13, 177, 9), // "Itemadded"
+QT_MOC_LITERAL(14, 187, 10), // "QMyObject*"
+QT_MOC_LITERAL(15, 198, 8), // "addtoMap"
+QT_MOC_LITERAL(16, 207, 10), // "objectType"
+QT_MOC_LITERAL(17, 218, 13), // "removefromMap"
+QT_MOC_LITERAL(18, 232, 13) // "ShovelMessage"
 
     },
     "QMyMap\0addItem\0\0objectNames\0RequestDone\0"
-    "RequestCancelled\0SunShineAdded\0"
+    "RequestCancelled\0SunShineAdded\0GameOver\0"
     "Plantrequest_Ready\0Plantrequest_Update\0"
     "Plantrequest_Try\0Plantrequest_Done\0"
     "Plantrequest_Cancelled\0Itemadded\0"
@@ -65,32 +66,34 @@ static const uint qt_meta_data_QMyMap[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      13,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       4,       // signalCount
+       5,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   79,    2, 0x06 /* Public */,
-       4,    0,   84,    2, 0x06 /* Public */,
-       5,    0,   85,    2, 0x06 /* Public */,
-       6,    0,   86,    2, 0x06 /* Public */,
+       1,    2,   84,    2, 0x06 /* Public */,
+       4,    0,   89,    2, 0x06 /* Public */,
+       5,    0,   90,    2, 0x06 /* Public */,
+       6,    0,   91,    2, 0x06 /* Public */,
+       7,    0,   92,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    2,   87,    2, 0x0a /* Public */,
-       8,    1,   92,    2, 0x0a /* Public */,
-       9,    0,   95,    2, 0x0a /* Public */,
-      10,    0,   96,    2, 0x0a /* Public */,
-      11,    0,   97,    2, 0x0a /* Public */,
-      12,    1,   98,    2, 0x0a /* Public */,
-      14,    2,  101,    2, 0x0a /* Public */,
-      16,    2,  106,    2, 0x0a /* Public */,
-      17,    1,  111,    2, 0x0a /* Public */,
+       8,    2,   93,    2, 0x0a /* Public */,
+       9,    1,   98,    2, 0x0a /* Public */,
+      10,    0,  101,    2, 0x0a /* Public */,
+      11,    0,  102,    2, 0x0a /* Public */,
+      12,    0,  103,    2, 0x0a /* Public */,
+      13,    1,  104,    2, 0x0a /* Public */,
+      15,    2,  107,    2, 0x0a /* Public */,
+      17,    2,  112,    2, 0x0a /* Public */,
+      18,    1,  117,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::QPointF,    2,    2,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -101,9 +104,9 @@ static const uint qt_meta_data_QMyMap[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 13,    2,
-    QMetaType::Void, 0x80000000 | 15, 0x80000000 | 13,    2,    2,
-    QMetaType::Void, 0x80000000 | 15, 0x80000000 | 13,    2,    2,
+    QMetaType::Void, 0x80000000 | 14,    2,
+    QMetaType::Void, 0x80000000 | 16, 0x80000000 | 14,    2,    2,
+    QMetaType::Void, 0x80000000 | 16, 0x80000000 | 14,    2,    2,
     QMetaType::Void, QMetaType::QPointF,    2,
 
        0        // eod
@@ -119,15 +122,16 @@ void QMyMap::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 1: _t->RequestDone(); break;
         case 2: _t->RequestCancelled(); break;
         case 3: _t->SunShineAdded(); break;
-        case 4: _t->Plantrequest_Ready((*reinterpret_cast< objectNames(*)>(_a[1])),(*reinterpret_cast< QPointF(*)>(_a[2]))); break;
-        case 5: _t->Plantrequest_Update((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
-        case 6: _t->Plantrequest_Try(); break;
-        case 7: _t->Plantrequest_Done(); break;
-        case 8: _t->Plantrequest_Cancelled(); break;
-        case 9: _t->Itemadded((*reinterpret_cast< QMyObject*(*)>(_a[1]))); break;
-        case 10: _t->addtoMap((*reinterpret_cast< objectType(*)>(_a[1])),(*reinterpret_cast< QMyObject*(*)>(_a[2]))); break;
-        case 11: _t->removefromMap((*reinterpret_cast< objectType(*)>(_a[1])),(*reinterpret_cast< QMyObject*(*)>(_a[2]))); break;
-        case 12: _t->ShovelMessage((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
+        case 4: _t->GameOver(); break;
+        case 5: _t->Plantrequest_Ready((*reinterpret_cast< objectNames(*)>(_a[1])),(*reinterpret_cast< QPointF(*)>(_a[2]))); break;
+        case 6: _t->Plantrequest_Update((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
+        case 7: _t->Plantrequest_Try(); break;
+        case 8: _t->Plantrequest_Done(); break;
+        case 9: _t->Plantrequest_Cancelled(); break;
+        case 10: _t->Itemadded((*reinterpret_cast< QMyObject*(*)>(_a[1]))); break;
+        case 11: _t->addtoMap((*reinterpret_cast< objectType(*)>(_a[1])),(*reinterpret_cast< QMyObject*(*)>(_a[2]))); break;
+        case 12: _t->removefromMap((*reinterpret_cast< objectType(*)>(_a[1])),(*reinterpret_cast< QMyObject*(*)>(_a[2]))); break;
+        case 13: _t->ShovelMessage((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -161,6 +165,13 @@ void QMyMap::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
                 return;
             }
         }
+        {
+            typedef void (QMyMap::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QMyMap::GameOver)) {
+                *result = 4;
+                return;
+            }
+        }
     }
 }
 
@@ -189,13 +200,13 @@ int QMyMap::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 13)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 13;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 13)
+        if (_id < 14)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 13;
+        _id -= 14;
     }
     return _id;
 }
@@ -223,5 +234,11 @@ void QMyMap::RequestCancelled()
 void QMyMap::SunShineAdded()
 {
     QMetaObject::activate(this, &staticMetaObject, 3, Q_NULLPTR);
+}
+
+// SIGNAL 4
+void QMyMap::GameOver()
+{
+    QMetaObject::activate(this, &staticMetaObject, 4, Q_NULLPTR);
 }
 QT_END_MOC_NAMESPACE

@@ -657,8 +657,8 @@ bool QPoleVaultingZombie::inRange(QMyObject* myobject)
 	if (status == 1)
 	{
 		if ((myobject->getPointinMap().y() == PointinMap.y()) && 
-			((((myobject->pos().x() + myobject->boundingRect().width()) + 2) >= (pos().x() + 200)) &&
-				(((myobject->pos().x() + myobject->boundingRect().width()) - 2) <= (pos().x() + 200))))
+			((((myobject->pos().x() + myobject->boundingRect().width()) + 7) >= (pos().x() + 230)) &&
+				(((myobject->pos().x() + myobject->boundingRect().width()) - 7) <= (pos().x() + 230))))
 			return true;
 		return false;
 	}

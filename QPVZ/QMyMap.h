@@ -13,12 +13,12 @@ class QMyMap :public QMyObject
 {
 	Q_OBJECT
 private:
-	bool					isPlantedMap[12][5];	//是否种植
-	QMyObject				*objectPointMap[12][5];	//在此处种植的物品指针
+	bool					isPlantedMap[15][7];	//是否种植
+	QMyObject				*objectPointMap[15][7];	//在此处种植的物品指针
 	QRectF					MapRect;				//地图区域
 	QPoint					pointNewItemtoPlantOn;	//记录一下新的植物要放置的地点
-	qreal					verticalLines[12];		//竖直边界线
-	qreal					horizontalLines[5];		//水平边界线
+	qreal					verticalLines[15];		//竖直边界线
+	qreal					horizontalLines[7];		//水平边界线
 	QItemShade				*ReadytoPlant;			//尝试种植时跟随鼠标移动的物品
 	QItemShade				*ReadytoPlant_Shadow;	//尝试种植时显示将要种下的位置的物品
 	QVector<QPlants*>		PlantsinMap;			//植物数组
@@ -34,6 +34,8 @@ signals:
 	void RequestCancelled();
 	//地图上的阳光被捡起
 	void SunShineAdded();
+	//游戏结束
+	void GameOver();
 
 public slots:
 	//尝试种植

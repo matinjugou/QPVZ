@@ -55,7 +55,7 @@ private:
 	int				currentTime;			//当前时间
 	int				TimerID;				//计时器ID
 	int				ModetoStart;			//将要开启的游戏模式
-	int				ModeButtonStatus;				//将要开启的游戏模式的按钮的样式
+	int				ModeButtonStatus;		//将要开启的游戏模式的按钮的样式
 	QMyButton		*StartGame_Adventure;	//冒险模式按钮
 	QMyButton		*StartGame_NetFight;	//冒险模式按钮
 	QMyButton		*Options;				//选项按钮
@@ -98,6 +98,10 @@ private:
 	int						TimerID;					//计时器ID
 	int						barMoveed;					//滚动条是否已经移动
 	bool					firstZombieShowed;			//第一只僵尸是否已经出现
+	int						GameOverTiemerCount;		//游戏失败退出倒计时
+	int						GameOverTiemerID;			//游戏失败计时器
+	bool					isGameOvered;				//游戏是否结束了
+	QMyObject				*GameOverPix;				//游戏失败画面
 	qint32					Level;						//当前关卡
 	QFile					SettingsFile;				//配置文件
 	QMySunShine				*newSunShine;				//创建新阳光的指针
@@ -121,6 +125,8 @@ public:
 public slots:
 	//游戏开始
 	void GameStart();
+	//游戏结束
+	void GameOver();
 
 public:
 	//计时器时间
@@ -139,11 +145,11 @@ class QGameNetFightMode :public QGameMode
 private:
 	bool					asServer;					//是否作为服务器
 	QString					ipStr;						//IP地址
-
 	int						currentTime;				//计时器时间
 	int						TimerID;					//计时器ID
 	int						stage;						//游戏状态
 	int						barMoveed;					//滚动条是否已经移动
+	QMyObject				*ZombieLine;				//僵尸的种植边界线
 	qint32					Level;						//当前关卡
 	QFile					SettingsFile;				//配置文件
 	QMySunShine				*newSunShine;				//创建新阳光的指针

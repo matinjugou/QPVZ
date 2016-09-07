@@ -4,20 +4,20 @@
 QMyMap::QMyMap(QGameMode *parent)
 	:QMyObject(parent)
 {
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < 14; i++)
 		for (int j = 0; j < 5; j++)
 		{
 			isPlantedMap[i][j] = false;
 			objectPointMap[i][j] = NULL;
 		}
-	MapRect.setX(245);
+	MapRect.setX(79);
 	MapRect.setY(87);
-	MapRect.setWidth(1003);
+	MapRect.setWidth(1162);
 	MapRect.setHeight(503);
 
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < 14; i++)
 	{
-		verticalLines[i] = MapRect.x() + MapRect.width() / 12 * i;
+		verticalLines[i] = MapRect.x() + MapRect.width() / 14 * i;
 		if (i < 5)
 		{
 			horizontalLines[i] = MapRect.y() + MapRect.height() / 5 * i;
@@ -61,7 +61,8 @@ void QMyMap::Plantrequest_Update(QPointF itemPos)
 		QPoint tempPoint = PostoPoint(itemPos);
 		int x = tempPoint.x();
 		int y = tempPoint.y();
-		if ((isPlantedMap[x][y] == true) || (x >= 9))
+		if ((((ReadytoPlant->objectType == Plants) && ((x > 10) || (x < 2) || (isPlantedMap[x][y] == true))))
+			|| ((ReadytoPlant->objectType == Zombies) && (x < 9)))
 		{
 			ReadytoPlant_Shadow->setVisible(false);
 		}
@@ -71,7 +72,7 @@ void QMyMap::Plantrequest_Update(QPointF itemPos)
 			QPointF tempPos;
 			tempPos = PointtoPos(tempPoint);
 			QRectF tempRect = ReadytoPlant_Shadow->boundingRect();
-			tempPos.setX(tempPos.x() + (MapRect.width() / 12 - tempRect.width()) / 2);
+			tempPos.setX(tempPos.x() + (MapRect.width() / 14 - tempRect.width()) / 2);
 			tempPos.setY(tempPos.y() + (MapRect.height() / 5) - 27 - tempRect.height());
 			if (ReadytoPlant->objectType == Zombies)
 			{
@@ -146,7 +147,7 @@ void QMyMap::Itemadded(QMyObject* newItemAdded)
 	else if (newItemAdded->getType() == Zombies)
 	{
 		QPointF tempPos = newItemAdded->pos();
-		tempPos.setX(tempPos.x() + (MapRect.width() / 12 - newItemAdded->boundingRect().width()) / 2);
+		tempPos.setX(tempPos.x() + (MapRect.width() / 14 - newItemAdded->boundingRect().width()) / 2);
 		tempPos.setY(tempPos.y() + MapRect.height() / 5 - newItemAdded->boundingRect().height() - 27);
 		newItemAdded->setPos(tempPos);
 		tempPos.setX(tempPos.x() + newItemAdded->boundingRect().width() / 2);
@@ -331,7 +332,11 @@ void QMyMap::examineMap()
 		QPointF tempPointf;
 		tempPointf.setX(i->pos().x() + i->boundingRect().width() / 2);
 		tempPointf.setY(i->pos().y() + i->boundingRect().height());
-		i->setPointinMap(PostoPoint(tempPointf));
+		QPoint tempPoint;
+		tempPoint = PostoPoint(tempPointf);
+		i->setPointinMap(tempPoint);
+		if (tempPoint.x() == 0)
+			emit GameOver();
 	}
 	for (const auto &i : WeaponsinMap)
 	{
@@ -361,11 +366,11 @@ qreal QMyMap::getHorizontalLine(int i)
 QPoint QMyMap::PostoPoint(QPointF itemPos)
 {
 	QPoint tempPoint;
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < 14; i++)
 	{
-		if (i == 11)
+		if (i == 13)
 		{
-			tempPoint.setX(11);
+			tempPoint.setX(13);
 		}
 		else if ((itemPos.x() >= verticalLines[i]) && (itemPos.x() < verticalLines[i + 1]))
 		{

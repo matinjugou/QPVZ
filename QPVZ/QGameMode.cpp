@@ -87,7 +87,6 @@ QGameMainMode::QGameMainMode(QGameModeLoader* parent)
 	connect(Quit, SIGNAL(clicked()), this, SIGNAL(exit()));
 
 	emit exchangetoScene(Scene);
-//	startTimer(20);
 }
 
 QGameMainMode::~QGameMainMode()
@@ -109,7 +108,6 @@ void QGameMainMode::timerEvent(QTimerEvent *event)
 		ModeButtonStatus = 1;
 		zombieHand->getMyGif()->jumpToFrame(1);
 		disconnect(Mapper, SIGNAL(mapped(int)), this, SLOT(beforeNewGameStart(int)));
-//		connect(zombieHand->getMyGif(), SIGNAL(finished()), zombieHand->getMyGif(), SLOT(stop()));
 		zombieHand->getMyGif()->start();
 	}
 	if (currentTime % 5 == 0)
@@ -208,7 +206,10 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	Shovel_Bank = new QMyObject(this);
 	MyProcessorBar = new QMyProcessor(100, 0, tempHighPos, this);
 	QuitGame = new QMyButton("Resources/pvz-material/images/Buttons/QuitGamePlain.png", "Resources/pvz-material/images/Buttons/QuitGameHover.png", this);
+	GameOverPix = new QMyObject(this);
 
+	GameOverPix->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/ZombiesWon.png"));
+	GameOverPix->setMyPixmap(0);
 
 	Shovel_Bank->setPixmap(QPixmap("Resources/pvz-material/images/interface/ShovelBank.png"));
 
@@ -219,6 +220,9 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	Selector->setPos(500, 687);
 	Bank->setPos(500, -120);
 	Shovel_Bank->setPos(666, 0);
+	GameOverPix->setPos(401, 80);
+	GameOverPix->setOpacity(0);
+
 	Shovel->setPos(666, 0);
 	Shovel->setOriginPos(Shovel->pos());
 	Shovel->setOpacity(0);
@@ -233,6 +237,7 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	Scene->addItem(Shovel_Bank);
 	Scene->addItem(Shovel);
 	Scene->addItem(MyProcessorBar);
+	Scene->addItem(GameOverPix);
 	Scene->addItem(QuitGame);
 
 	connect(Selector, SIGNAL(moveRequest(QMyCard*)), Bank, SLOT(moveRequested(QMyCard*)));
@@ -253,11 +258,16 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	connect(Shovel, SIGNAL(leftButtonClicked(QPointF)), MappingSystem, SLOT(ShovelMessage(QPointF)));
 
 	connect(MappingSystem, SIGNAL(SunShineAdded()), Bank, SLOT(SunShineAdded()));
+
+	connect(MappingSystem, SIGNAL(GameOver()), this, SLOT(GameOver()));
 	
 	currentTime = 0;
 	stage = 0;
 	barMoveed = 0;
 	firstZombieShowed = false;
+	GameOverTiemerID = -1;
+	GameOverTiemerCount = 0;
+	isGameOvered = false;
 
 	animation = new QPropertyAnimation(this);
 }
@@ -282,124 +292,150 @@ void QGameAdventureMode::GameStart()
 	}
 }
 
+void QGameAdventureMode::GameOver()
+{
+	if (!isGameOvered)
+	{
+		isGameOvered = true;
+		QPropertyAnimation *GameOverAnimation = new QPropertyAnimation(GameOverPix, "opacity", GameOverPix);
+		GameOverAnimation->setDuration(100);
+		GameOverAnimation->setStartValue(0);
+		GameOverAnimation->setEndValue(1);
+		GameOverAnimation->setEasingCurve(QEasingCurve::Linear);
+		GameOverAnimation->start();
+		GameOverTiemerID = startTimer(1000);
+	}
+}
+
 //public
 void QGameAdventureMode::timerEvent(QTimerEvent *event)
 {
-	currentTime++;
-	if (stage == 1)
+	if (event->timerId() == GameOverTiemerID)
 	{
-		if ((currentTime >= 50) && (currentTime < 75))
+		GameOverTiemerCount++;
+		if (GameOverTiemerCount == 5)
 		{
-			if (barMoveed == 0)
-			{
-				moveScrollBar(0, 500, 700);
-				QPropertyAnimation *ButtonAnimation = new QPropertyAnimation(QuitGame, "pos", QuitGame);
-				ButtonAnimation->setStartValue(QuitGame->pos());
-				ButtonAnimation->setEndValue(QPointF(1400 - QuitGame->boundingRect().width(), 0));
-				ButtonAnimation->setDuration(700);
-				ButtonAnimation->setEasingCurve(QEasingCurve::InOutCubic);
-				ButtonAnimation->start();
-				barMoveed = 1;
-			}
-		}
-		else if ((currentTime > 75) && (currentTime <= 85))
-		{
-			if (barMoveed == 1)
-			{
-				Selector->moveTo(500, 87, 200);
-				Bank->moveTo(500, 0, 200);
-				barMoveed = 2;
-			}
-		}
-		else if (currentTime >= 85)
-		{
-			currentTime = 0;
-			killTimer(TimerID);
-			barMoveed = 0;
+			emit exit();
 		}
 	}
-	else if (stage == 2)
-	{
-		if (currentTime <= 5)
-		{
-			if (barMoveed == 0)
-			{
-				Selector->moveTo(500, 600, 100);
-				barMoveed = 1;
-			}
-		}
-		else if ((currentTime > 5) && (currentTime <= 30))
-		{
-			if (barMoveed == 1)
-			{
-				moveScrollBar(500, 200, 500);
-				QPropertyAnimation *ButtonAnimation = new QPropertyAnimation(QuitGame, "pos", QuitGame);
-				ButtonAnimation->setStartValue(QuitGame->pos());
-				ButtonAnimation->setEndValue(QPointF(987, 0));
-				ButtonAnimation->setDuration(500);
-				ButtonAnimation->setEasingCurve(QEasingCurve::InOutCubic);
-				ButtonAnimation->start();
-				Bank->moveTo(220, 0, 500);
-				barMoveed = 2;
-			}
-		}
-		else if (currentTime > 30)
-		{
-			QPropertyAnimation *ShovelAnimation = new QPropertyAnimation(Shovel, "opacity", Shovel);
-			QPropertyAnimation *ShovelBankAnimation = new QPropertyAnimation(Shovel_Bank, "opacity", Shovel_Bank);
-			ShovelAnimation->setDuration(100);
-			ShovelAnimation->setStartValue(0);
-			ShovelAnimation->setEndValue(1);
-			ShovelAnimation->setEasingCurve(QEasingCurve::Linear);
-			ShovelBankAnimation->setDuration(100);
-			ShovelBankAnimation->setStartValue(0);
-			ShovelBankAnimation->setEndValue(1);
-			ShovelBankAnimation->setEasingCurve(QEasingCurve::Linear);
-			ShovelAnimation->start();
-			ShovelBankAnimation->start();
-			currentTime = 0;
-			stage++;
-			barMoveed = 0;
-		}
-	}
-	else if (stage == 3)
+	else
 	{
 		currentTime++;
-		for (int i = 0; i < totZombies; i++)
+		if (stage == 1)
 		{
-			if ((ZombiesList[i].timetoshow * 50) == currentTime)
+			if ((currentTime >= 50) && (currentTime < 75))
 			{
-				QPoint tempPoint;
-				int y = rand() % 5;
-				tempPoint.setX(10);
-				tempPoint.setY(y);
-				addItem(ZombiesList[i].Zombie_Type, MappingSystem->PointtoPos(tempPoint));
-				MyProcessorBar->addtocurrentProcess(1.0 / (double)totZombies);
-				if (!firstZombieShowed)
+				if (barMoveed == 0)
 				{
-					firstZombieShowed = true;
-					MyProcessorBar->Init();
-					QPropertyAnimation *ProcessorAnimation = new QPropertyAnimation(MyProcessorBar, "opacity", MyProcessorBar);
-					ProcessorAnimation->setDuration(100);
-					ProcessorAnimation->setStartValue(0);
-					ProcessorAnimation->setEndValue(1);
-					ProcessorAnimation->setEasingCurve(QEasingCurve::Linear);
-					ProcessorAnimation->start();
+					moveScrollBar(0, 500, 700);
+					QPropertyAnimation *ButtonAnimation = new QPropertyAnimation(QuitGame, "pos", QuitGame);
+					ButtonAnimation->setStartValue(QuitGame->pos());
+					ButtonAnimation->setEndValue(QPointF(1400 - QuitGame->boundingRect().width(), 0));
+					ButtonAnimation->setDuration(700);
+					ButtonAnimation->setEasingCurve(QEasingCurve::InOutCubic);
+					ButtonAnimation->start();
+					barMoveed = 1;
 				}
 			}
+			else if ((currentTime > 75) && (currentTime <= 85))
+			{
+				if (barMoveed == 1)
+				{
+					Selector->moveTo(500, 87, 200);
+					Bank->moveTo(500, 0, 200);
+					barMoveed = 2;
+				}
+			}
+			else if (currentTime >= 85)
+			{
+				currentTime = 0;
+				killTimer(TimerID);
+				barMoveed = 0;
+			}
 		}
-		if (currentTime % 500 == 0)
+		else if (stage == 2)
 		{
-			newSunShine = new QMySunShine(Scene);
-			QPointF tempPos;
-			tempPos.setX(MappingSystem->getRect().width() / 12 * (rand() % 9) + MappingSystem->getRect().x());
-			tempPos.setY(-60);
-			newSunShine->setPos(tempPos);
-			Scene->addItem(newSunShine);
-			tempPos.setY(MappingSystem->getRect().height() / 5 * (rand() % 4) + MappingSystem->getRect().y());
-			newSunShine->moveTo(tempPos, 3000, QEasingCurve::Linear);
-			newSunShine->setZValue(100);
-			connect(newSunShine, SIGNAL(BeTaken()), Bank, SLOT(SunShineAdded()));
+			if (currentTime <= 5)
+			{
+				if (barMoveed == 0)
+				{
+					Selector->moveTo(500, 600, 100);
+					barMoveed = 1;
+				}
+			}
+			else if ((currentTime > 5) && (currentTime <= 30))
+			{
+				if (barMoveed == 1)
+				{
+					moveScrollBar(500, 200, 500);
+					QPropertyAnimation *ButtonAnimation = new QPropertyAnimation(QuitGame, "pos", QuitGame);
+					ButtonAnimation->setStartValue(QuitGame->pos());
+					ButtonAnimation->setEndValue(QPointF(987, 0));
+					ButtonAnimation->setDuration(500);
+					ButtonAnimation->setEasingCurve(QEasingCurve::InOutCubic);
+					ButtonAnimation->start();
+					Bank->moveTo(220, 0, 500);
+					barMoveed = 2;
+				}
+			}
+			else if (currentTime > 30)
+			{
+				QPropertyAnimation *ShovelAnimation = new QPropertyAnimation(Shovel, "opacity", Shovel);
+				QPropertyAnimation *ShovelBankAnimation = new QPropertyAnimation(Shovel_Bank, "opacity", Shovel_Bank);
+				ShovelAnimation->setDuration(100);
+				ShovelAnimation->setStartValue(0);
+				ShovelAnimation->setEndValue(1);
+				ShovelAnimation->setEasingCurve(QEasingCurve::Linear);
+				ShovelBankAnimation->setDuration(100);
+				ShovelBankAnimation->setStartValue(0);
+				ShovelBankAnimation->setEndValue(1);
+				ShovelBankAnimation->setEasingCurve(QEasingCurve::Linear);
+				ShovelAnimation->start();
+				ShovelBankAnimation->start();
+				currentTime = 0;
+				stage++;
+				barMoveed = 0;
+			}
+		}
+		else if (stage == 3)
+		{
+			currentTime++;
+			for (int i = 0; i < totZombies; i++)
+			{
+				if ((ZombiesList[i].timetoshow * 50) == currentTime)
+				{
+					QPoint tempPoint;
+					int y = rand() % 5;
+					tempPoint.setX(10);
+					tempPoint.setY(y);
+					addItem(ZombiesList[i].Zombie_Type, MappingSystem->PointtoPos(tempPoint));
+					MyProcessorBar->addtocurrentProcess(1.0 / (double)totZombies);
+					if (!firstZombieShowed)
+					{
+						firstZombieShowed = true;
+						MyProcessorBar->Init();
+						QPropertyAnimation *ProcessorAnimation = new QPropertyAnimation(MyProcessorBar, "opacity", MyProcessorBar);
+						ProcessorAnimation->setDuration(100);
+						ProcessorAnimation->setStartValue(0);
+						ProcessorAnimation->setEndValue(1);
+						ProcessorAnimation->setEasingCurve(QEasingCurve::Linear);
+						ProcessorAnimation->start();
+					}
+				}
+			}
+			if (currentTime % 500 == 0)
+			{
+				newSunShine = new QMySunShine(Scene);
+				QPointF tempPos;
+				tempPos.setX(MappingSystem->getRect().width() / 14 * (rand() % 9) + MappingSystem->getRect().x());
+				tempPos.setY(-60);
+				newSunShine->setPos(tempPos);
+				Scene->addItem(newSunShine);
+				tempPos.setY(MappingSystem->getRect().height() / 5 * (rand() % 4) + MappingSystem->getRect().y());
+				newSunShine->moveTo(tempPos, 3000, QEasingCurve::Linear);
+				newSunShine->setZValue(100);
+				connect(newSunShine, SIGNAL(BeTaken()), Bank, SLOT(SunShineAdded()));
+			}
 		}
 	}
 }
@@ -473,12 +509,9 @@ QGameNetFightMode::QGameNetFightMode(QGameModeLoader* parent)
 	Scene->setSceneRect(0, 0, 1400, 600);
 
 	MappingSystem = new QMyMap(this);
-	
-
 	Bank = new QCardBank(this);
 	QuitGame = new QMyButton("Resources/pvz-material/images/Buttons/QuitGamePlain.png", "Resources/pvz-material/images/Buttons/QuitGameHover.png", this);
-
-
+	ZombieLine = new QMyObject(this);
 
 	Background->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/background1.jpg"));
 	Background->setMyPixmap(0);
@@ -486,9 +519,13 @@ QGameNetFightMode::QGameNetFightMode(QGameModeLoader* parent)
 	Bank->setPos(500, -120);
 	Bank->setSunShine(200);
 
+	ZombieLine->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/Stripe.png"));
+	ZombieLine->setMyPixmap(0);
+	ZombieLine->setPos(807, 70);
 	
 	QuitGame->setPos(787, 0);
 
+	Scene->addItem(ZombieLine);
 	Scene->addItem(Bank);
 	Scene->addItem(MappingSystem);
 	Scene->addItem(QuitGame);
@@ -738,7 +775,7 @@ void QGameNetFightMode::timerEvent(QTimerEvent *event)
 		{
 			newSunShine = new QMySunShine(Scene);
 			QPointF tempPos;
-			tempPos.setX(MappingSystem->getRect().width() / 12 * (rand() % 9) + MappingSystem->getRect().x());
+			tempPos.setX(MappingSystem->getRect().width() / 14 * (rand() % 9) + MappingSystem->getRect().x());
 			tempPos.setY(-60);
 			newSunShine->setPos(tempPos);
 			Scene->addItem(newSunShine);
