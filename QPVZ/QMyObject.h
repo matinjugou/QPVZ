@@ -10,6 +10,7 @@
 
 class QGameMode;
 class QGameAdventureMode;
+class QGameNetFightMode;
 class QCardBank;
 class QCardSelector;
 class QPlants;

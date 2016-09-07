@@ -12,6 +12,7 @@ class QItemShade :public QObject, public QGraphicsPixmapItem
 public:
 	QPixmap			ShadePixmap;		//待种植的植物图片
 	objectNames		objectTypeNames;	//待种植的植物的名字
+	objectType		objectType;			//种植的物品的种类
 	QPoint			PointinMap;			//待种植的植物在地图上的坐标点
 public:
 	QItemShade(QMyMap *parent = 0);

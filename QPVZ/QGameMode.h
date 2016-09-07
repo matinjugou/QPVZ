@@ -1,22 +1,23 @@
 #pragma once
 #include "QMyObject.h"
-#include "QZombies.h"
-#include "QPlants.h"
 #include "qgraphicsscene.h"
 #include "QMyButton.h"
-#include "QCardBanks.h"
-#include "QMyMap.h"
-#include "QMySunShine.h"
 #include "MyVariable.h"
 #include "qfile.h"
 #include "qdatastream.h"
-#include "QMyShovel.h"
-#include "QMyProcessor.h"
+#include "qtcpserver.h"
+#include "qtcpsocket.h"
+#include "QMyDialog.h"
 
 class QMySunShine;
 class QGameModeLoader;
 class QMyObject;
 class QCardSelector;
+class QMyShovel;
+class QMyMap;
+class QCardBanks;
+class QMySunShine;
+class QMyProcessor;
 
 class QGameMode :public QObject, public QGraphicsPixmapItem
 {
@@ -108,10 +109,10 @@ private:
 	QMyProcessor			*MyProcessorBar;			//进度条
 	QMyMap					*MappingSystem;				//地图处理
 	QMyButton				*QuitGame;					//退出按鈕
-	int						totCards;					//可选卡片的种类数
-	QVector<objectNames>	CardList;					//可选卡片的种类，之后改写为文件读取
 	qint32					totZombies;					//总共的僵尸数量，可以改为文件读取
 	QVector<Node>			ZombiesList;				//僵尸名字和出现的时间，可以修改外接文件
+	int						totCards;					//可选卡片的种类数
+	QVector<objectNames>	CardList;					//可选卡片的种类，之后改写为文件读取
 
 public:
 	QGameAdventureMode(QGameModeLoader *parent = 0);
@@ -130,4 +131,62 @@ public:
 	objectNames zombieTypeInttoEnum(int);
 	//将读取的植物数字转化为对应的枚举类型
 	objectNames plantTypeInttoEnum(int);
+};
+
+class QGameNetFightMode :public QGameMode
+{
+	Q_OBJECT
+private:
+	bool					asServer;					//是否作为服务器
+	QString					ipStr;						//IP地址
+
+	int						currentTime;				//计时器时间
+	int						TimerID;					//计时器ID
+	int						stage;						//游戏状态
+	int						barMoveed;					//滚动条是否已经移动
+	qint32					Level;						//当前关卡
+	QFile					SettingsFile;				//配置文件
+	QMySunShine				*newSunShine;				//创建新阳光的指针
+	QPropertyAnimation		*animation;					//动画
+	QCardSelector			*Selector;					//卡片选择器
+	QCardBank				*Bank;						//卡片商
+	QMyMap					*MappingSystem;				//地图处理
+	QMyButton				*QuitGame;					//退出按鈕
+	QTcpServer				*Server;					//服务器
+	QTcpSocket				*Socket;					//套接字
+	QMyDialog				*myDialog;					//对话框
+	int						totCards;					//可选卡片的种类数
+	QVector<objectNames>	CardList;					//可选卡片的种类，之后改写为文件读取
+
+public:
+	QGameNetFightMode(QGameModeLoader* parent = 0);
+	~QGameNetFightMode();
+
+public slots:
+	//游戏开始
+	void GameStart();
+	//收到种下新物品的消息
+	void getMessage();
+	//发送种下新物品的消息
+	void sendMessage(objectNames, QPointF);
+
+public:
+	//初始化连接
+	bool InitTcpConnection();
+	//加载卡片资源
+	void LoadMyCard();
+	//加载种植事件处理
+	void InitAddItemConnection();
+	//计时器事件
+	void timerEvent(QTimerEvent *event);
+	//移动View的滚动条
+	void moveScrollBar(int fromvalue, int arrivevalue, int duration);
+	//将读取的僵尸数字转化为对应的枚举类型
+	objectNames zombieTypeInttoEnum(int);
+	//将读取的植物数字转化为对应的枚举类型
+	objectNames plantTypeInttoEnum(int);
+	//将物品种类名的字符串转化为对应的枚举类型
+	objectNames itemStringtoObjectnames(QString);
+	//将物品种类名的枚举类型转化为对应的字符串
+	QString itemObjectnamestoString(objectNames);
 };

@@ -168,3 +168,51 @@ WallNutCard::~WallNutCard()
 {
 
 }
+
+CommonZombieCard::CommonZombieCard(QCardSelector *parent)
+	:QMyCard(parent)
+{
+	objectTypeName = CommonZombie;
+	Pictures.push_back(QPixmap("Resources/pvz-material/images/Cards/Zombies/CommonZombie.png"));
+	setPixmap(Pictures[0]);
+	Sunprice = 50;
+	nameText = QString::number(Sunprice, 10);
+	CD = 375;
+}
+
+CommonZombieCard::~CommonZombieCard()
+{
+
+}
+
+BucketHeadZombieCard::BucketHeadZombieCard(QCardSelector *parent)
+	:QMyCard(parent)
+{
+	objectTypeName = BucketHeadZombie;
+	Pictures.push_back(QPixmap("Resources/pvz-material/images/Cards/Zombies/BucketheadZombie.png"));
+	setPixmap(Pictures[0]);
+	Sunprice = 100;
+	nameText = QString::number(Sunprice, 10);
+	CD = 750;
+}
+
+BucketHeadZombieCard::~BucketHeadZombieCard()
+{
+
+}
+
+PoleVaultingZombieCard::PoleVaultingZombieCard(QCardSelector *parent)
+	:QMyCard(parent)
+{
+	objectTypeName = PoleVaultingZombie;
+	Pictures.push_back(QPixmap("Resources/pvz-material/images/Cards/Zombies/PoleVaultingZombie.png"));
+	setPixmap(Pictures[0]);
+	Sunprice = 100;
+	nameText = QString::number(Sunprice, 10);
+	CD = 750;
+}
+
+PoleVaultingZombieCard::~PoleVaultingZombieCard()
+{
+
+}

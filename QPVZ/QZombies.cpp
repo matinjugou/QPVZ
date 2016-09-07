@@ -1,4 +1,5 @@
 #include "QZombies.h"
+#include "QMyObject.h"
 #include <stdlib.h>
 #include <iostream>
 

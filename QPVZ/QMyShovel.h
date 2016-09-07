@@ -10,6 +10,8 @@ protected:
 public:
 	QMyShovel(QGameAdventureMode *parent = 0);
 	QMyShovel(int x, int y, QGameAdventureMode *parent = 0);
+	QMyShovel(QGameNetFightMode *parent = 0);
+	QMyShovel(int x, int y, QGameNetFightMode *parent = 0);
 	~QMyShovel();
 signals:
 	//×ó¼üµã»÷

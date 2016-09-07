@@ -1,6 +1,13 @@
 #include "QGameMode.h"
 #include "QGameModeLoader.h"
 #include "QCardSelector.h"
+#include "QMyMap.h"
+#include "QMySunShine.h"
+#include "QCardBanks.h"
+#include "QMyShovel.h"
+#include "QMyProcessor.h"
+#include "QZombies.h"
+#include "QPlants.h"
 
 QGameMode::QGameMode(QGameModeLoader* parent)
 	:QObject(parent)
@@ -430,6 +437,7 @@ objectNames QGameAdventureMode::zombieTypeInttoEnum(int zombieTypeint)
 	default:
 		break;
 	}
+	return Nosuchobject;
 }
 
 objectNames QGameAdventureMode::plantTypeInttoEnum(int plantTypeint)
@@ -454,4 +462,419 @@ objectNames QGameAdventureMode::plantTypeInttoEnum(int plantTypeint)
 	default:
 		break;
 	}
+	return Nosuchobject;
+}
+
+
+
+QGameNetFightMode::QGameNetFightMode(QGameModeLoader* parent)
+	:QGameMode(parent)
+{
+	Scene->setSceneRect(0, 0, 1400, 600);
+
+	MappingSystem = new QMyMap(this);
+	
+
+	Bank = new QCardBank(this);
+	QuitGame = new QMyButton("Resources/pvz-material/images/Buttons/QuitGamePlain.png", "Resources/pvz-material/images/Buttons/QuitGameHover.png", this);
+
+
+
+	Background->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/background1.jpg"));
+	Background->setMyPixmap(0);
+	Background->setPos(0, 0);
+	Bank->setPos(500, -120);
+	Bank->setSunShine(200);
+
+	
+	QuitGame->setPos(787, 0);
+
+	Scene->addItem(Bank);
+	Scene->addItem(MappingSystem);
+	Scene->addItem(QuitGame);
+
+	
+	connect(Bank, SIGNAL(ReadytoPlant(objectNames, QPointF)), MappingSystem, SLOT(Plantrequest_Ready(objectNames, QPointF)));
+	connect(MappingSystem, SIGNAL(RequestDone()), Bank, SLOT(plantRequestDone()));
+	connect(MappingSystem, SIGNAL(RequestCancelled()), Bank, SLOT(plantRequestCancelled()));
+	connect(MappingSystem, SIGNAL(addItem(objectNames, QPointF)), this, SIGNAL(addItem(objectNames, QPointF)));
+
+	connect(QuitGame, SIGNAL(clicked()), this, SIGNAL(exit()));
+
+	connect(this, SIGNAL(Itemadded(QMyObject*)), MappingSystem, SLOT(Itemadded(QMyObject*)));
+
+
+	connect(MappingSystem, SIGNAL(SunShineAdded()), Bank, SLOT(SunShineAdded()));
+
+	currentTime = 0;
+	stage = 0;
+	barMoveed = 0;
+
+	animation = new QPropertyAnimation(this);
+}
+
+QGameNetFightMode::~QGameNetFightMode()
+{
+
+}
+
+
+//public slot
+void QGameNetFightMode::GameStart()
+{
+	if (stage < 2)
+	{
+		if (stage == 0)
+			emit exchangetoScene(Scene);
+		stage++;
+		TimerID = startTimer(20);
+		if (stage == 2)
+		{
+			MappingSystem->startTimer(20);
+		}
+	}
+}
+
+bool QGameNetFightMode::InitTcpConnection()
+{
+	myDialog = new QMyDialog;
+	if (myDialog->exec() == QDialog::Accepted)
+	{
+		if (myDialog->ui.radioButton_Server->isChecked())
+		{
+			asServer = true;
+		}
+		else
+		{
+			asServer = false;
+			ipStr = myDialog->ui.IPLineEdit->text();
+		}
+		if (asServer)
+		{
+			Server = new QTcpServer(this);
+			Server->listen(QHostAddress::Any, 1270);
+			if (Server->waitForNewConnection(60000))
+			{
+				Socket = new QTcpSocket(this);
+				Socket = Server->nextPendingConnection();
+			}
+			else
+			{
+				delete myDialog;
+				return false;
+			}
+		}
+		else
+		{
+			Socket = new QTcpSocket(this);
+			Socket->connectToHost(ipStr, 1270);
+			if (Socket->state() != QAbstractSocket::ConnectedState)
+			{
+				delete myDialog;
+				return false;
+			}
+		}
+		delete myDialog;
+		return true;
+	}
+	else
+	{
+		delete myDialog;
+		return false;
+	}
+}
+
+void QGameNetFightMode::LoadMyCard()
+{
+	if (asServer)
+	{
+		SettingsFile.setFileName("Resources/files/SettingsFiles_NetFight_Plants.txt");
+		if (!SettingsFile.open(QIODevice::ReadOnly))
+		{
+			qDebug() << "Failed";
+		}
+
+		QTextStream inStream(&SettingsFile);
+		inStream >> totCards;
+		for (int i = 0; i < totCards; i++)
+		{
+			int tempplantType;
+			inStream >> tempplantType;
+			CardList.push_back(plantTypeInttoEnum(tempplantType));
+		}
+
+	}
+	else
+	{
+		SettingsFile.setFileName("Resources/files/SettingsFiles_NetFight_Zombies.txt");
+		if (!SettingsFile.open(QIODevice::ReadOnly))
+		{
+			qDebug() << "Failed";
+		}
+
+		QTextStream inStream(&SettingsFile);
+		inStream >> totCards;
+		for (int i = 0; i < totCards; i++)
+		{
+			int tempzombieType;
+			inStream >> tempzombieType;
+			CardList.push_back(zombieTypeInttoEnum(tempzombieType));
+		}
+	}
+
+	SettingsFile.close();
+
+
+	Selector = new QCardSelector(totCards, CardList, this);
+	Scene->addItem(Selector);
+	Selector->setPos(500, 687);
+
+	connect(Selector, SIGNAL(moveRequest(QMyCard*)), Bank, SLOT(moveRequested(QMyCard*)));
+	connect(Selector, SIGNAL(removeInform(QMyCard*)), Bank, SLOT(removeConfirm(QMyCard*)));
+	connect(Bank, SIGNAL(moveAccepted(QPointF, QMyCard*)), Selector, SLOT(moveAccepted(QPointF, QMyCard*)));
+
+	connect(Selector, SIGNAL(startGameNow()), this, SLOT(GameStart()));
+	connect(Selector, SIGNAL(startGameNow()), Bank, SLOT(Initconnection()));
+
+}
+
+void QGameNetFightMode::InitAddItemConnection()
+{
+	connect(Socket, SIGNAL(readyRead()), this, SLOT(getMessage()));
+	connect(MappingSystem, SIGNAL(addItem(objectNames, QPointF)), this, SLOT(sendMessage(objectNames, QPointF)));
+}
+
+void QGameNetFightMode::sendMessage(objectNames itemobejectnames, QPointF tempPos)
+{
+	QString tempString;
+	tempString = itemObjectnamestoString(itemobejectnames) 
+		+ "$" + QString::number(tempPos.x()) + "$" + QString::number(tempPos.y());
+	Socket->write(tempString.toLatin1());
+}
+
+void QGameNetFightMode::getMessage()
+{
+	QString buffer;
+	buffer = QString(Socket->readAll());
+	QStringList List = buffer.split('$');
+	QPointF tempPos;
+	objectNames tempobjectName = itemStringtoObjectnames(List[0]);
+	tempPos.setX(List[1].toDouble());
+	tempPos.setY(List[2].toDouble());
+	addItem(tempobjectName, tempPos);
+}
+
+void QGameNetFightMode::timerEvent(QTimerEvent *event)
+{
+	currentTime++;
+	if (stage == 1)
+	{
+		if ((currentTime >= 50) && (currentTime < 75))
+		{
+			if (barMoveed == 0)
+			{
+				moveScrollBar(0, 500, 700);
+				QPropertyAnimation *ButtonAnimation = new QPropertyAnimation(QuitGame, "pos", QuitGame);
+				ButtonAnimation->setStartValue(QuitGame->pos());
+				ButtonAnimation->setEndValue(QPointF(1400 - QuitGame->boundingRect().width(), 0));
+				ButtonAnimation->setDuration(700);
+				ButtonAnimation->setEasingCurve(QEasingCurve::InOutCubic);
+				ButtonAnimation->start();
+				barMoveed = 1;
+			}
+		}
+		else if ((currentTime > 75) && (currentTime <= 85))
+		{
+			if (barMoveed == 1)
+			{
+				Selector->moveTo(500, 87, 200);
+				Bank->moveTo(500, 0, 200);
+				barMoveed = 2;
+			}
+		}
+		else if (currentTime >= 85)
+		{
+			currentTime = 0;
+			killTimer(TimerID);
+			barMoveed = 0;
+		}
+	}
+	else if (stage == 2)
+	{
+		if (currentTime <= 5)
+		{
+			if (barMoveed == 0)
+			{
+				Selector->moveTo(500, 600, 100);
+				barMoveed = 1;
+			}
+		}
+		else if ((currentTime > 5) && (currentTime <= 30))
+		{
+			if (barMoveed == 1)
+			{
+				moveScrollBar(500, 200, 500);
+				QPropertyAnimation *ButtonAnimation = new QPropertyAnimation(QuitGame, "pos", QuitGame);
+				ButtonAnimation->setStartValue(QuitGame->pos());
+				ButtonAnimation->setEndValue(QPointF(987, 0));
+				ButtonAnimation->setDuration(500);
+				ButtonAnimation->setEasingCurve(QEasingCurve::InOutCubic);
+				ButtonAnimation->start();
+				Bank->moveTo(220, 0, 500);
+				barMoveed = 2;
+			}
+		}
+		else if (currentTime > 30)
+		{
+			currentTime = 0;
+			stage++;
+			barMoveed = 0;
+		}
+	}
+	else if (stage == 3)
+	{
+		currentTime++;
+		if ((currentTime % 500 == 0) && (asServer))
+		{
+			newSunShine = new QMySunShine(Scene);
+			QPointF tempPos;
+			tempPos.setX(MappingSystem->getRect().width() / 12 * (rand() % 9) + MappingSystem->getRect().x());
+			tempPos.setY(-60);
+			newSunShine->setPos(tempPos);
+			Scene->addItem(newSunShine);
+			tempPos.setY(MappingSystem->getRect().height() / 5 * (rand() % 4) + MappingSystem->getRect().y());
+			newSunShine->moveTo(tempPos, 3000, QEasingCurve::Linear);
+			newSunShine->setZValue(100);
+			connect(newSunShine, SIGNAL(BeTaken()), Bank, SLOT(SunShineAdded()));
+		}
+	}
+}
+
+void QGameNetFightMode::moveScrollBar(int fromvalue, int arrivevalue, int duration)
+{
+	animation->setTargetObject(View->horizontalScrollBar());
+	animation->setPropertyName("value");
+	animation->setDuration(duration);
+	animation->setStartValue(fromvalue);
+	animation->setEndValue(arrivevalue);
+	animation->setEasingCurve(QEasingCurve::InOutCubic);
+	animation->start();
+}
+
+objectNames QGameNetFightMode::zombieTypeInttoEnum(int zombieTypeint)
+{
+	switch (zombieTypeint)
+	{
+	case 1:
+	{
+		return CommonZombie;
+	}
+	break;
+	case 2:
+	{
+		return BucketHeadZombie;
+	}
+	break;
+	case 3:
+	{
+		return PoleVaultingZombie;
+	}
+	break;
+	default:
+		break;
+	}
+	return Nosuchobject;
+}
+
+objectNames QGameNetFightMode::plantTypeInttoEnum(int plantTypeint)
+{
+	switch (plantTypeint)
+	{
+	case 1:
+	{
+		return PeaShooter;
+	}
+	break;
+	case 2:
+	{
+		return SunFlower;
+	}
+	break;
+	case 3:
+	{
+		return WallNut;
+	}
+	break;
+	default:
+		break;
+	}
+}
+
+objectNames QGameNetFightMode::itemStringtoObjectnames(QString itemnamestring)
+{
+	if (itemnamestring == "PeaShooter")
+	{
+		return PeaShooter;
+	}
+	else if (itemnamestring == "CommonZombie")
+	{
+		return CommonZombie;
+	}
+	else if (itemnamestring == "SunFlower")
+	{
+		return SunFlower;
+	}
+	else if (itemnamestring == "WallNut")
+	{
+		return WallNut;
+	}
+	else if (itemnamestring == "BucketHeadZombie")
+	{
+		return BucketHeadZombie;
+	}
+	else if (itemnamestring == "PoleVaultingZombie")
+	{
+		return PoleVaultingZombie;
+	}
+	return Nosuchobject;
+}
+
+QString QGameNetFightMode::itemObjectnamestoString(objectNames itemobjectname)
+{
+	switch (itemobjectname)
+	{
+	case PeaShooter:
+	{
+		return "PeaShooter";
+	}
+		break;
+	case CommonZombie:
+	{
+		return "CommonZombie";
+	}
+		break;
+	case SunFlower: 
+	{
+		return "SunFlower";
+	}
+		break;
+	case WallNut: 
+	{
+		return "WallNut";
+	}
+		break;
+	case BucketHeadZombie:
+	{
+		return "BucketHeadZombie";
+	}
+		break;
+	case PoleVaultingZombie:
+	{
+		return "PoleVaultingZombie";
+	}
+		break;
+	default:
+		break;
+	}
+	return Nosuchobject;
 }

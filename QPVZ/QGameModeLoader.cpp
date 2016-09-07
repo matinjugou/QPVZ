@@ -32,9 +32,24 @@ void QGameModeLoader::Load(int name)
 		connect(AdventureMode, SIGNAL(exit()), this, SLOT(QuitMode()));
 		AdventureMode->GameStart();
 	}
-		break;
+	break;
+	case 2:
+	{
+		QGameNetFightMode *NetFightMode = new QGameNetFightMode(this);
+		CurrentMode = NetFightMode;
+		NetFightMode->setView(LoaderView);
+		connect(NetFightMode, SIGNAL(exchangetoScene(QGraphicsScene*)), this, SIGNAL(exchangetoScene(QGraphicsScene*)));
+		connect(CurrentMode, SIGNAL(addItem(objectNames, QPointF)), this, SIGNAL(addItem(objectNames, QPointF)));
+		connect(this, SIGNAL(Itemadded(QMyObject*)), CurrentMode, SIGNAL(Itemadded(QMyObject*)));
+		connect(NetFightMode, SIGNAL(exit()), this, SLOT(QuitMode()));
+		if (!NetFightMode->InitTcpConnection())
+			return;
+		NetFightMode->LoadMyCard();
+		NetFightMode->InitAddItemConnection();
+		NetFightMode->GameStart();
+	}
 	default:
-		break;
+	break;
 	}
 }
 

@@ -3,6 +3,7 @@
 #include "QCardBanks.h"
 #include "QCardSelector.h"
 #include "QPlants.h"
+#include "QZombies.h"
 #include "math.h"
 QMyObject::QMyObject(QObject *parent)
 	:QObject(parent)

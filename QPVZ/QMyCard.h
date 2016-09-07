@@ -76,3 +76,24 @@ public:
 	WallNutCard(QCardSelector *parent = 0);
 	~WallNutCard();
 };
+
+class CommonZombieCard :public QMyCard
+{
+public:
+	CommonZombieCard(QCardSelector *parent = 0);
+	~CommonZombieCard();
+}; 
+
+class BucketHeadZombieCard :public QMyCard
+{
+public:
+	BucketHeadZombieCard(QCardSelector *parent = 0);
+	~BucketHeadZombieCard();
+};
+
+class PoleVaultingZombieCard :public QMyCard
+{
+public:
+	PoleVaultingZombieCard(QCardSelector *parent = 0);
+	~PoleVaultingZombieCard();
+};

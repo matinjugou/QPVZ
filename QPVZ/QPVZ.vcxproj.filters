@@ -218,6 +218,15 @@
     <ClCompile Include="QMyProcessor.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QMyDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QMyDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="QMyDialog.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qpvz.h">
@@ -280,6 +289,12 @@
     <CustomBuild Include="QMyProcessor.h">
       <Filter>Header Files\Component</Filter>
     </CustomBuild>
+    <CustomBuild Include="qmydialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QMyDialog.h">
+      <Filter>Header Files\Component</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_qpvz.h">
@@ -296,6 +311,9 @@
     </ClInclude>
     <ClInclude Include="MyVariable.h">
       <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_qmydialog.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

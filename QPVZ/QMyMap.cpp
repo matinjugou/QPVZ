@@ -73,6 +73,10 @@ void QMyMap::Plantrequest_Update(QPointF itemPos)
 			QRectF tempRect = ReadytoPlant_Shadow->boundingRect();
 			tempPos.setX(tempPos.x() + (MapRect.width() / 12 - tempRect.width()) / 2);
 			tempPos.setY(tempPos.y() + (MapRect.height() / 5) - 27 - tempRect.height());
+			if (ReadytoPlant->objectType == Zombies)
+			{
+				tempPos.setX(tempPos.x() - 27);
+			}
 			ReadytoPlant_Shadow->setPos(tempPos);
 			ReadytoPlant_Shadow->setVisible(true);
 		}
@@ -84,7 +88,16 @@ void QMyMap::Plantrequest_Try()
 	if (ReadytoPlant_Shadow->isVisible())
 	{
 		pointNewItemtoPlantOn = ReadytoPlant_Shadow->getPointinMap();
-		emit addItem(ReadytoPlant->objectTypeNames, ReadytoPlant_Shadow->scenePos());
+		if (ReadytoPlant_Shadow->objectType == Zombies)
+		{
+			QPointF tempPos;
+			tempPos = PointtoPos(ReadytoPlant_Shadow->getPointinMap());
+			emit addItem(ReadytoPlant->objectTypeNames, tempPos);
+		}
+		else
+		{
+			emit addItem(ReadytoPlant->objectTypeNames, ReadytoPlant_Shadow->scenePos());
+		}
 		Plantrequest_Done();
 	}
 	else
@@ -219,6 +232,8 @@ void QMyMap::changePixmap(objectNames itemname)
 	{
 		ReadytoPlant->objectTypeNames = itemname;
 		ReadytoPlant_Shadow->objectTypeNames = itemname;
+		ReadytoPlant->objectType = Plants;
+		ReadytoPlant_Shadow->objectType = Plants;
 		ReadytoPlant->LoadPixmap("Resources/pvz-material/images/Plants/Peashooter/0.gif");
 		ReadytoPlant_Shadow->LoadPixmap("Resources/pvz-material/images/Plants/Peashooter/0.gif");
 	}
@@ -227,6 +242,8 @@ void QMyMap::changePixmap(objectNames itemname)
 	{
 		ReadytoPlant->objectTypeNames = itemname;
 		ReadytoPlant_Shadow->objectTypeNames = itemname;
+		ReadytoPlant->objectType = Plants;
+		ReadytoPlant_Shadow->objectType = Plants;
 		ReadytoPlant->LoadPixmap("Resources/pvz-material/images/Plants/SunFlower/0.gif");
 		ReadytoPlant_Shadow->LoadPixmap("Resources/pvz-material/images/Plants/SunFlower/0.gif");
 	}
@@ -235,8 +252,40 @@ void QMyMap::changePixmap(objectNames itemname)
 	{
 		ReadytoPlant->objectTypeNames = itemname;
 		ReadytoPlant_Shadow->objectTypeNames = itemname;
+		ReadytoPlant->objectType = Plants;
+		ReadytoPlant_Shadow->objectType = Plants;
 		ReadytoPlant->LoadPixmap("Resources/pvz-material/images/Plants/WallNut/0.gif");
 		ReadytoPlant_Shadow->LoadPixmap("Resources/pvz-material/images/Plants/WallNut/0.gif");
+	}
+	break;
+	case CommonZombie:
+	{
+		ReadytoPlant->objectTypeNames = itemname;
+		ReadytoPlant_Shadow->objectTypeNames = itemname;
+		ReadytoPlant->objectType = Zombies;
+		ReadytoPlant_Shadow->objectType = Zombies;
+		ReadytoPlant->LoadPixmap("Resources/pvz-material/images/Zombies/Zombie/0.gif");
+		ReadytoPlant_Shadow->LoadPixmap("Resources/pvz-material/images/Zombies/Zombie/0.gif");
+	}
+	break;
+	case BucketHeadZombie:
+	{
+		ReadytoPlant->objectTypeNames = itemname;
+		ReadytoPlant_Shadow->objectTypeNames = itemname;
+		ReadytoPlant->objectType = Zombies;
+		ReadytoPlant_Shadow->objectType = Zombies;
+		ReadytoPlant->LoadPixmap("Resources/pvz-material/images/Zombies/BucketheadZombie/0.gif");
+		ReadytoPlant_Shadow->LoadPixmap("Resources/pvz-material/images/Zombies/BucketheadZombie/0.gif");
+	}
+	break;
+	case PoleVaultingZombie:
+	{
+		ReadytoPlant->objectTypeNames = itemname;
+		ReadytoPlant_Shadow->objectTypeNames = itemname;
+		ReadytoPlant->objectType = Zombies;
+		ReadytoPlant_Shadow->objectType = Zombies;
+		ReadytoPlant->LoadPixmap("Resources/pvz-material/images/Zombies/PoleVaultingZombie/0.gif");
+		ReadytoPlant_Shadow->LoadPixmap("Resources/pvz-material/images/Zombies/PoleVaultingZombie/0.gif");
 	}
 	break;
 	default:
@@ -253,17 +302,19 @@ void QMyMap::examineMap()
 {
 	for (const auto &i : PlantsinMap)
 	{
+		i->setThreatend(false);
+		for (const auto &j : ZombiesinMap)
 		{
-			i->setThreatend(false);
-			for (const auto &j : ZombiesinMap)
+			if (i->inRange(j))
 			{
-				if (i->inRange(j))
-				{
-					i->setThreatend(true);
-					break;
-				}
+				i->setThreatend(true);
+				break;
 			}
 		}
+		QPointF tempPointf;
+		tempPointf.setX(i->pos().x() + i->boundingRect().width() / 2);
+		tempPointf.setY(i->pos().y() + i->boundingRect().height());
+		i->setPointinMap(PostoPoint(tempPointf));
 	}
 	for (const auto &i : ZombiesinMap)
 	{

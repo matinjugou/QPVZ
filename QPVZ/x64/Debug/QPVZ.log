@@ -1,4 +1,43 @@
-﻿  QGameMode.cpp
-d:\文档\清华大学\程序设计实训\作业\qpvz\qpvz\qgamemode.cpp(433): warning C4715: “QGameAdventureMode::zombieTypeInttoEnum”: 不是所有的控件路径都返回值
-d:\文档\清华大学\程序设计实训\作业\qpvz\qpvz\qgamemode.cpp(457): warning C4715: “QGameAdventureMode::plantTypeInttoEnum”: 不是所有的控件路径都返回值
+﻿  moc_QCardBanks.cpp
+  moc_QCardSelector.cpp
+  moc_QGameDisplayer.cpp
+  moc_QGameMode.cpp
+  moc_QGameModeLoader.cpp
+  moc_QItemShades.cpp
+  moc_QMyButton.cpp
+  moc_QMyCard.cpp
+  moc_QMyMap.cpp
+  moc_QMyObject.cpp
+  moc_QMyShovel.cpp
+  moc_QMySunShine.cpp
+  moc_QPlants.cpp
+  moc_QWeapons.cpp
+  moc_QZombies.cpp
+  moc_qpvz.cpp
+  QCardBanks.cpp
+  QCardSelector.cpp
+  QEquipments.cpp
+  QFightMethods.cpp
+  正在生成代码...
+  正在编译...
+  QGameController.cpp
+  QGameDisplayer.cpp
+  QGameMode.cpp
+  QGameModeLoader.cpp
+  QItemShades.cpp
+  QMyButton.cpp
+  QMyCard.cpp
+  QMyMap.cpp
+  QMyObject.cpp
+  QMyProcessor.cpp
+  QMyShovel.cpp
+  QPlants.cpp
+  QSunShine.cpp
+  QWeapons.cpp
+  QZombies.cpp
+  main.cpp
+  qpvz.cpp
+  正在生成代码...
+d:\文档\清华大学\程序设计实训\作业\qpvz\qpvz\qzombies.cpp(671): warning C4715: “QPoleVaultingZombie::inRange”: 不是所有的控件路径都返回值
+d:\文档\清华大学\程序设计实训\作业\qpvz\qpvz\qgamemode.cpp(811): warning C4715: “QGameNetFightMode::plantTypeInttoEnum”: 不是所有的控件路径都返回值
   QPVZ.vcxproj -> D:\文档\清华大学\程序设计实训\作业\QPVZ\x64\Debug\QPVZ.exe

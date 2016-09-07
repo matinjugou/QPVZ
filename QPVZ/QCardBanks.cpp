@@ -98,6 +98,11 @@ void QCardBank::SunShineAdded()
 	sunshineNum += 25;
 }
 
+void QCardBank::setSunShine(int sunshinetoset)
+{
+	sunshineNum = sunshinetoset;
+}
+
 //public foo
 void QCardBank::moveTo(int x, int y, int duration)
 {

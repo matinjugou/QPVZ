@@ -154,6 +154,30 @@ void QCardSelector::addNewCard(objectNames name)
 		connect(newCard, SIGNAL(moveToSelector(QMyCard*)), this, SLOT(resetIn(QMyCard*)));
 	}
 	break;
+	case CommonZombie:
+	{
+		newCard = new CommonZombieCard(this);
+		newCardBoard = new CommonZombieCard(this);
+		connect(newCard, SIGNAL(moveToBank(QMyCard*)), this, SIGNAL(moveRequest(QMyCard*)));
+		connect(newCard, SIGNAL(moveToSelector(QMyCard*)), this, SLOT(resetIn(QMyCard*)));
+	}
+	break;
+	case BucketHeadZombie:
+	{
+		newCard = new BucketHeadZombieCard(this);
+		newCardBoard = new BucketHeadZombieCard(this);
+		connect(newCard, SIGNAL(moveToBank(QMyCard*)), this, SIGNAL(moveRequest(QMyCard*)));
+		connect(newCard, SIGNAL(moveToSelector(QMyCard*)), this, SLOT(resetIn(QMyCard*)));
+	}
+	break;
+	case PoleVaultingZombie:
+	{
+		newCard = new PoleVaultingZombieCard(this);
+		newCardBoard = new PoleVaultingZombieCard(this);
+		connect(newCard, SIGNAL(moveToBank(QMyCard*)), this, SIGNAL(moveRequest(QMyCard*)));
+		connect(newCard, SIGNAL(moveToSelector(QMyCard*)), this, SLOT(resetIn(QMyCard*)));
+	}
+	break;
 	default:
 		break;
 	}

@@ -17,6 +17,22 @@ QMyShovel::QMyShovel(int x, int y, QGameAdventureMode *parent)
 	OriginPos = QPointF(x, y);
 }
 
+QMyShovel::QMyShovel(QGameNetFightMode *parent)
+	:QMyObject(parent)
+{
+	setPixmap(QPixmap("Resources/pvz-material/images/Buttons/Shovel.png"));
+	status = false;
+}
+
+QMyShovel::QMyShovel(int x, int y, QGameNetFightMode *parent)
+	: QMyObject(parent)
+{
+	setPixmap(QPixmap("Resources/pvz-material/images/Buttons/Shovel.png"));
+	status = false;
+	setPos(x, y);
+	OriginPos = QPointF(x, y);
+}
+
 QMyShovel::~QMyShovel()
 {
 }

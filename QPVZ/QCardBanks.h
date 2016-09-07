@@ -43,6 +43,8 @@ public slots:
 	
 	//增加阳光值
 	void SunShineAdded();
+	//设定阳光值
+	void setSunShine(int);
 
 public:
 	void moveTo(int x, int y, int duration);
