@@ -4,7 +4,7 @@
 
 
 class QMySunShine;
-class QFightMethods;
+class QPlantsBomb;
 class QPeas;
 
 /* QPlants:			植物类
@@ -20,12 +20,14 @@ public:
 	QPlants(QGraphicsScene* parent = 0);
 	~QPlants();
 public:
-	bool isThreatened();
 	//返回是否被威胁
-	virtual bool inRange(QMyObject*) { return false; }
+	bool isThreatened();
 	//设置攻击范围判定函数
-	void setThreatend(bool);
+	virtual bool inRange(QMyObject*) { return false; }
 	//设置是否被威胁
+	void setThreatend(bool);
+	//死亡动画
+	void Died();
 };
 
 /* QPlants:			射击型植物类
@@ -54,10 +56,13 @@ public:
 class QFightPlants :public QPlants
 {
 protected:
-	QFightMethods	*FightMethod;	//攻击方法
+	int Power;
 public:
 	QFightPlants(QGraphicsScene *parent = 0);
 	~QFightPlants();
+public:
+	//设置力量
+	void setPower(int);
 };
 
 class QPeaShooter :public QBulletPlants
@@ -69,14 +74,12 @@ public:
 	QPeaShooter(int x, int y, QGraphicsScene *parent = 0);
 	~QPeaShooter();
 public:
-	void timerEvent(QTimerEvent *event);
 	//计时器时间
-	void Shoot();
+	void timerEvent(QTimerEvent *event);
 	//射击
-	void Died();
-	//死亡动画
-	bool inRange(QMyObject*);
+	void Shoot();
 	//在攻击范围
+	bool inRange(QMyObject*);
 };
 
 class QSunFlower :public QPlants
@@ -91,12 +94,10 @@ public:
 	~QSunFlower();
 
 public:
-	void makeSunShine();
 	//制作一个阳光
-	void timerEvent(QTimerEvent *event);
+	void makeSunShine();
 	//计时器事件
-	void Died();
-	//死亡处理
+	void timerEvent(QTimerEvent *event);
 };
 
 class QWallNut :public QPlants
@@ -111,8 +112,23 @@ public:
 	~QWallNut();
 
 public:
-	void timerEvent(QTimerEvent *event);
 	//计时器事件
-	void Died();
-	//死亡处理
+	void timerEvent(QTimerEvent *event);
+};
+
+class QCherryBomb :public QFightPlants
+{
+protected:
+	int						currentTime;		//计时器时间		
+	bool					boomed;				//是否已经爆炸
+	QVector<QMyObject*>		enemytoKill;		//记录要杀死的敌人
+public:
+	QCherryBomb(QGraphicsScene *parent = 0);
+	QCherryBomb(int x, int y, QGraphicsScene *parent = 0);
+	~QCherryBomb();
+public:
+	//计时器事件
+	void timerEvent(QTimerEvent *event);
+	//在攻击范围
+	bool inRange(QMyObject*);
 };

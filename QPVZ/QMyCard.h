@@ -77,6 +77,13 @@ public:
 	~WallNutCard();
 };
 
+class CherryBombCard :public QMyCard
+{
+public:
+	CherryBombCard(QCardSelector *parent = 0);
+	~CherryBombCard();
+};
+
 class CommonZombieCard :public QMyCard
 {
 public:

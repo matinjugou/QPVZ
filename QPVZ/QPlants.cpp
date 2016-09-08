@@ -1,7 +1,7 @@
+#include "QMyObject.h"
 #include "QPlants.h"
 #include "QMySunShine.h"
 #include "QWeapons.h"
-#include "QFightMethods.h"
 
 QPlants::QPlants(QGraphicsScene* parent)
 	:QMyObject(parent)
@@ -25,6 +25,12 @@ QPlants::~QPlants()
 
 }
 
+void QPlants::Died()
+{
+	setVisible(false);
+	deleteLater();
+}
+
 QBulletPlants::QBulletPlants(QGraphicsScene * parent)
 	:QPlants(parent)
 {
@@ -32,6 +38,20 @@ QBulletPlants::QBulletPlants(QGraphicsScene * parent)
 
 QBulletPlants::~QBulletPlants()
 {
+}
+
+QFightPlants::QFightPlants(QGraphicsScene * parent)
+	:QPlants(parent)
+{
+}
+
+QFightPlants::~QFightPlants()
+{
+}
+
+void QFightPlants::setPower(int power)
+{
+	Power = power;
 }
 
 QPeaShooter::QPeaShooter(QGraphicsScene *parent)
@@ -94,12 +114,6 @@ void QPeaShooter::timerEvent(QTimerEvent *event)
 	{
 		lastShoot = CD;
 	}
-}
-
-void QPeaShooter::Died()
-{
-	setVisible(false);
-	deleteLater();
 }
 
 void QPeaShooter::Shoot()
@@ -200,12 +214,6 @@ void QSunFlower::timerEvent(QTimerEvent *event)
 	}
 }
 
-void QSunFlower::Died()
-{
-	//TODO ËÀÍö¶¯»­
-	setVisible(false);
-	deleteLater();
-}
 
 QWallNut::QWallNut(QGraphicsScene *parent)
 	:QPlants(parent)
@@ -290,9 +298,106 @@ void QWallNut::timerEvent(QTimerEvent *event)
 	}
 }
 
-void QWallNut::Died()
+
+
+QCherryBomb::QCherryBomb(QGraphicsScene *parent)
+	:QFightPlants(parent)
 {
-	//TODO ËÀÍö¶¯»­
-	setVisible(false);
-	deleteLater();
+	currentTime = 0;
+	Plants_Name = CherryBomb;
+	HP = 300;
+
+	QMovie *newQMovie;
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Plants/CherryBomb/CherryBomb.gif");
+	Gifs.push_back(newQMovie);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Plants/CherryBomb/Boom.gif");
+	Gifs.push_back(newQMovie);
+	newQMovie->setSpeed(50);
+
+	setMyGif(0);
+	boomed = false;
+
+	TimerID = startTimer(20);
+}
+
+QCherryBomb::QCherryBomb(int x, int y, QGraphicsScene *parent)
+	:QFightPlants(parent)
+{
+	currentTime = 0;
+	Plants_Name = CherryBomb;
+	HP = 300;
+
+	QMovie *newQMovie;
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Plants/CherryBomb/CherryBomb.gif");
+	Gifs.push_back(newQMovie);
+	newQMovie->setSpeed(50);
+
+	newQMovie = new QMovie;
+	newQMovie->setFileName("Resources/pvz-material/images/Plants/CherryBomb/Boom.gif");
+	Gifs.push_back(newQMovie);
+
+	setMyGif(0);
+	setPos(x, y);
+	boomed = false;
+
+	TimerID = startTimer(20);
+}
+
+QCherryBomb::~QCherryBomb()
+{
+
+}
+
+void QCherryBomb::timerEvent(QTimerEvent* event)
+{
+	if (HP <= 0)
+	{
+		killTimer(TimerID);
+		emit removefrommap(Plants, this);
+		Died();
+		return;
+	}
+	currentTime++;
+	if (currentTime >= 50)
+	{
+		setMyGif(1);
+		if (!boomed)
+		{
+			boomed = true;
+			Power = 1800;
+			for (const auto &i : enemytoKill)
+			{
+				i->killHP(Power);
+			}
+		}
+	}
+	if (currentTime >= 70)
+	{
+		setHP(-1);
+	}
+	for (const auto &i : enemytoKill)
+	{
+		if (!((i->getPointinMap().x() >= (PointinMap.x() - 1)) &&
+			(((i->getPointinMap().x()) <= (PointinMap.x() + 1))) &&
+			((i->getPointinMap().y()) >= (PointinMap.y() - 1)) &&
+			((i->getPointinMap().y()) >= (PointinMap.y() - 1))))
+		{
+			enemytoKill.removeAll(i);
+		}
+	}
+}
+
+bool QCherryBomb::inRange(QMyObject* enemy)
+{
+	if ((enemy->getPointinMap().x() >= (PointinMap.x() - 1)) && ((enemy->getPointinMap().x() <= (PointinMap.x() + 1))) &&
+		(enemy->getPointinMap().y() >= (PointinMap.y() - 1)) && (enemy->getPointinMap().y() >= (PointinMap.y() - 1)))
+	{
+		enemytoKill.push_back(enemy);
+		return true;
+	}
+	return false;
 }

@@ -8,6 +8,7 @@
 #include "qtcpserver.h"
 #include "qtcpsocket.h"
 #include "QMyDialog.h"
+#include "qmediaplayer.h"
 
 class QMySunShine;
 class QGameModeLoader;
@@ -23,9 +24,10 @@ class QGameMode :public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT
 protected:
-	QGraphicsScene		*Scene;		//场景
-	QGraphicsView		*View;		//视图，引入对象树后可以删除
-	QMyObject			*Background;
+	QGraphicsScene		*Scene;					//场景
+	QGraphicsView		*View;					//视图
+	QMyObject			*Background;			//背景
+	QMediaPlayer		*backgroundMusic;		//BGM
 
 public:
 	QGameMode(QGameModeLoader *parent = 0);
@@ -46,6 +48,8 @@ public:
 	QGraphicsScene* getScene();
 	//设置当前模式的视角，引入对象树系统后可以优化掉
 	void setView(QGraphicsView*);
+	//重新播放BGM
+	void replayBGM(QMediaPlayer::State);
 };
 
 class QGameMainMode :public QGameMode
@@ -65,6 +69,8 @@ private:
 	QMyButton		*Name_Change;			//改姓名
 	QMyObject		*zombieHand;			//开场僵尸的手
 	QSignalMapper	*Mapper;				//信号地图
+	QMediaPlayer	*eveilLaugh;			//僵尸手伸出来的音效
+	QMediaPlayer	*gameStartSound;		//僵尸手伸出来的音效
 
 public:
 	QGameMainMode(QGameModeLoader* parent = 0);
@@ -117,6 +123,9 @@ private:
 	QVector<Node>			ZombiesList;				//僵尸名字和出现的时间，可以修改外接文件
 	int						totCards;					//可选卡片的种类数
 	QVector<objectNames>	CardList;					//可选卡片的种类，之后改写为文件读取
+	int						readyToPlantCount;			//准备安放植物图片数量
+	QMediaPlayer			*readyToPlantBGM;			//准备安放植物的音效
+	QMyObject				*readyToPlantText;			//准备安放植物提示
 
 public:
 	QGameAdventureMode(QGameModeLoader *parent = 0);
@@ -163,6 +172,9 @@ private:
 	QMyDialog				*myDialog;					//对话框
 	int						totCards;					//可选卡片的种类数
 	QVector<objectNames>	CardList;					//可选卡片的种类，之后改写为文件读取
+	int						readyToPlantCount;			//准备安放植物图片数量
+	QMediaPlayer			*readyToPlantBGM;			//准备安放植物的音效
+	QMyObject				*readyToPlantText;			//准备安放植物提示
 
 public:
 	QGameNetFightMode(QGameModeLoader* parent = 0);

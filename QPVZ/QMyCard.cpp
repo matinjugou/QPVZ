@@ -169,6 +169,22 @@ WallNutCard::~WallNutCard()
 
 }
 
+CherryBombCard::CherryBombCard(QCardSelector *parent)
+	:QMyCard(parent)
+{
+	objectTypeName = CherryBomb;
+	Pictures.push_back(QPixmap("Resources/pvz-material/images/Cards/Plants/CherryBomb.png"));
+	setPixmap(Pictures[0]);
+	Sunprice = 50;
+	nameText = QString::number(Sunprice, 10);
+	CD = 2500;
+}
+
+CherryBombCard::~CherryBombCard()
+{
+
+}
+
 CommonZombieCard::CommonZombieCard(QCardSelector *parent)
 	:QMyCard(parent)
 {

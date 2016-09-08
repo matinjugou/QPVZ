@@ -88,6 +88,13 @@ void QGameDisplayer::addItem(objectNames name, QPointF pos)
 		emit Itemadded(newWallNut);
 	}
 	break;
+	case CherryBomb:
+	{
+		QCherryBomb* newCherryBomb = new QCherryBomb(pos.x(), pos.y(), this->currentScene);
+		currentScene->addItem(newCherryBomb);
+		emit Itemadded(newCherryBomb);
+	}
+	break;
 	default:
 		break;
 	}

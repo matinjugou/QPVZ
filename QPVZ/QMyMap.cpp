@@ -289,6 +289,16 @@ void QMyMap::changePixmap(objectNames itemname)
 		ReadytoPlant_Shadow->LoadPixmap("Resources/pvz-material/images/Zombies/PoleVaultingZombie/0.gif");
 	}
 	break;
+	case CherryBomb:
+	{
+		ReadytoPlant->objectTypeNames = itemname;
+		ReadytoPlant_Shadow->objectTypeNames = itemname;
+		ReadytoPlant->objectType = Plants;
+		ReadytoPlant_Shadow->objectType = Plants;
+		ReadytoPlant->LoadPixmap("Resources/pvz-material/images/Plants/CherryBomb/0.gif");
+		ReadytoPlant_Shadow->LoadPixmap("Resources/pvz-material/images/Plants/CherryBomb/0.gif");
+	}
+	break;
 	default:
 		break;
 	}

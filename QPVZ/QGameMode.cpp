@@ -80,11 +80,25 @@ QGameMainMode::QGameMainMode(QGameModeLoader* parent)
 	Mapper->setMapping(StartGame_Adventure, 1);
 	Mapper->setMapping(StartGame_NetFight, 2);
 
+	eveilLaugh = new QMediaPlayer(zombieHand);
+	eveilLaugh->setMedia(QUrl::fromLocalFile("Resources/pvz-material/audio/evillaugh.mp3"));
+	eveilLaugh->setVolume(50);
+
+	gameStartSound = new QMediaPlayer(zombieHand);
+	gameStartSound->setMedia(QUrl::fromLocalFile("Resources/pvz-material/audio/losemusic.mp3"));
+	gameStartSound->setVolume(50);
+
+	backgroundMusic = new QMediaPlayer(this);
+	backgroundMusic->setMedia(QUrl::fromLocalFile("Resources/pvz-material/audio/Faster.mp3"));
+	backgroundMusic->setVolume(50);
+	backgroundMusic->play();
+	connect(backgroundMusic, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(replayBGM(QMediaPlayer::State)));
+
 	connect(Mapper, SIGNAL(mapped(int)), this, SLOT(beforeNewGameStart(int)));
 
 	connect(Options, SIGNAL(clicked()), this, SIGNAL(Setting_Options()));
 	connect(Help, SIGNAL(clicked()), this, SIGNAL(Help_Start()));
-	connect(Quit, SIGNAL(clicked()), this, SIGNAL(exit()));
+	connect(Quit, SIGNAL(clicked()), qApp, SLOT(quit()));
 
 	emit exchangetoScene(Scene);
 }
@@ -92,6 +106,12 @@ QGameMainMode::QGameMainMode(QGameModeLoader* parent)
 QGameMainMode::~QGameMainMode()
 {
 
+}
+
+void QGameMode::replayBGM(QMediaPlayer::State statechanged)
+{
+	if (statechanged == QMediaPlayer::StoppedState)
+		backgroundMusic->play();
 }
 
 void QGameMainMode::beforeNewGameStart(int gameModeType)
@@ -109,6 +129,9 @@ void QGameMainMode::timerEvent(QTimerEvent *event)
 		zombieHand->getMyGif()->jumpToFrame(1);
 		disconnect(Mapper, SIGNAL(mapped(int)), this, SLOT(beforeNewGameStart(int)));
 		zombieHand->getMyGif()->start();
+		backgroundMusic->pause();
+		eveilLaugh->play();
+		gameStartSound->play();
 	}
 	if (currentTime % 5 == 0)
 	{
@@ -205,8 +228,10 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	Shovel = new QMyShovel(this);
 	Shovel_Bank = new QMyObject(this);
 	MyProcessorBar = new QMyProcessor(100, 0, tempHighPos, this);
+	MyProcessorBar->setZValue(100);
 	QuitGame = new QMyButton("Resources/pvz-material/images/Buttons/QuitGamePlain.png", "Resources/pvz-material/images/Buttons/QuitGameHover.png", this);
 	GameOverPix = new QMyObject(this);
+	readyToPlantText = new QMyObject(this);
 
 	GameOverPix->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/ZombiesWon.png"));
 	GameOverPix->setMyPixmap(0);
@@ -217,6 +242,11 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	Background->setMyPixmap(0);
 	Background->setPos(0, 0);
 	
+	readyToPlantText->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/PrepareGrowPlants1.png"));
+	readyToPlantText->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/PrepareGrowPlants2.png"));
+	readyToPlantText->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/PrepareGrowPlants3.png"));
+
+	readyToPlantText->setPos(520, 230);
 	Selector->setPos(500, 687);
 	Bank->setPos(500, -120);
 	Shovel_Bank->setPos(666, 0);
@@ -238,7 +268,17 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	Scene->addItem(Shovel);
 	Scene->addItem(MyProcessorBar);
 	Scene->addItem(GameOverPix);
+	Scene->addItem(readyToPlantText);
 	Scene->addItem(QuitGame);
+
+	backgroundMusic = new QMediaPlayer(this);
+	backgroundMusic->setMedia(QUrl::fromLocalFile("Resources/pvz-material/audio/Look up at the Sky.mp3"));
+	backgroundMusic->setVolume(50);
+	backgroundMusic->play();
+
+	readyToPlantBGM = new QMediaPlayer(this);
+	readyToPlantBGM->setMedia(QUrl::fromLocalFile("Resources/pvz-material/audio/readysetplant.mp3"));
+	readyToPlantBGM->setVolume(50);
 
 	connect(Selector, SIGNAL(moveRequest(QMyCard*)), Bank, SLOT(moveRequested(QMyCard*)));
 	connect(Selector, SIGNAL(removeInform(QMyCard*)), Bank, SLOT(removeConfirm(QMyCard*)));
@@ -399,6 +439,30 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 		}
 		else if (stage == 3)
 		{
+			if (currentTime == 1)
+			{
+				backgroundMusic->stop();
+				backgroundMusic->setMedia(QUrl::fromLocalFile("Resources/pvz-material/audio/UraniwaNi.mp3"));
+				readyToPlantBGM->play();
+				readyToPlantCount = 0;
+				readyToPlantText->setMyPixmap(readyToPlantCount);
+			}
+			if ((currentTime % 20 == 0) && (currentTime < 59))
+			{
+				readyToPlantCount++;
+				readyToPlantText->setMyPixmap(readyToPlantCount);
+			}
+			if (currentTime == 55)
+			{
+				readyToPlantText->hide();
+				currentTime = 0;
+				stage++;
+				backgroundMusic->play();
+				connect(backgroundMusic, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(replayBGM(QMediaPlayer::State)));
+			}
+		}
+		else if (stage == 4)
+		{
 			currentTime++;
 			for (int i = 0; i < totZombies; i++)
 			{
@@ -406,7 +470,7 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 				{
 					QPoint tempPoint;
 					int y = rand() % 5;
-					tempPoint.setX(10);
+					tempPoint.setX(13);
 					tempPoint.setY(y);
 					addItem(ZombiesList[i].Zombie_Type, MappingSystem->PointtoPos(tempPoint));
 					MyProcessorBar->addtocurrentProcess(1.0 / (double)totZombies);
@@ -427,7 +491,7 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 			{
 				newSunShine = new QMySunShine(Scene);
 				QPointF tempPos;
-				tempPos.setX(MappingSystem->getRect().width() / 14 * (rand() % 9) + MappingSystem->getRect().x());
+				tempPos.setX(MappingSystem->getRect().width() / 14 * (rand() % 9) + MappingSystem->getRect().x() + 2);
 				tempPos.setY(-60);
 				newSunShine->setPos(tempPos);
 				Scene->addItem(newSunShine);
@@ -495,6 +559,10 @@ objectNames QGameAdventureMode::plantTypeInttoEnum(int plantTypeint)
 		return WallNut;
 	}
 	break;
+	case 4:
+	{
+		return CherryBomb;
+	}
 	default:
 		break;
 	}
@@ -512,6 +580,7 @@ QGameNetFightMode::QGameNetFightMode(QGameModeLoader* parent)
 	Bank = new QCardBank(this);
 	QuitGame = new QMyButton("Resources/pvz-material/images/Buttons/QuitGamePlain.png", "Resources/pvz-material/images/Buttons/QuitGameHover.png", this);
 	ZombieLine = new QMyObject(this);
+	readyToPlantText = new QMyObject(this);
 
 	Background->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/background1.jpg"));
 	Background->setMyPixmap(0);
@@ -522,15 +591,30 @@ QGameNetFightMode::QGameNetFightMode(QGameModeLoader* parent)
 	ZombieLine->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/Stripe.png"));
 	ZombieLine->setMyPixmap(0);
 	ZombieLine->setPos(807, 70);
-	
+
+	readyToPlantText->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/PrepareGrowPlants1.png"));
+	readyToPlantText->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/PrepareGrowPlants2.png"));
+	readyToPlantText->pushbackPixmap(QPixmap("Resources/pvz-material/images/interface/PrepareGrowPlants3.png"));
+
+	readyToPlantText->setPos(520, 230);
+
 	QuitGame->setPos(787, 0);
 
 	Scene->addItem(ZombieLine);
 	Scene->addItem(Bank);
 	Scene->addItem(MappingSystem);
 	Scene->addItem(QuitGame);
+	Scene->addItem(readyToPlantText);
 
-	
+	backgroundMusic = new QMediaPlayer(this);
+	backgroundMusic->setMedia(QUrl::fromLocalFile("Resources/pvz-material/audio/Look up at the Sky.mp3"));
+	backgroundMusic->setVolume(50);
+	backgroundMusic->play();
+
+	readyToPlantBGM = new QMediaPlayer(this);
+	readyToPlantBGM->setMedia(QUrl::fromLocalFile("Resources/pvz-material/audio/readysetplant.mp3"));
+	readyToPlantBGM->setVolume(50);
+
 	connect(Bank, SIGNAL(ReadytoPlant(objectNames, QPointF)), MappingSystem, SLOT(Plantrequest_Ready(objectNames, QPointF)));
 	connect(MappingSystem, SIGNAL(RequestDone()), Bank, SLOT(plantRequestDone()));
 	connect(MappingSystem, SIGNAL(RequestCancelled()), Bank, SLOT(plantRequestCancelled()));
@@ -605,11 +689,6 @@ bool QGameNetFightMode::InitTcpConnection()
 		{
 			Socket = new QTcpSocket(this);
 			Socket->connectToHost(ipStr, 1270);
-			if (Socket->state() != QAbstractSocket::ConnectedState)
-			{
-				delete myDialog;
-				return false;
-			}
 		}
 		delete myDialog;
 		return true;
@@ -770,6 +849,30 @@ void QGameNetFightMode::timerEvent(QTimerEvent *event)
 	}
 	else if (stage == 3)
 	{
+		if (currentTime == 1)
+		{
+			backgroundMusic->stop();
+			backgroundMusic->setMedia(QUrl::fromLocalFile("Resources/pvz-material/audio/UraniwaNi.mp3"));
+			readyToPlantBGM->play();
+			readyToPlantCount = 0;
+			readyToPlantText->setMyPixmap(readyToPlantCount);
+		}
+		if ((currentTime % 20 == 0) && (currentTime < 59))
+		{
+			readyToPlantCount++;
+			readyToPlantText->setMyPixmap(readyToPlantCount);
+		}
+		if (currentTime == 55)
+		{
+			readyToPlantText->hide();
+			currentTime = 0;
+			stage++;
+			backgroundMusic->play();
+			connect(backgroundMusic, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(replayBGM(QMediaPlayer::State)));
+		}
+	}
+	else if (stage == 4)
+	{
 		currentTime++;
 		if ((currentTime % 500 == 0) && (asServer))
 		{
@@ -842,6 +945,10 @@ objectNames QGameNetFightMode::plantTypeInttoEnum(int plantTypeint)
 		return WallNut;
 	}
 	break;
+	case 4:
+	{
+		return CherryBomb;
+	}
 	default:
 		break;
 	}
@@ -872,6 +979,10 @@ objectNames QGameNetFightMode::itemStringtoObjectnames(QString itemnamestring)
 	else if (itemnamestring == "PoleVaultingZombie")
 	{
 		return PoleVaultingZombie;
+	}
+	else if (itemnamestring == "CherryBomb")
+	{
+		return CherryBomb;
 	}
 	return Nosuchobject;
 }
@@ -910,6 +1021,11 @@ QString QGameNetFightMode::itemObjectnamestoString(objectNames itemobjectname)
 		return "PoleVaultingZombie";
 	}
 		break;
+	case CherryBomb:
+	{
+		return "CherryBomb";
+	}
+	break;
 	default:
 		break;
 	}

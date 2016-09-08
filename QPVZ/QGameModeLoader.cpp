@@ -59,7 +59,7 @@ void QGameModeLoader::QuitMode()
 		CurrentMode->deleteLater();
 	CurrentMode = MainMode;
 	exchangetoScene(MainMode->getScene());
-	qDebug() << &MainMode;
+	MainMode->replayBGM(QMediaPlayer::StoppedState);
 }
 
 void QGameModeLoader::setView(QGraphicsView* view)

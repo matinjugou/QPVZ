@@ -154,6 +154,14 @@ void QCardSelector::addNewCard(objectNames name)
 		connect(newCard, SIGNAL(moveToSelector(QMyCard*)), this, SLOT(resetIn(QMyCard*)));
 	}
 	break;
+	case CherryBomb:
+	{
+		newCard = new CherryBombCard(this);
+		newCardBoard = new CherryBombCard(this);
+		connect(newCard, SIGNAL(moveToBank(QMyCard*)), this, SIGNAL(moveRequest(QMyCard*)));
+		connect(newCard, SIGNAL(moveToSelector(QMyCard*)), this, SLOT(resetIn(QMyCard*)));
+	}
+	break;
 	case CommonZombie:
 	{
 		newCard = new CommonZombieCard(this);
