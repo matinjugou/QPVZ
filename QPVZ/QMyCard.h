@@ -24,34 +24,34 @@ public:
 	~QMyCard();
 
 signals:
-	void moveToBank(QMyCard*);
 	//发送消息要求移动到银行
-	void moveToSelector(QMyCard*);
+	void moveToBank(QMyCard*);
 	//发送消息要求移动到选择器
-	void ReadytoPlant(objectNames, QPointF, QMyCard*);
+	void moveToSelector(QMyCard*);
 	//发送准备种植的消息
+	void ReadytoPlant(objectNames, QPointF, QMyCard*);
 
 public slots:
-	void moveAccepted(QPointF);
 	//移动到Bank的移动请求被接受
+	void moveAccepted(QPointF);
 
 public:
-	int getSunPrice();
 	//得到阳关值
-	bool getInCD();
+	int getSunPrice();
 	//得到冷却时间
-	void CDStart();
+	bool getInCD();
 	//开始冷却
-	void timerEvent(QTimerEvent *event);
+	void CDStart();
 	//时间响应事件
-	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void timerEvent(QTimerEvent *event);
 	//鼠标点击事件
-	void setChosenType(cardType);
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	//设置当前卡片状态
-	void setCardOriginPos(QPointF);
+	void setChosenType(cardType);
 	//设置卡片在卡片选择器里面的位置
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	void setCardOriginPos(QPointF);
 	//绘制函数
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 };
 
 //TODO 继承并构造卡片子类

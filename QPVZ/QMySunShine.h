@@ -17,14 +17,14 @@ public:
 	~QMySunShine();
 
 signals:
-	void BeTaken();
 	//发送阳光被取走的信号
+	void BeTaken();
 
 public:
-	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	//鼠标点击事件
-	void timerEvent(QTimerEvent *event);
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	//计时器事件
-	void SetScaleAnimation(qreal fromScale, qreal toScale, int duration);
+	void timerEvent(QTimerEvent *event);
 	//缩放动画
+	void SetScaleAnimation(qreal fromScale, qreal toScale, int duration);
 };

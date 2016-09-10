@@ -18,18 +18,18 @@ public:
 	~QGameDisplayer();
 
 signals:
-	void Itemadded(QMyObject*);
 	//向下传递物品已经添加的信号
+	void Itemadded(QMyObject*);
 
 public slots:
-	void setScene(QGraphicsScene* scene);
 	//设置当前的场景
-	void addItem(objectNames, QPointF);
+	void setScene(QGraphicsScene* scene);
 	//添加物品到场景
+	void addItem(objectNames, QPointF);
 
 public:
-	QGraphicsView* getView();
 	//得到当前的视图
-	QGraphicsScene* getCurrentScene();
+	QGraphicsView* getView();
 	//得到当前的场景
+	QGraphicsScene* getCurrentScene();
 };

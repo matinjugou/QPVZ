@@ -107,6 +107,8 @@ private:
 	int						GameOverTiemerCount;		//游戏失败退出倒计时
 	int						GameOverTiemerID;			//游戏失败计时器
 	bool					isGameOvered;				//游戏是否结束了
+	bool					Gamewin1;					//胜利条件一，是否所有僵尸都死了
+	bool					Gamewin2;					//胜利条件二，是否还有僵尸没有上场
 	QMyObject				*GameOverPix;				//游戏失败画面
 	qint32					Level;						//当前关卡
 	QFile					SettingsFile;				//配置文件
@@ -136,6 +138,8 @@ public slots:
 	void GameStart();
 	//游戏结束
 	void GameOver();
+	//游戏胜利条件一改变
+	void GameConditionChanged(bool);
 
 public:
 	//计时器时间
@@ -158,6 +162,7 @@ private:
 	int						TimerID;					//计时器ID
 	int						stage;						//游戏状态
 	int						barMoveed;					//滚动条是否已经移动
+	int						timeCouner;					//植物胜利计时器
 	QMyObject				*ZombieLine;				//僵尸的种植边界线
 	qint32					Level;						//当前关卡
 	QFile					SettingsFile;				//配置文件

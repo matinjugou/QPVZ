@@ -327,6 +327,10 @@ void QMyMap::examineMap()
 		tempPointf.setY(i->pos().y() + i->boundingRect().height());
 		i->setPointinMap(PostoPoint(tempPointf));
 	}
+	if (ZombiesinMap.size() == 0)
+		emit AllZombiesAreDone(true);
+	else
+		emit AllZombiesAreDone(false);
 	for (const auto &i : ZombiesinMap)
 	{
 		i->setExcited(false);

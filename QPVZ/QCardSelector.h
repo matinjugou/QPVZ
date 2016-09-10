@@ -30,24 +30,24 @@ public:
 	~QCardSelector();
 
 signals:
-	void moveRequest(QMyCard*);
 	//接受来自卡片的移动请求
-	void removeInform(QMyCard*);
+	void moveRequest(QMyCard*);
 	//通知Bank将卡片移走
-	void startGameNow();
+	void removeInform(QMyCard*);
 	//通知Mode开始游戏
+	void startGameNow();
 
 public slots:
-	void moveAccepted(QPointF, QMyCard*);
 	//接受来自Bank的确认移动信息，将卡片移到bank内
-	void resetIn(QMyCard*);
+	void moveAccepted(QPointF, QMyCard*);
 	//接受来自卡片的将卡片重新放回的消息
+	void resetIn(QMyCard*);
 
 public:
+	//移动动画
 	void moveTo(QPointF targetPos, int duration);
 	//移动动画
 	void moveTo(int x, int y, int duration);
-	//移动动画
-	void addNewCard(objectNames);
 	//添加新的卡片
+	void addNewCard(objectNames);
 };

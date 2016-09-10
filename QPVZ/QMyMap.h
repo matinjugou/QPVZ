@@ -36,6 +36,8 @@ signals:
 	void SunShineAdded();
 	//游戏结束
 	void GameOver();
+	//所有僵尸已经被消灭信号
+	void AllZombiesAreDone(bool);
 
 public slots:
 	//尝试种植

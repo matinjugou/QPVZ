@@ -20,10 +20,10 @@ public:
 	~QCardBank();
 
 signals:
-	void moveAccepted(QPointF, QMyCard*);		
 	//接受Selector中卡片的置入请求并回传位置给卡片
-	void ReadytoPlant(objectNames, QPointF);	
+	void moveAccepted(QPointF, QMyCard*);		
 	//向map发送准备种植的消息
+	void ReadytoPlant(objectNames, QPointF);	
 
 public slots:
 	//接收卡片的置入请求，并得到卡片地址便于回传

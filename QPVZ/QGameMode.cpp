@@ -300,6 +300,8 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	connect(MappingSystem, SIGNAL(SunShineAdded()), Bank, SLOT(SunShineAdded()));
 
 	connect(MappingSystem, SIGNAL(GameOver()), this, SLOT(GameOver()));
+
+	connect(MappingSystem, SIGNAL(AllZombiesAreDone(bool)), this, SLOT(GameConditionChanged(bool)));
 	
 	currentTime = 0;
 	stage = 0;
@@ -308,6 +310,8 @@ QGameAdventureMode::QGameAdventureMode(QGameModeLoader *parent)
 	GameOverTiemerID = -1;
 	GameOverTiemerCount = 0;
 	isGameOvered = false;
+	Gamewin1 = false;
+	Gamewin2 = false;
 
 	animation = new QPropertyAnimation(this);
 }
@@ -350,6 +354,10 @@ void QGameAdventureMode::GameOver()
 //public
 void QGameAdventureMode::timerEvent(QTimerEvent *event)
 {
+	if (Gamewin1 && Gamewin2)
+	{
+		emit exit();
+	}
 	if (event->timerId() == GameOverTiemerID)
 	{
 		GameOverTiemerCount++;
@@ -485,6 +493,10 @@ void QGameAdventureMode::timerEvent(QTimerEvent *event)
 						ProcessorAnimation->setEasingCurve(QEasingCurve::Linear);
 						ProcessorAnimation->start();
 					}
+					if (i == (totZombies - 1))
+					{
+						Gamewin2 = true;
+					}
 				}
 			}
 			if (currentTime % 500 == 0)
@@ -513,6 +525,11 @@ void QGameAdventureMode::moveScrollBar(int fromvalue, int arrivevalue, int durat
 	animation->setEndValue(arrivevalue);
 	animation->setEasingCurve(QEasingCurve::InOutCubic);
 	animation->start();
+}
+
+void QGameAdventureMode::GameConditionChanged(bool value)
+{
+	Gamewin1 = value;
 }
 
 objectNames QGameAdventureMode::zombieTypeInttoEnum(int zombieTypeint)
@@ -630,6 +647,7 @@ QGameNetFightMode::QGameNetFightMode(QGameModeLoader* parent)
 	currentTime = 0;
 	stage = 0;
 	barMoveed = 0;
+	timeCouner = 0;
 
 	animation = new QPropertyAnimation(this);
 }
@@ -783,6 +801,12 @@ void QGameNetFightMode::getMessage()
 void QGameNetFightMode::timerEvent(QTimerEvent *event)
 {
 	currentTime++;
+	timeCouner++;
+	if (timeCouner == 15000)
+	{
+		killTimer(TimerID);
+		emit exit();
+	}
 	if (stage == 1)
 	{
 		if ((currentTime >= 50) && (currentTime < 75))

@@ -19,22 +19,22 @@ public:
 	~QItemShade();
 
 signals:
-	void leftButtonClicked();
 	//左键被点击
-	void rightButtonClicked();
+	void leftButtonClicked();
 	//右键被点击
-	void cursorMoved(QPointF);
+	void rightButtonClicked();
 	//鼠标移动
+	void cursorMoved(QPointF);
 
 public:
-	QPoint getPointinMap();
 	//得到待种植植物在地图上的坐标点
-	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	QPoint getPointinMap();
 	//鼠标移动事件
-	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	//鼠标点击事件
-	void LoadPixmap(const QString &filename);
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	//加载图片
-	void setPointinMap(QPoint temppoint);
+	void LoadPixmap(const QString &filename);
 	//设置待种植植物在地图上的坐标点
+	void setPointinMap(QPoint temppoint);
 };
