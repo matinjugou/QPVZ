@@ -279,7 +279,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="QCardBanks.cpp" />
     <ClCompile Include="QCardSelector.cpp" />
-    <ClCompile Include="QEquipments.cpp" />
     <ClCompile Include="QGameController.cpp" />
     <ClCompile Include="QGameDisplayer.cpp" />
     <ClCompile Include="QGameMode.cpp" />
@@ -378,7 +377,6 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <ClInclude Include="MyVariable.h" />
-    <ClInclude Include="QEquipments.h" />
     <CustomBuild Include="QMyButton.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing QMyButton.h...</Message>

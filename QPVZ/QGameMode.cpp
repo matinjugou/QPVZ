@@ -976,6 +976,7 @@ objectNames QGameNetFightMode::plantTypeInttoEnum(int plantTypeint)
 	default:
 		break;
 	}
+	return Nosuchobject;
 }
 
 objectNames QGameNetFightMode::itemStringtoObjectnames(QString itemnamestring)

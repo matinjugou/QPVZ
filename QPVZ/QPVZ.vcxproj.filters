@@ -107,9 +107,6 @@
     <ClCompile Include="QZombies.cpp">
       <Filter>Source Files\Zombies</Filter>
     </ClCompile>
-    <ClCompile Include="QEquipments.cpp">
-      <Filter>Source Files\Zombies</Filter>
-    </ClCompile>
     <ClCompile Include="QGameDisplayer.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
@@ -299,9 +296,6 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QEquipments.h">
-      <Filter>Header Files\Zombies</Filter>
     </ClInclude>
     <ClInclude Include="MyVariable.h">
       <Filter>Header Files\Component</Filter>

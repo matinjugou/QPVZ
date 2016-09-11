@@ -42,7 +42,6 @@
   正在生成代码...
   正在编译...
   QCardSelector.cpp
-  QEquipments.cpp
   QGameController.cpp
   QGameDisplayer.cpp
   QGameMode.cpp
@@ -61,7 +60,5 @@
   QWeapons.cpp
   QZombies.cpp
   正在生成代码...
-d:\文档\清华大学\程序设计实训\作业\qpvz\qpvz\qzombies.cpp(671): warning C4715: “QPoleVaultingZombie::inRange”: 不是所有的控件路径都返回值
-d:\文档\清华大学\程序设计实训\作业\qpvz\qpvz\qgamemode.cpp(960): warning C4715: “QGameNetFightMode::plantTypeInttoEnum”: 不是所有的控件路径都返回值
   qrc_qpvz.cpp
   QPVZ.vcxproj -> D:\文档\清华大学\程序设计实训\作业\QPVZ\Win32\Debug\QPVZ.exe

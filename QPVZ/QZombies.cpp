@@ -668,6 +668,7 @@ bool QPoleVaultingZombie::inRange(QMyObject* myobject)
 			return true;
 		else return false;
 	}
+	return false;
 }
 
 void QPoleVaultingZombie::ChangeGif()

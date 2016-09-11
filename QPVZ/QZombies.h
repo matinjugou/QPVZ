@@ -1,9 +1,7 @@
 #pragma once
 #include "QMyObject.h"
-#include "QEquipments.h"
 #include "MyVariable.h"
 
-class QEquipments;
 
 class QZombies:public QMyObject
 {
